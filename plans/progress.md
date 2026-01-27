@@ -77,3 +77,33 @@ Implemented the foundational data structure for storing and managing WoW addon e
 
 **Next Steps:**
 The data foundation is complete. Next priority is building the data loading system that imports and validates these JSON files at build time.
+
+---
+
+### Infrastructure - Build Data Loading System
+**Status**: Completed
+
+Implemented build-time data loading system for WoW addon exports:
+
+**Created Files:**
+- `src/lib/loadExports.ts` with three utility functions:
+  - `loadAllExports()`: Imports all JSON files and returns type-safe AddonCategory array
+  - `getAddonManifest()`: Returns simplified list of addon IDs and names for navigation
+  - `getAddonById(id)`: Retrieves specific addon by ID
+- `src/lib/loadExports.test.ts` with comprehensive test coverage (7 passing tests)
+
+**Implementation Details:**
+- Static imports of JSON files from data/exports/ (details.json, platynator.json)
+- Type-safe data access using AddonCategory interface
+- Auto-generation of addon manifest from file structure
+- All exports validated against TypeScript types at compile time
+
+**Verification:**
+- Build succeeds with `bun run build` (271.58ms)
+- TypeScript compilation passes with full type safety
+- All 7 unit tests pass (27 expect() calls)
+- Manifest correctly lists Details and Platynator
+- New addons can be added by creating JSON file and adding import
+
+**Next Steps:**
+Foundation complete. Next priorities: UI components (Hero section, ExportCard, AddonTabs, SearchBar) to display the loaded data.
