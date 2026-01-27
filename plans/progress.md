@@ -140,3 +140,65 @@ Implemented foundational Hero component for lui branding:
 
 **Next Steps:**
 Hero section complete. Next priority: Core export UI components (ExportCard, AddonTabs, SearchBar, CopyButton) for displaying and interacting with addon exports.
+
+---
+
+### UI - Core Export UI Components
+**Status**: Completed
+
+Implemented all foundational UI components for displaying and interacting with WoW addon exports:
+
+**Created Files:**
+- `src/components/CopyButton.tsx` - Reusable copy-to-clipboard button with visual feedback
+- `src/components/ExportCard.tsx` - Card component displaying export name, description, timestamp, and copy button
+- `src/components/SearchBar.tsx` - Search input component for filtering exports
+- `src/components/AddonTabs.tsx` - Tab navigation component for switching between addon categories
+- `src/lib/formatRelativeTime.ts` - Utility function for converting ISO dates to relative time format
+
+**Implementation Details:**
+
+**CopyButton Component:**
+- Uses modern Clipboard API with fallback for older browsers
+- Visual feedback: text changes to "Copied!" with secondary variant
+- 2-second timeout before resetting to normal state
+- Error handling for clipboard permission denials
+- Keyboard accessible via shadcn/ui Button component
+
+**ExportCard Component:**
+- Uses shadcn/ui Card components (CardHeader, CardTitle, CardDescription, CardAction)
+- Displays export name as title
+- Shows description with relative timestamp below
+- Copy button positioned in CardAction (top-right corner)
+- Export string NOT displayed (hidden, copy-only)
+- Responsive design with mobile-friendly layout
+
+**SearchBar Component:**
+- Uses shadcn/ui Input component
+- Centered layout with max-width constraint (max-w-2xl)
+- ARIA label for accessibility
+- Controlled component pattern for filtering
+
+**AddonTabs Component:**
+- Custom accessible tabs implementation
+- ARIA roles: tablist, tab with proper aria-selected and aria-controls
+- Active tab indicated with primary border-bottom
+- Hover states for inactive tabs
+- Focus visible ring for keyboard navigation
+- Horizontal scrolling on mobile for many tabs
+- Responsive design with proper touch targets
+
+**Relative Timestamp Formatting:**
+- Handles: just now, minutes, hours, days, weeks, months, years
+- Singular/plural handling ("1 day ago" vs "2 days ago")
+- Displayed in muted, smaller text below description
+
+**Verification:**
+- Build succeeds with `bun run build` (118.06ms)
+- All 7 tests pass with 27 expect() calls
+- TypeScript compilation passes with full type safety
+- All components keyboard accessible (focus states, ARIA attributes)
+- Mobile responsive (responsive classes, overflow handling, touch targets)
+- Export string NOT displayed on cards (copy-only via CopyButton)
+
+**Next Steps:**
+Core components complete. Next priority: Main app layout to integrate Hero, SearchBar, AddonTabs, and ExportCard grid with filtering functionality.

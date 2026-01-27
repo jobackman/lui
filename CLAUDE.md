@@ -72,6 +72,12 @@ test("hello world", () => {
 
 Do not leave comments on simple fields. Add them only when the intention of something would otherwise be unclear.
 
+## File Naming Conventions
+
+- **Component files**: Use kebab-case for all component files (e.g., `copy-button.tsx`, `export-card.tsx`, `addon-tabs.tsx`)
+- **Component names**: Export components using PascalCase (e.g., `export function CopyButton()`)
+- This applies to all files in `src/components/` except for the `ui/` folder which follows shadcn/ui conventions
+
 ## Frontend
 
 Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.

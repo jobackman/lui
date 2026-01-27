@@ -58,7 +58,7 @@
       "Verify all components are keyboard accessible",
       "Verify components are mobile responsive"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
