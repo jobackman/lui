@@ -72,7 +72,7 @@
       "Verify empty state shows when no results found",
       "Verify responsive layout on all device sizes"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",

@@ -1,5 +1,5 @@
 ---
-description: Build a feature from the prd
+description: Build the next highest prio with Ralph
 agent: build
 model: github-copilot/claude-sonnet-4.5
 ---

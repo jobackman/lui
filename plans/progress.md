@@ -202,3 +202,64 @@ Implemented all foundational UI components for displaying and interacting with W
 
 **Next Steps:**
 Core components complete. Next priority: Main app layout to integrate Hero, SearchBar, AddonTabs, and ExportCard grid with filtering functionality.
+
+---
+
+### UI - Main App Layout Integration
+**Status**: Completed
+
+Implemented complete main app layout integrating all UI components with filtering and state management:
+
+**Updated Files:**
+- `src/app.tsx` - Complete rewrite with state management and filtering logic
+
+**Implementation Details:**
+
+**State Management:**
+- Uses React hooks (useState, useMemo) for reactive state
+- Tracks activeTab (current addon category)
+- Tracks searchQuery (user search input)
+- Initializes to first addon by default
+
+**Layout Structure:**
+1. Hero section at top
+2. SearchBar positioned below hero with padding
+3. AddonTabs for category navigation
+4. Main content area with tabpanel role for accessibility
+5. Responsive grid layout for export cards
+
+**Filtering Logic:**
+- Combined filtering: active tab + search query
+- Search matches against both export name and description
+- Case-insensitive search using toLowerCase()
+- Memoized with useMemo for performance (only recomputes on activeTab or searchQuery change)
+
+**Empty State Handling:**
+- Shows "No exports found matching [query]" when search returns no results
+- Shows "No exports available" when tab has no exports
+- Centered empty state with muted text styling
+
+**Grid Layout:**
+- Responsive breakpoints: 1 column (mobile), 2 columns (md), 3 columns (lg)
+- gap-4 spacing between cards
+- Cards render via ExportCard component with unique keys
+
+**Accessibility:**
+- Proper ARIA roles: tabpanel with aria-labelledby linking to tab
+- id attributes for panel-tab associations
+- Keyboard navigation support through underlying components
+
+**Verification:**
+- Build succeeds with `bun run build` (128.80ms)
+- All 7 tests pass with 27 expect() calls
+- TypeScript compilation passes with full type safety
+- Hero displays at top (app.tsx:36)
+- SearchBar below hero (app.tsx:39)
+- AddonTabs render with tabs prop (app.tsx:43)
+- Export cards in responsive grid (app.tsx:62-64)
+- Filtering works: activeAddon + searchQuery (app.tsx:27-35)
+- Empty state displays when filteredExports.length === 0 (app.tsx:52-57)
+- Responsive layout classes applied (md:grid-cols-2, lg:grid-cols-3)
+
+**Next Steps:**
+Main app layout complete. The core application is now functional. Next priorities are feature enhancements: copy to clipboard functionality verification, relative timestamps verification, styling polish, documentation, and build/deploy configuration.
