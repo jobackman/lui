@@ -1,0 +1,139 @@
+[
+  {
+    "category": "Setup",
+    "description": "Create plan folder structure with prd.json and progress.md for tracking product requirements",
+    "steps": [
+      "Verify plans/ folder exists",
+      "Verify prd.json contains valid JSON array structure",
+      "Verify progress.md file exists",
+      "Verify prd.json schema matches: category, description, steps, passes"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Create data structure and schema for WoW addon exports",
+    "steps": [
+      "Verify data/exports/ folder exists",
+      "Verify TypeScript types defined for AddonExport and AddonCategory",
+      "Verify details.json exists with valid structure",
+      "Verify platynator.json exists with valid structure",
+      "Verify JSON validates against TypeScript types",
+      "Verify new addons can be added by creating new JSON file"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Build data loading system to import and validate all export JSON files at build time",
+    "steps": [
+      "Verify utility function loads all JSON files from data/exports/",
+      "Verify TypeScript compilation succeeds with type-safe data",
+      "Verify addon manifest auto-generated from file structure",
+      "Verify manifest lists Details and Platynator"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Create Hero section component with LucyUI branding",
+    "steps": [
+      "Verify Hero component exists with 'LucyUI' title",
+      "Verify subtitle/tagline explains the purpose",
+      "Verify minimal, modern styling applied",
+      "Verify component renders above main content",
+      "Verify responsive design on mobile/tablet/desktop"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Build core export UI components for displaying and interacting with exports",
+    "steps": [
+      "Verify ExportCard component shows name, description, timestamp, copy button",
+      "Verify ExportCard does NOT display export string",
+      "Verify AddonTabs component switches between Details and Platynator",
+      "Verify SearchBar component filters exports by name/description",
+      "Verify CopyButton component exists with visual feedback",
+      "Verify all components are keyboard accessible",
+      "Verify components are mobile responsive"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Implement main app layout with hero, search, tabs, and export cards",
+    "steps": [
+      "Verify Hero section displays at top",
+      "Verify SearchBar positioned below hero",
+      "Verify Addon tabs render correctly",
+      "Verify Export cards display in grid layout",
+      "Verify filtering works for active tab and search query",
+      "Verify empty state shows when no results found",
+      "Verify responsive layout on all device sizes"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Implement copy to clipboard functionality for export strings",
+    "steps": [
+      "Verify clicking copy button copies exportString to clipboard",
+      "Verify success notification/toast appears ('Copied!')",
+      "Verify works in Chrome, Firefox, and Safari",
+      "Verify fallback exists for older browsers",
+      "Verify error handling for clipboard permission denials"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Display relative timestamps for when exports were last updated",
+    "steps": [
+      "Verify lastUpdated date converts to relative format (e.g., '2 days ago')",
+      "Verify timestamp displays correctly on export cards",
+      "Verify format is readable and user-friendly",
+      "Verify handles various timeframes (minutes, hours, days, weeks, months)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Apply minimal, modern styling and polish to the entire application",
+    "steps": [
+      "Verify minimal, modern design system using shadcn/ui components",
+      "Verify subtle animations for copy feedback and tab transitions",
+      "Verify consistent spacing and typography throughout",
+      "Verify mobile optimizations applied",
+      "Verify accessibility standards met (contrast ratios, focus states)",
+      "Verify no WoW fantasy theming present"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Documentation",
+    "description": "Create documentation for adding and updating exports",
+    "steps": [
+      "Verify README contains 'Adding New Exports' guide",
+      "Verify example export JSON structure documented",
+      "Verify instructions for updating existing exports",
+      "Verify instructions for adding new addon category",
+      "Verify can successfully add new export following documentation",
+      "Verify can successfully create new addon JSON file following documentation"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Configure build and deploy process for Vercel static deployment",
+    "steps": [
+      "Verify build.ts bundles all data files correctly",
+      "Verify production build succeeds with 'bun run build'",
+      "Verify all assets present in dist/ folder",
+      "Verify production mode works locally",
+      "Verify optimized for Vercel static deployment",
+      "Verify successful deployment to Vercel"
+    ],
+    "passes": false
+  }
+]

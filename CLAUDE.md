@@ -1,7 +1,38 @@
+# Project Workflow
+
 # Plan Mode
 
 - Make the plan extremely concise. Sacrifice grammar for the sake of concision.
 - At the end of each plan, give me a list of unresolved questions to answer, if any.
+
+## Product Requirements Management
+
+This project uses a structured PRD (Product Requirements Document) workflow:
+
+- **Location**: `plans/prd.json` - JSON array of product requirements
+- **Schema**: Each requirement has:
+  - `category`: Grouping (e.g., Data, Infrastructure, UI, Feature, Documentation)
+  - `description`: What the requirement is
+  - `steps`: Array of verification steps to confirm completion
+  - `passes`: Boolean tracking completion status
+
+- **Progress Tracking**: `plans/progress.md` - Append progress updates here when working on PRD items
+  - Include date, requirement name, status, and summary of work completed
+  - Keep entries concise but informative
+
+## Working on Features
+
+1. Check `plans/prd.json` for requirements with `"passes": false`
+2. Implement the feature according to the description and steps
+3. Mark `"passes": true` when all verification steps complete
+4. Append progress to `plans/progress.md` with details of what was done
+
+## Adding New Requirements
+
+- Add new objects to the `plans/prd.json` array
+- Follow the established schema
+- Start with `"passes": false`
+- Include clear, testable verification steps
 
 # Bun
 
