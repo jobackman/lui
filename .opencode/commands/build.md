@@ -1,7 +1,7 @@
 ---
 description: Build a feature from the prd
 agent: build
-model: anthropic/claude-4-5-sonnet
+model: github-copilot/claude-sonnet-4.5
 ---
 
 Use @plans/prd.json @plans/progress.md
