@@ -1,0 +1,24 @@
+{
+  "id": "details",
+  "name": "Details",
+  "exports": [
+    {
+      "name": "Lucy's DPS Tracker",
+      "description": "Damage meter configuration optimized for raid DPS tracking",
+      "exportString": "!WA:2!Sv1Y8nT13LXKOjdT0kqtT0Y7kqMZ9KqMWqMY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7",
+      "lastUpdated": "2026-01-25T14:30:00Z"
+    },
+    {
+      "name": "Healer Breakdown",
+      "description": "Healing meter with cooldown tracking for raid healers",
+      "exportString": "!WA:2!Tv1Y8nT13LXKOjdT0kqtT0Y7kqMZ9KqMWqMY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7",
+      "lastUpdated": "2026-01-24T10:15:00Z"
+    },
+    {
+      "name": "Mythic+ Display",
+      "description": "Compact meter for dungeon runs with interrupts and dispels",
+      "exportString": "!WA:2!Uv1Y8nT13LXKOjdT0kqtT0Y7kqMZ9KqMWqMY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7",
+      "lastUpdated": "2026-01-20T18:45:00Z"
+    }
+  ]
+}

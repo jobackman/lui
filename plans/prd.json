@@ -21,7 +21,7 @@
       "Verify JSON validates against TypeScript types",
       "Verify new addons can be added by creating new JSON file"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Infrastructure",
