@@ -36,15 +36,15 @@
   },
   {
     "category": "UI",
-    "description": "Create Hero section component with LucyUI branding",
+    "description": "Create Hero section component with lui branding",
     "steps": [
-      "Verify Hero component exists with 'LucyUI' title",
+      "Verify Hero component exists with 'lui' title",
       "Verify subtitle/tagline explains the purpose",
       "Verify minimal, modern styling applied",
       "Verify component renders above main content",
       "Verify responsive design on mobile/tablet/desktop"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
