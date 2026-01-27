@@ -68,6 +68,10 @@ test("hello world", () => {
 });
 ```
 
+## Comments
+
+Do not leave comments on simple fields. Add them only when the intention of something would otherwise be unclear.
+
 ## Frontend
 
 Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.
