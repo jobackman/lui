@@ -84,7 +84,7 @@
       "Verify fallback exists for older browsers",
       "Verify error handling for clipboard permission denials"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",
