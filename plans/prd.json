@@ -270,5 +270,19 @@
       "Verify hierarchy is clear and improves usability"
     ],
     "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Redesign export cards to single-column layout removing descriptions, showing only addon name and copy button",
+    "steps": [
+      "Verify CardDescription removed from ExportCard component (description + timestamp)",
+      "Verify ExportCard layout is horizontal: addon name on left, copy button on right",
+      "Verify app.tsx grid changed from multi-column (md:grid-cols-2 lg:grid-cols-3) to single column",
+      "Verify cards display in single column on all screen sizes",
+      "Verify card maintains clean, minimal appearance",
+      "Verify copy functionality still works",
+      "Verify responsive behavior on mobile/tablet/desktop"
+    ],
+    "passes": false
   }
 ]
