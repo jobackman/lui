@@ -228,5 +228,47 @@
       "Verify can successfully add new MCP server following documentation"
     ],
     "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Implement modern frosted-glass (glassmorphism) design system with backdrop blur effects across all components",
+    "steps": [
+      "Verify CSS custom properties defined for glass effects (blur, opacity, border)",
+      "Verify ExportCard components use frosted-glass styling with backdrop-blur",
+      "Verify AddonTabs use glassmorphic appearance",
+      "Verify SearchBar has frosted-glass treatment",
+      "Verify Hero section uses subtle glass overlay effects",
+      "Verify glass effects work across Chrome, Firefox, Safari",
+      "Verify fallback styling for browsers without backdrop-filter support",
+      "Verify contrast ratios meet accessibility standards with glass effects"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Add dynamic colorful gradient or pattern backgrounds to replace plain background",
+    "steps": [
+      "Verify background uses modern gradient or geometric pattern",
+      "Verify background colors/patterns complement frosted-glass UI",
+      "Verify background is visually appealing and not distracting",
+      "Verify option to toggle between multiple background styles/themes",
+      "Verify background is performant (no animation lag)",
+      "Verify background works on all device sizes",
+      "Verify sufficient contrast between background and foreground elements"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Establish clear visual hierarchy using varying glass opacity and blur levels",
+    "steps": [
+      "Verify primary UI elements (cards, modals) have strongest glass effect",
+      "Verify secondary elements (backgrounds, containers) have subtler glass effect",
+      "Verify proper z-index layering for glass elements",
+      "Verify hover/focus states enhance glass effect appropriately",
+      "Verify transitions between glass states are smooth",
+      "Verify hierarchy is clear and improves usability"
+    ],
+    "passes": false
   }
 ]
