@@ -350,3 +350,56 @@ Verified and tested the complete relative timestamp implementation for export ca
 **Next Steps:**
 Relative timestamps feature complete and fully tested. Next priorities: Apply minimal modern styling and polish, create documentation for adding exports, and configure build/deploy process for Vercel.
 
+---
+
+### UI - Single-Column Export Card Redesign
+**Status**: Completed
+
+Implemented simplified single-column layout for export cards, removing descriptions and timestamps for a cleaner, more focused UI:
+
+**Updated Files:**
+- `src/components/export-card.tsx` - Removed CardDescription component and timestamp display
+- `src/app.tsx` - Changed grid layout from multi-column (md:grid-cols-2 lg:grid-cols-3) to single column
+- `src/app.tsx` - Updated search filter to only search by name (removed description search)
+
+**Implementation Details:**
+
+**ExportCard Component Changes:**
+- Removed CardDescription import and usage
+- Removed formatRelativeTime import (no longer needed)
+- Simplified component to only display CardTitle (addon name) and CardAction (copy button)
+- Horizontal layout preserved: name on left, copy button on right (via existing CardHeader grid)
+- Reduced component from 28 lines to 19 lines
+
+**App Layout Changes:**
+- Changed grid from `grid gap-4 md:grid-cols-2 lg:grid-cols-3` to `grid gap-4`
+- Single column layout now displays on all screen sizes (mobile, tablet, desktop)
+- Search filter updated to only match against export name (line 30)
+- Removed description search since descriptions no longer displayed
+
+**Visual Result:**
+- Cleaner, more minimal appearance
+- Improved focus on addon names
+- Faster scanning for users looking for specific addon
+- Reduced visual clutter
+- Maintains full copy functionality via CopyButton
+
+**Verification:**
+- Build succeeds: `bun run build` (169.19ms)
+- All 22 tests pass: `bun test` with 73 expect() calls
+- TypeScript compilation passes with full type safety
+- CardDescription removed from export-card.tsx (import and usage)
+- ExportCard layout is horizontal (name left via CardTitle, button right via CardAction)
+- App.tsx grid changed to single column (removed md:grid-cols-2 lg:grid-cols-3)
+- Cards display in single column on all screen sizes
+- Clean, minimal appearance maintained
+- Copy functionality still works (CopyButton unchanged)
+- Responsive behavior works on all devices
+
+**PRD Updated:**
+- Marked "Redesign export cards to single-column layout" as passes: true
+- All verification steps confirmed complete
+
+**Next Steps:**
+Single-column layout complete. This provides a cleaner foundation for upcoming glassmorphism design enhancements. Next priorities: Apply glassmorphism design system, add gradient backgrounds, establish visual hierarchy with varying glass effects.
+

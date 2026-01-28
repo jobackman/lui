@@ -28,8 +28,7 @@ export function App() {
 
     const query = searchQuery.toLowerCase();
     return activeAddon.exports.filter(exp => 
-      exp.name.toLowerCase().includes(query) ||
-      exp.description.toLowerCase().includes(query)
+      exp.name.toLowerCase().includes(query)
     );
   }, [activeAddon, searchQuery]);
 
@@ -58,7 +57,7 @@ export function App() {
               )}
             </div>
           ) : (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4">
               {filteredExports.map((exp, index) => (
                 <ExportCard key={`${exp.name}-${index}`} export={exp} />
               ))}
