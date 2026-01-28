@@ -95,7 +95,7 @@
       "Verify format is readable and user-friendly",
       "Verify handles various timeframes (minutes, hours, days, weeks, months)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",

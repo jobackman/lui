@@ -306,3 +306,47 @@ Verified and tested the complete copy to clipboard implementation for export str
 **Next Steps:**
 Core copy functionality complete and fully tested. Next priority: Relative timestamps feature verification, then styling polish, documentation, and deployment configuration.
 
+---
+
+### Feature - Display Relative Timestamps for Export Updates
+**Status**: Completed
+
+Verified and tested the complete relative timestamp implementation for export cards:
+
+**Implementation Verified:**
+- `src/lib/formatRelativeTime.ts` - Utility function converts ISO 8601 dates to relative format
+- `src/components/export-card.tsx:18` - ExportCard displays timestamp using formatRelativeTime()
+- Timestamp shown below description in muted, smaller text (text-xs text-muted-foreground/70)
+- Format: "Updated [relative time]" (e.g., "Updated 2 days ago")
+
+**Testing Added:**
+- Created `src/lib/formatRelativeTime.test.ts` with 9 comprehensive test suites
+- Tests cover all timeframes: just now, minutes, hours, days, weeks, months, years
+- Tests verify singular/plural handling ("1 day ago" vs "2 days ago")
+- Tests verify ISO 8601 string format compatibility
+- 22 total tests with 73 expect() assertions across all test files
+
+**Verification Results:**
+- Build succeeds: `bun run build` (160.72ms)
+- All 22 tests pass: `bun test` with 73 expect() calls
+- TypeScript compilation passes with full type safety
+- Handles all timeframes correctly:
+  - < 60s: "just now"
+  - < 60m: "X minute(s) ago"
+  - < 24h: "X hour(s) ago"
+  - < 7d: "X day(s) ago"
+  - < 4w: "X week(s) ago"
+  - < 12mo: "X month(s) ago"
+  - >= 1y: "X year(s) ago"
+- Singular/plural grammar handled correctly for all timeframes
+- Timestamp displays correctly on export cards (export-card.tsx:17-19)
+- Format is readable and user-friendly with muted styling
+- Responsive text sizing (text-xs)
+
+**PRD Updated:**
+- Marked "Display relative timestamps for when exports were last updated" as passes: true
+- All verification steps confirmed complete
+
+**Next Steps:**
+Relative timestamps feature complete and fully tested. Next priorities: Apply minimal modern styling and polish, create documentation for adding exports, and configure build/deploy process for Vercel.
+
