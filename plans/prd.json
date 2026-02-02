@@ -16,7 +16,7 @@
       "Verify all new addons display correctly in UI",
       "Verify data loading utilities auto-detect new addon files"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
