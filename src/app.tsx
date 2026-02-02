@@ -1,12 +1,22 @@
 import { useState, useMemo } from 'react';
+import { Routes, Route, useParams, Navigate } from 'react-router-dom';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
 import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
-import { loadAllExports } from '@/lib/loadExports';
+import { loadAllExports, getAddonById } from '@/lib/loadExports';
 import './index.css';
 
 export function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/a/:id" element={<AddonDetailPage />} />
+    </Routes>
+  );
+}
+
+function HomePage() {
   const allAddons = loadAllExports();
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
@@ -69,6 +79,39 @@ export function App() {
               })}
             </div>
           )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AddonDetailPage() {
+  const { id } = useParams<{ id: string }>();
+  
+  // Handle invalid addon IDs
+  if (!id) {
+    return <Navigate to="/" replace />;
+  }
+
+  const addon = getAddonById(id);
+  
+  // 404 handling - redirect to home for invalid addon IDs
+  if (!addon) {
+    return <Navigate to="/" replace />;
+  }
+
+  // Placeholder detail page (will be fully implemented in next feature)
+  return (
+    <div className="min-h-screen relative">
+      <BackgroundRippleEffect cellSize={48} />
+      
+      <div className="relative z-20">
+        <div className="container mx-auto w-full px-8 py-12">
+          <h1 className="text-4xl font-bold mb-4">{addon.export.name}</h1>
+          <p className="text-muted-foreground mb-8">{addon.export.description}</p>
+          <p className="text-sm text-muted-foreground">
+            Addon detail page (placeholder - full implementation in next feature)
+          </p>
         </div>
       </div>
     </div>

@@ -139,7 +139,7 @@
       "Verify no console errors or warnings related to routing",
       "Verify hot module reloading continues to work with routing setup"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
