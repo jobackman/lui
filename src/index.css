@@ -42,6 +42,31 @@ body::before {
   }
 }
 
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes cell-ripple {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.animate-cell-ripple {
+  animation: cell-ripple var(--duration, 200ms) ease-out none 1 var(--delay, 0ms);
+}
+
 @media (prefers-reduced-motion) {
   *,
   ::before,

@@ -284,5 +284,45 @@
       "Verify responsive behavior on mobile/tablet/desktop"
     ],
     "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Remove tab navigation and implement unified addon grouping with section headers",
+    "steps": [
+      "Verify AddonTabs component removed from app.tsx imports and JSX",
+      "Verify activeTab state and onTabChange logic removed from app.tsx",
+      "Verify all addon exports displayed simultaneously in single scrollable view",
+      "Verify section headers added to visually group exports by addon category",
+      "Verify section headers use addon.name from AddonCategory",
+      "Verify section headers have clear visual hierarchy with glassmorphism styling",
+      "Verify each addon group wrapped in a glass panel/container for visual separation",
+      "Verify search filters across ALL addon exports globally (not just one category)",
+      "Verify empty state shows when no exports match search across all categories",
+      "Verify proper spacing between addon group sections",
+      "Verify keyboard navigation works without tabs",
+      "Verify responsive layout on mobile/tablet/desktop",
+      "Verify accessibility: proper heading hierarchy (h2 for section headers) for screen readers",
+      "Verify AddonTabs component file can be safely deleted or deprecated"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Implement theme system that follows system preference by default, falling back to dark mode",
+    "steps": [
+      "Verify theme context/provider created with light/dark/system modes",
+      "Verify system preference detection using prefers-color-scheme media query",
+      "Verify default theme is 'system' mode on first visit",
+      "Verify fallback to dark mode when no system preference detected",
+      "Verify theme state persists in localStorage for user override",
+      "Verify theme toggle UI component exists (system/light/dark options)",
+      "Verify CSS variables update based on active theme",
+      "Verify glassmorphism effects adapt to light/dark theme appropriately",
+      "Verify smooth transitions between theme changes",
+      "Verify theme applied before first paint (no flash of wrong theme)",
+      "Verify works across all browsers (Chrome, Firefox, Safari)",
+      "Verify accessibility maintained in both light and dark modes"
+    ],
+    "passes": false
   }
 ]
