@@ -384,5 +384,111 @@
       "Verify responsive positioning on mobile/tablet/desktop"
     ],
     "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Support external link-only addons without export strings",
+    "steps": [
+      "Verify AddonExport interface updated to make exportString optional (exportString?: string)",
+      "Verify AddonExport interface includes new optional field: externalUrl (string)",
+      "Verify externalUrl field represents external source for copying export string (e.g., WoWHead, Icy Veins, external guide)",
+      "Verify TypeScript types validate that addons have either exportString OR externalUrl (not necessarily both)",
+      "Verify sample addon JSON created with externalUrl instead of exportString for testing",
+      "Verify data loading utilities handle optional exportString correctly",
+      "Verify TypeScript compilation succeeds with updated types"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Update ExportCard to handle external link-only addons",
+    "steps": [
+      "Verify CopyButton hidden when exportString is not present",
+      "Verify external link button displayed when externalUrl is present",
+      "Verify external link button uses appropriate icon (ExternalLink from lucide-react)",
+      "Verify external link opens in new tab with security attributes (rel='noopener noreferrer')",
+      "Verify external link button has same glassmorphism styling as other buttons",
+      "Verify external link button has hover/focus states and slide-in animation on card hover",
+      "Verify button labeled clearly with aria-label ('Open external guide' or similar)",
+      "Verify tooltip/title indicates purpose ('View on external site')",
+      "Verify card remains clickable and expandable for external-link addons",
+      "Verify expanded view shows appropriate messaging when no exportString present",
+      "Verify setup instructions can explain how to use external source"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Data",
+    "description": "Add JSON files for new addon examples with realistic placeholder data",
+    "steps": [
+      "Verify data/exports/sensei-resource-bar.json created with export or externalUrl",
+      "Verify data/exports/waypoint-ui.json created with export or externalUrl",
+      "Verify data/exports/baganator.json created with export or externalUrl",
+      "Verify data/exports/blizzhudtweaks.json created with export or externalUrl",
+      "Verify data/exports/cooldown-manager.json created with export or externalUrl",
+      "Verify each addon JSON includes: id, name, description, lastUpdated",
+      "Verify placeholder images added to each addon (using picsum.photos or similar)",
+      "Verify setup instructions provided for each addon",
+      "Verify mix of export-string addons and external-link addons for variety",
+      "Verify TypeScript compilation validates all new JSON files",
+      "Verify all new addons display correctly in UI",
+      "Verify data loading utilities auto-detect new addon files"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Display last updated timestamp on collapsed (unexpanded) card view",
+    "steps": [
+      "Verify formatRelativeTime utility imported into ExportCard component",
+      "Verify timestamp displayed in collapsed card view alongside addon name",
+      "Verify timestamp positioned below addon name with appropriate spacing",
+      "Verify timestamp uses white/80 opacity for subtle appearance",
+      "Verify timestamp has text shadow or drop shadow for readability over images",
+      "Verify timestamp styling consistent with design system (glass effects)",
+      "Verify timestamp maintains WCAG contrast ratios against gradient overlay",
+      "Verify timestamp responsive on mobile/tablet/desktop",
+      "Verify timestamp does not interfere with buttons or card interactivity"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Add smooth height transition animation for card expansion/collapse",
+    "steps": [
+      "Verify card height transitions smoothly when expanding (e.g., from min-h-[300px] to min-h-[600px])",
+      "Verify card height transitions smoothly when collapsing back to original size",
+      "Verify transition duration appropriate for smooth animation (500ms or similar)",
+      "Verify transition easing function provides natural motion (ease-in-out or custom cubic-bezier)",
+      "Verify transition-all or specific height/max-height transition applied to Card component",
+      "Verify expanded card content fades in smoothly (opacity transition) after height animation starts",
+      "Verify collapsed content fades out before height animation (prevents content jump)",
+      "Verify animation respects prefers-reduced-motion accessibility setting",
+      "Verify animation performs smoothly without lag on various devices",
+      "Verify bento grid layout reflows gracefully during animation",
+      "Verify no content overflow or clipping during transition",
+      "Verify animation works correctly when rapidly expanding/collapsing multiple cards"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Remove thumbnail navigation UI from expanded card, rely only on carousel indicator dots",
+    "steps": [
+      "Verify thumbnail image navigation section removed from expanded card view (lines ~252-277 in export-card.tsx)",
+      "Verify prev/next arrow buttons removed from expanded view carousel navigation (ChevronLeft/ChevronRight buttons)",
+      "Verify 'Image X of Y' text counter removed from expanded view",
+      "Verify glass-strong panel wrapper for carousel controls removed from expanded view",
+      "Verify carousel indicator dots remain visible in expanded card view (not just collapsed)",
+      "Verify indicator dots repositioned for expanded view (e.g., bottom-center with proper z-index)",
+      "Verify indicator dots remain clickable in both collapsed and expanded states",
+      "Verify indicator dots have sufficient visibility against expanded card background",
+      "Verify keyboard navigation still works (ArrowLeft/ArrowRight to navigate images)",
+      "Verify ARIA labels maintained for accessibility ('Image X of Y' announced for screen readers)",
+      "Verify expanded card layout uses reclaimed space more efficiently",
+      "Verify setup instructions and description have more breathing room",
+      "Verify responsive behavior maintained on mobile/tablet/desktop"
+    ],
+    "passes": false
   }
 ]
