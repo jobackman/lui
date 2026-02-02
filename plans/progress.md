@@ -1257,3 +1257,42 @@ Added indicator dots for multi-image card galleries with manual navigation:
 
 ---
 
+### UI - Refined Card Layout: Compact Dots at Bottom, Buttons at Top-Right
+**Status**: Completed
+
+Redesigned card layout for better visual hierarchy and cleaner appearance:
+
+**Updated Files:**
+- `src/components/export-card.tsx` - Repositioned dots and buttons
+
+**Layout Changes:**
+
+**Indicator Dots - Bottom-Center:**
+- Moved from `bottom-20` to `bottom-4` (very bottom of card)
+- Reduced container padding: `px-3 py-2` → `px-2 py-1.5` (more compact)
+- Smaller glass background wraps dots tightly
+- Still maintains 44x44px touch targets for accessibility
+- Visually subtle, doesn't interfere with title
+
+**Buttons - Top-Right Corner:**
+- Repositioned from bottom-right to `top-4 right-4`
+- Download and Copy buttons now in top-right corner
+- Same slide-in animation on hover
+- Better visual separation from title and dots
+- More conventional UI pattern (action buttons top-right)
+
+**Title - Bottom-Left (Unchanged):**
+- Remains at bottom with gradient overlay
+- Clear visual hierarchy: buttons top, dots bottom, title bottom-left
+
+**Verification:**
+- Build: 319.22ms ✓
+- Tests: 26 pass, 80 expect() ✓
+- Dots at bottom-4 with compact padding ✓
+- Buttons at top-4 right-4 ✓
+- All interactions work (click dots, hover buttons) ✓
+- Responsive on all devices ✓
+- Cleaner, more balanced layout ✓
+
+---
+

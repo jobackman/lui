@@ -67,9 +67,43 @@ export function ExportCard({ export: exportData }: ExportCardProps) {
       {/* Bottom gradient overlay for text readability - always visible */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90 pointer-events-none" />
 
-      {/* Image indicator dots - only shown for multiple images */}
+      {/* Buttons positioned at top-right */}
+      <div className="absolute top-4 right-4 z-10 flex gap-2">
+        {exportData.downloadUrl && (
+          <Button
+            variant="ghost"
+            size="icon"
+            asChild
+            className="glass-strong hover:bg-white/30 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-300 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
+            title="Download addon"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <a
+              href={exportData.downloadUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download addon"
+            >
+              <Download className="h-4 w-4" />
+            </a>
+          </Button>
+        )}
+        <CopyButton 
+          text={exportData.exportString}
+          className="glass-strong hover:bg-white/30 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-300 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
+        />
+      </div>
+
+      {/* Title positioned at bottom-left */}
+      <CardHeader className="absolute bottom-0 left-0 right-0 z-10 pb-6">
+        <CardTitle className="text-white drop-shadow-lg shadow-black">
+          {exportData.name}
+        </CardTitle>
+      </CardHeader>
+
+      {/* Image indicator dots - compact, at very bottom */}
       {hasMultipleImages && (
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-3 py-2 glass-subtle rounded-full">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-2 py-1.5 glass-subtle rounded-full">
           {images.map((_, index) => (
             <button
               key={index}
@@ -93,40 +127,6 @@ export function ExportCard({ export: exportData }: ExportCardProps) {
           ))}
         </div>
       )}
-
-      {/* Content Layer positioned at bottom */}
-      <CardHeader className="absolute bottom-0 left-0 right-0 z-10 pb-6">
-        <CardTitle className="text-white drop-shadow-lg shadow-black">
-          {exportData.name}
-        </CardTitle>
-        <CardAction>
-          <div className="flex gap-2">
-            {exportData.downloadUrl && (
-              <Button
-                variant="ghost"
-                size="icon"
-                asChild
-                className="glass-strong hover:bg-white/30 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-300 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
-                title="Download addon"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <a
-                  href={exportData.downloadUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Download addon"
-                >
-                  <Download className="h-4 w-4" />
-                </a>
-              </Button>
-            )}
-            <CopyButton 
-              text={exportData.exportString}
-              className="glass-strong hover:bg-white/30 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-300 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
-            />
-          </div>
-        </CardAction>
-      </CardHeader>
     </Card>
   );
 }
