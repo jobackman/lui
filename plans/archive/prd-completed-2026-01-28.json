@@ -1,0 +1,420 @@
+[
+  {
+    "category": "Setup",
+    "description": "Create plan folder structure with prd.json and progress.md for tracking product requirements",
+    "steps": [
+      "Verify plans/ folder exists",
+      "Verify prd.json contains valid JSON array structure",
+      "Verify progress.md file exists",
+      "Verify prd.json schema matches: category, description, steps, passes"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Create data structure and schema for WoW addon exports",
+    "steps": [
+      "Verify data/exports/ folder exists",
+      "Verify TypeScript types defined for AddonExport and AddonCategory",
+      "Verify details.json exists with valid structure",
+      "Verify platynator.json exists with valid structure",
+      "Verify JSON validates against TypeScript types",
+      "Verify new addons can be added by creating new JSON file"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Build data loading system to import and validate all export JSON files at build time",
+    "steps": [
+      "Verify utility function loads all JSON files from data/exports/",
+      "Verify TypeScript compilation succeeds with type-safe data",
+      "Verify addon manifest auto-generated from file structure",
+      "Verify manifest lists Details and Platynator"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Create Hero section component with lui branding",
+    "steps": [
+      "Verify Hero component exists with 'lui' title",
+      "Verify subtitle/tagline explains the purpose",
+      "Verify minimal, modern styling applied",
+      "Verify component renders above main content",
+      "Verify responsive design on mobile/tablet/desktop"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Build core export UI components for displaying and interacting with exports",
+    "steps": [
+      "Verify ExportCard component shows name, description, timestamp, copy button",
+      "Verify ExportCard does NOT display export string",
+      "Verify AddonTabs component switches between Details and Platynator",
+      "Verify SearchBar component filters exports by name/description",
+      "Verify CopyButton component exists with visual feedback",
+      "Verify all components are keyboard accessible",
+      "Verify components are mobile responsive"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Implement main app layout with hero, search, tabs, and export cards",
+    "steps": [
+      "Verify Hero section displays at top",
+      "Verify SearchBar positioned below hero",
+      "Verify Addon tabs render correctly",
+      "Verify Export cards display in grid layout",
+      "Verify filtering works for active tab and search query",
+      "Verify empty state shows when no results found",
+      "Verify responsive layout on all device sizes"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Implement copy to clipboard functionality for export strings",
+    "steps": [
+      "Verify clicking copy button copies exportString to clipboard",
+      "Verify success notification/toast appears ('Copied!')",
+      "Verify works in Chrome, Firefox, and Safari",
+      "Verify fallback exists for older browsers",
+      "Verify error handling for clipboard permission denials"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Display relative timestamps for when exports were last updated",
+    "steps": [
+      "Verify lastUpdated date converts to relative format (e.g., '2 days ago')",
+      "Verify timestamp displays correctly on export cards",
+      "Verify format is readable and user-friendly",
+      "Verify handles various timeframes (minutes, hours, days, weeks, months)"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Apply minimal, modern styling and polish to the entire application",
+    "steps": [
+      "Verify minimal, modern design system using shadcn/ui components",
+      "Verify subtle animations for copy feedback and tab transitions",
+      "Verify consistent spacing and typography throughout",
+      "Verify mobile optimizations applied",
+      "Verify accessibility standards met (contrast ratios, focus states)",
+      "Verify no WoW fantasy theming present"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Implement modern frosted-glass (glassmorphism) design system with backdrop blur effects across all components",
+    "steps": [
+      "Verify CSS custom properties defined for glass effects (blur, opacity, border)",
+      "Verify ExportCard components use frosted-glass styling with backdrop-blur",
+      "Verify AddonTabs use glassmorphic appearance",
+      "Verify SearchBar has frosted-glass treatment",
+      "Verify Hero section uses subtle glass overlay effects",
+      "Verify glass effects work across Chrome, Firefox, Safari",
+      "Verify fallback styling for browsers without backdrop-filter support",
+      "Verify contrast ratios meet accessibility standards with glass effects"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Add dynamic colorful gradient or pattern backgrounds to replace plain background",
+    "steps": [
+      "Verify background uses modern gradient or geometric pattern",
+      "Verify background colors/patterns complement frosted-glass UI",
+      "Verify background is visually appealing and not distracting",
+      "Verify option to toggle between multiple background styles/themes",
+      "Verify background is performant (no animation lag)",
+      "Verify background works on all device sizes",
+      "Verify sufficient contrast between background and foreground elements"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Reduce frosted glass opacity to increase transparency and establish clear visual hierarchy using varying glass opacity and blur levels",
+    "steps": [
+      "Verify CSS custom properties for glass opacity reduced (e.g., from 0.8 to 0.4-0.6 range)",
+      "Verify ExportCard components have increased transparency with lower background opacity",
+      "Verify SearchBar glass effect has reduced opacity for more background visibility",
+      "Verify Hero section glass overlays have increased transparency",
+      "Verify theme toggle component glass effects have reduced opacity",
+      "Verify primary UI elements (cards, modals) have strongest glass effect",
+      "Verify secondary elements (backgrounds, containers) have subtler glass effect",
+      "Verify proper z-index layering for glass elements",
+      "Verify hover/focus states enhance glass effect appropriately",
+      "Verify transitions between glass states are smooth",
+      "Verify hierarchy is clear and improves usability",
+      "Verify glass effects work in both light and dark theme modes with new opacity",
+      "Verify backdrop-blur values adjusted if needed to maintain frosted effect with lower opacity",
+      "Verify text contrast ratios still meet WCAG accessibility standards (4.5:1 for normal text, 3:1 for large)",
+      "Verify readability maintained across all backgrounds despite increased transparency",
+      "Verify changes tested across Chrome, Firefox, and Safari",
+      "Verify mobile/tablet/desktop responsive behavior maintained"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Redesign export cards to single-column layout removing descriptions, showing only addon name and copy button",
+    "steps": [
+      "Verify CardDescription removed from ExportCard component (description + timestamp)",
+      "Verify ExportCard layout is horizontal: addon name on left, copy button on right",
+      "Verify app.tsx grid changed from multi-column (md:grid-cols-2 lg:grid-cols-3) to single column",
+      "Verify cards display in single column on all screen sizes",
+      "Verify card maintains clean, minimal appearance",
+      "Verify copy functionality still works",
+      "Verify responsive behavior on mobile/tablet/desktop"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Remove tab navigation and implement unified addon grouping with section headers",
+    "steps": [
+      "Verify AddonTabs component removed from app.tsx imports and JSX",
+      "Verify activeTab state and onTabChange logic removed from app.tsx",
+      "Verify all addon exports displayed simultaneously in single scrollable view",
+      "Verify section headers added to visually group exports by addon category",
+      "Verify section headers use addon.name from AddonCategory",
+      "Verify section headers have clear visual hierarchy with glassmorphism styling",
+      "Verify each addon group wrapped in a glass panel/container for visual separation",
+      "Verify search filters across ALL addon exports globally (not just one category)",
+      "Verify empty state shows when no exports match search across all categories",
+      "Verify proper spacing between addon group sections",
+      "Verify keyboard navigation works without tabs",
+      "Verify responsive layout on mobile/tablet/desktop",
+      "Verify accessibility: proper heading hierarchy (h2 for section headers) for screen readers",
+      "Verify AddonTabs component file can be safely deleted or deprecated"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Implement theme system that follows system preference by default, falling back to dark mode",
+    "steps": [
+      "Verify theme context/provider created with light/dark/system modes",
+      "Verify system preference detection using prefers-color-scheme media query",
+      "Verify default theme is 'system' mode on first visit",
+      "Verify fallback to dark mode when no system preference detected",
+      "Verify theme state persists in localStorage for user override",
+      "Verify theme toggle UI component exists (system/light/dark options)",
+      "Verify CSS variables update based on active theme",
+      "Verify glassmorphism effects adapt to light/dark theme appropriately",
+      "Verify smooth transitions between theme changes",
+      "Verify theme applied before first paint (no flash of wrong theme)",
+      "Verify works across all browsers (Chrome, Firefox, Safari)",
+      "Verify accessibility maintained in both light and dark modes"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Restructure addon data to single export per addon and add download links",
+    "steps": [
+      "Verify AddonExport interface updated to include optional downloadUrl field",
+      "Verify AddonCategory interface changed: exports is now a single AddonExport object instead of array",
+      "Verify details.json restructured to single export object with downloadUrl",
+      "Verify platynator.json restructured to single export object with downloadUrl",
+      "Verify data loading utilities updated to handle single export instead of array",
+      "Verify app.tsx updated to render single export per addon (no mapping over exports array)",
+      "Verify ExportCard component displays download icon button next to copy button",
+      "Verify download button is secondary/subtle compared to primary copy button",
+      "Verify download button uses download icon as icon-only button",
+      "Verify download link opens in new tab with proper security attributes (rel='noopener noreferrer')",
+      "Verify download button maintains glassmorphism styling consistent with design system",
+      "Verify download button has hover/focus states for better UX",
+      "Verify button is keyboard accessible with proper ARIA label ('Download addon')",
+      "Verify tooltip/title attribute shows on hover to clarify button purpose",
+      "Verify works on mobile/tablet/desktop with appropriate touch targets",
+      "Verify handles missing downloadUrl gracefully (button hidden if URL not provided)",
+      "Verify all existing functionality (copy, search, filtering) still works after restructure"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Remove standalone section headers for addon grouping and simplify layout",
+    "steps": [
+      "Verify addon section headers (e.g., h2 elements for Details, Platynator) removed from app.tsx",
+      "Verify glass panel containers wrapping individual addon groups removed",
+      "Verify exports display in flat, unified list without visual grouping by addon",
+      "Verify spacing between export cards remains consistent",
+      "Verify search functionality still filters across all addons",
+      "Verify empty state still displays when no results match",
+      "Verify responsive layout maintained on all device sizes"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Implement Bento Grid layout for addon cards (Aceternity style)",
+    "steps": [
+      "Verify CSS Grid layout implemented with grid-template-columns (e.g., repeat(auto-fit, minmax(300px, 1fr)) or fixed column count)",
+      "Verify ExportCard components assigned varying grid-column-span and grid-row-span values for asymmetric layout",
+      "Verify cards placed using CSS grid properties (grid-column, grid-row) to create intentional bento-style composition",
+      "Verify responsive breakpoints: 1 column mobile, 2 columns tablet, 3-4 columns desktop",
+      "Verify some cards span 2 columns, some span 1 column for visual variety (similar to Aceternity bento grids)",
+      "Verify some cards span 2 rows for larger focal points (optional, based on content)",
+      "Verify grid layout pattern repeats logically or randomly distributes span variations",
+      "Verify glassmorphism styling maintained on all cards with proper backdrop-blur",
+      "Verify copy and download buttons remain accessible and functional in bento layout",
+      "Verify search filtering works smoothly (cards reflow gracefully when filtered)",
+      "Verify keyboard navigation remains logical in grid layout (left-to-right, top-to-bottom)",
+      "Verify grid gap spacing is consistent and visually balanced",
+      "Verify cards align properly in grid cells without overflow issues",
+      "Verify performance is acceptable with multiple export cards",
+      "Verify accessibility maintained (screen reader order follows DOM order, proper focus management)",
+      "Verify empty state displays centered when no results match search"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Extend AddonExport type definition to support optional image assets stored in public folder",
+    "steps": [
+      "Verify AddonExport interface updated to include optional `images` field (array of image paths)",
+      "Verify AddonExport interface updated to include optional `setupInstructions` field (string or markdown for import/setup guidance)",
+      "Verify public/images/addons/ folder structure created for storing addon images",
+      "Verify image paths use relative public URLs (e.g., \"/images/addons/details-preview.png\")",
+      "Verify placeholder images (picsum.photos or similar) used for testing functionality",
+      "Verify sample placeholder images added to details.json and platynator.json to demonstrate feature",
+      "Verify TypeScript compilation validates new image fields correctly",
+      "Verify image loading handles missing/optional images gracefully"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Transform export cards from text-based to image cards with information overlaid on images",
+    "steps": [
+      "Verify ExportCard displays image as card background",
+      "Verify card automatically cycles through multiple images on timer (e.g., 5-second intervals) if multiple images provided",
+      "Verify only one image displayed at a time with smooth crossfade transitions",
+      "Verify timer pauses on hover to allow viewing current image",
+      "Verify card uses CSS object-fit (cover/contain) to handle various image aspect ratios",
+      "Verify addon name overlaid on image with readable contrast (text shadow, gradient overlay, or frosted backdrop)",
+      "Verify copy and download buttons overlaid on image with glassmorphism styling",
+      "Verify fallback design when no image provided (gradient background or placeholder)",
+      "Verify image loads with lazy loading for performance",
+      "Verify proper alt text for accessibility",
+      "Verify overlay text maintains WCAG contrast ratios (4.5:1 minimum)",
+      "Verify bento grid layout still works with image-based cards",
+      "Verify responsive behavior on mobile/tablet/desktop",
+      "Verify glassmorphism effects complement image backgrounds",
+      "Verify buttons remain clearly visible and interactive on various image backgrounds",
+      "Verify placeholder images (e.g., picsum.photos, unsplash source) display correctly during development",
+      "Verify image cycling respects prefers-reduced-motion accessibility setting"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Implement click-to-expand card behavior with inline expansion showing additional information and full-size images",
+    "steps": [
+      "Verify clicking card body (not buttons) expands card inline within bento grid",
+      "Verify clicking copy/download buttons does NOT trigger card expansion",
+      "Verify only one card can be expanded at a time (expanding new card collapses previous)",
+      "Verify expanded card spans full width of grid container",
+      "Verify expanded view displays description, timestamp, and setup/import instructions",
+      "Verify expanded view shows all images in gallery/carousel format with navigation controls",
+      "Verify expanded view image carousel has prev/next buttons and optional thumbnail navigation",
+      "Verify expanded state uses glassmorphism styling consistent with design system",
+      "Verify collapse functionality (click card again, click collapse button, or click different card)",
+      "Verify smooth expand/collapse animations with height transitions",
+      "Verify keyboard accessibility (Enter/Space to expand, ESC to collapse, arrow keys for image navigation)",
+      "Verify focus management (returns to card after closing)",
+      "Verify ARIA attributes for expanded state (aria-expanded, role=\"button\" for clickable card)",
+      "Verify mobile touch interactions work smoothly (swipe for image navigation)",
+      "Verify expanded view scrollable if content exceeds viewport",
+      "Verify layout reflows gracefully when card expands/collapses within bento grid",
+      "Verify smooth scroll to expanded card if it's partially off-screen"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Redesign card layout to position titles and buttons at bottom with gradient overlay for text visibility, and implement button slide-in animation on hover",
+    "steps": [
+      "Verify card content (CardHeader with title and buttons) repositioned to bottom of card using absolute positioning or flexbox",
+      "Verify gradient overlay changed from full-card coverage to bottom gradient (e.g., from-transparent via-black/60 to-black/90)",
+      "Verify gradient starts from transparent at top, transitions to semi-transparent in middle, and becomes more opaque at bottom for optimal text readability",
+      "Verify addon title remains visible at bottom over gradient",
+      "Verify buttons (copy & download) hidden by default with CSS (opacity-0, translate-y)",
+      "Verify buttons slide into visibility on card hover using CSS transforms and opacity transitions",
+      "Verify button animation is smooth (e.g., transition duration 200-300ms with ease-out)",
+      "Verify buttons slide up from below or fade in (transform: translateY(10px) to translateY(0))",
+      "Verify hover state uses group-hover utility for consistent parent-child hover behavior",
+      "Verify buttons remain keyboard accessible (focus makes them visible even without hover)",
+      "Verify focus-visible styles applied for keyboard navigation",
+      "Verify touch devices show buttons by default or on tap (no hover state on mobile)",
+      "Verify gradient maintains WCAG contrast ratios for title text (4.5:1 minimum)",
+      "Verify responsive behavior on mobile/tablet/desktop",
+      "Verify animation respects prefers-reduced-motion accessibility setting"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Add visual indicator dots to show which image is currently displayed in multi-image card galleries",
+    "steps": [
+      "Verify indicator dots rendered only when multiple images exist (images.length > 1)",
+      "Verify dots positioned at bottom-center or bottom-right of card using absolute positioning",
+      "Verify dots container positioned above gradient overlay but below card content (proper z-index layering)",
+      "Verify number of dots matches number of images in gallery",
+      "Verify active dot highlighted with different styling (filled circle, larger size, different opacity, or color change)",
+      "Verify inactive dots use subtle styling (outline circle, smaller size, lower opacity)",
+      "Verify dots use glassmorphism styling consistent with design system (backdrop-blur, semi-transparent background)",
+      "Verify smooth transition animation when active dot changes during image cycling",
+      "Verify dots clickable to manually navigate to specific image (optional enhancement)",
+      "Verify dots have sufficient size for touch targets on mobile (minimum 44x44px touch area)",
+      "Verify dots spacing provides clear visual separation",
+      "Verify dots maintain visibility against various image backgrounds (white border/shadow if needed)",
+      "Verify dots hidden or accessible alternative provided for screen readers (aria-label indicating \"Image X of Y\")",
+      "Verify dots respect prefers-reduced-motion setting (instant switching instead of animated transitions)",
+      "Verify responsive positioning on mobile/tablet/desktop"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Support external link-only addons without export strings",
+    "steps": [
+      "Verify AddonExport interface updated to make exportString optional (exportString?: string)",
+      "Verify AddonExport interface includes new optional field: externalUrl (string)",
+      "Verify externalUrl field represents external source for copying export string (e.g., WoWHead, Icy Veins, external guide)",
+      "Verify TypeScript types validate that addons have either exportString OR externalUrl (not necessarily both)",
+      "Verify sample addon JSON created with externalUrl instead of exportString for testing",
+      "Verify data loading utilities handle optional exportString correctly",
+      "Verify TypeScript compilation succeeds with updated types"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Update ExportCard to handle external link-only addons",
+    "steps": [
+      "Verify CopyButton hidden when exportString is not present",
+      "Verify external link button displayed when externalUrl is present",
+      "Verify external link button uses appropriate icon (ExternalLink from lucide-react)",
+      "Verify external link opens in new tab with security attributes (rel='noopener noreferrer')",
+      "Verify external link button has same glassmorphism styling as other buttons",
+      "Verify external link button has hover/focus states and slide-in animation on card hover",
+      "Verify button labeled clearly with aria-label ('Open external guide' or similar)",
+      "Verify tooltip/title indicates purpose ('View on external site')",
+      "Verify card remains clickable and expandable for external-link addons",
+      "Verify expanded view shows appropriate messaging when no exportString present",
+      "Verify setup instructions can explain how to use external source"
+    ],
+    "passes": true
+  }
+]
