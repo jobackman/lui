@@ -353,5 +353,38 @@
       "Verify all functionality preserved (search, filtering, image carousel, copy buttons, external links)"
     ],
     "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Implement fixed hero header with background image carousel on addon detail page",
+    "steps": [
+      "Verify hero section created at top of addon detail page with fixed positioning (position: sticky or fixed)",
+      "Verify hero section height set to ~400-500px on desktop, ~300px on mobile/tablet",
+      "Verify image carousel moved from content card to hero background layer",
+      "Verify images displayed as full-width background (object-cover) in hero section",
+      "Verify image transition animation consistent with card carousel (duration-700 ease-in-out)",
+      "Verify image carousel cycling uses same opacity transition pattern as ExportCard component",
+      "Verify carousel controls (prev/next arrows, indicator dots) overlaid on hero background",
+      "Verify dark gradient overlay applied to hero (from-transparent to-black/90) for text readability",
+      "Verify addon name displayed as large heading (text-4xl sm:text-5xl) over hero background",
+      "Verify addon description displayed over hero with proper text shadow/contrast",
+      "Verify last updated timestamp displayed on hero section",
+      "Verify tags displayed on hero section with glass effect styling",
+      "Verify action buttons (Copy, Download, External Link) positioned on hero with glass-strong styling",
+      "Verify back button positioned on hero (top-left) with glass effect, remains visible when scrolling",
+      "Verify hero section remains fixed/sticky at top of viewport during scroll",
+      "Verify content card below hero contains only setup instructions (images removed from card)",
+      "Verify smooth scroll behavior when page loads",
+      "Verify keyboard navigation (ArrowLeft/ArrowRight) continues to work for image carousel",
+      "Verify Escape key navigation to home continues to work",
+      "Verify responsive layout: hero scales appropriately on mobile/tablet/desktop",
+      "Verify text readability maintained across all image backgrounds (sufficient contrast)",
+      "Verify carousel indicator dots visible and clickable on hero background",
+      "Verify no layout shift or content jump when scrolling",
+      "Verify hero z-index layering correct (hero above background effects, below modals)",
+      "Verify accessibility: ARIA labels maintained for carousel and screen reader announcements",
+      "Verify prefers-reduced-motion respected (no auto-cycling if user prefers reduced motion)"
+    ],
+    "passes": false
   }
 ]
