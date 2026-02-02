@@ -332,5 +332,26 @@
       "Verify hint responsive and hidden on very narrow mobile viewports if needed"
     ],
     "passes": false
+  },
+  {
+    "category": "Architecture",
+    "description": "Split route page components from app.tsx into separate files",
+    "steps": [
+      "Verify src/pages/ directory created",
+      "Verify src/pages/home-page.tsx created with HomePage component extracted from app.tsx",
+      "Verify HomePage imports all required dependencies (useState, useMemo, Hero, SearchBar, ExportCard, BackgroundRippleEffect, Link, loadAllExports)",
+      "Verify HomePage exported as named export from home-page.tsx",
+      "Verify src/pages/addon-detail-page.tsx created with AddonDetailPage component extracted from app.tsx",
+      "Verify AddonDetailPage imports all required dependencies (useState, useEffect, useParams, useNavigate, Navigate, Link, Card, Button, Tag, CopyButton, BackgroundRippleEffect, getAddonById, formatRelativeTime, icons)",
+      "Verify AddonDetailPage exported as named export from addon-detail-page.tsx",
+      "Verify app.tsx imports HomePage from '@/pages/home-page'",
+      "Verify app.tsx imports AddonDetailPage from '@/pages/addon-detail-page'",
+      "Verify app.tsx only contains App component with Routes configuration and necessary route imports",
+      "Verify TypeScript compilation succeeds with new file structure",
+      "Verify application runs correctly with split components",
+      "Verify navigation between routes still works (home to detail, detail to home, back button, Escape key)",
+      "Verify all functionality preserved (search, filtering, image carousel, copy buttons, external links)"
+    ],
+    "passes": true
   }
 ]
