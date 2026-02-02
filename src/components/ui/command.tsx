@@ -10,7 +10,7 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
   return (
     <CommandPrimitive
       className={cn(
-        "glass flex h-full w-full flex-col overflow-hidden rounded-md text-foreground",
+        "flex h-full w-full flex-col overflow-hidden rounded-md text-foreground bg-transparent",
         className,
       )}
       {...props}
