@@ -7,6 +7,7 @@
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { NuqsAdapter } from 'nuqs/adapters/react';
 import { App } from "./app";
 import { ThemeProvider } from "./contexts/theme-context";
 import { BackgroundProvider } from "./contexts/background-context";
@@ -14,11 +15,13 @@ import { BackgroundProvider } from "./contexts/background-context";
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
-    <ThemeProvider>
-      <BackgroundProvider>
-        <App />
-      </BackgroundProvider>
-    </ThemeProvider>
+    <NuqsAdapter>
+      <ThemeProvider>
+        <BackgroundProvider>
+          <App />
+        </BackgroundProvider>
+      </ThemeProvider>
+    </NuqsAdapter>
   </StrictMode>
 );
 
