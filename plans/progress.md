@@ -16,3 +16,5 @@ Work continues on the remaining features in prd.json.
 - Added timestamp to collapsed card view. Shows "Updated X ago" below addon name. Uses formatRelativeTime util, white/80 opacity, drop shadow. Build+tests pass.
 - Added routing infrastructure. Installed react-router-dom, wrapped App in BrowserRouter, created Routes for '/' (home) and '/a/:id' (addon detail). Invalid addon IDs redirect to home. Placeholder detail page implemented. Build+tests pass.
 - Converted home page to navigable bento grid. Removed expandedCardId state, wrapped cards in Link to /a/:id. ExportCard now collapsed-only, no expansion logic. Buttons still visible on hover. Auto-cycling images work. Bento grid layout maintained. Build+tests pass.
+- Implemented full addon detail page. Back nav, title/desc, timestamp, image carousel w/ prev/next arrows+dots, action buttons (copy/download/external), setup instructions in glass panel, keyboard nav (Escape→home, Arrow keys→carousel), SEO title updates, responsive layout. Build+tests pass.
+

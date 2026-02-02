@@ -187,6 +187,6 @@
       "Verify BackgroundRippleEffect component displayed on detail page",
       "Verify consistent glass/glassmorphism styling with rest of application"
     ],
-    "passes": false
+    "passes": true
   }
 ]
