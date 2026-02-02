@@ -188,5 +188,149 @@
       "Verify consistent glass/glassmorphism styling with rest of application"
     ],
     "passes": true
+  },
+  {
+    "category": "Architecture",
+    "description": "Add tags field to addon data model",
+    "steps": [
+      "Verify AddonExport interface in src/types/exports.ts includes optional tags field (tags?: string[])",
+      "Verify TypeScript compilation succeeds with updated type definition",
+      "Verify existing addon JSON files still validate without tags field (backward compatibility)",
+      "Verify sample addon JSON includes tags array for testing (e.g., ['ui', 'nameplates', 'pvp'])"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Data",
+    "description": "Add tags to existing addon definitions",
+    "steps": [
+      "Verify platynator.json includes relevant tags (e.g., ['nameplates', 'ui', 'pvp'])",
+      "Verify details.json includes relevant tags (e.g., ['damage-meter', 'ui', 'pve'])",
+      "Verify weakauras-guide.json includes relevant tags (e.g., ['weakauras', 'guide', 'customization'])",
+      "Verify sensei-resource-bar.json includes relevant tags",
+      "Verify waypoint-ui.json includes relevant tags",
+      "Verify baganator.json includes relevant tags (e.g., ['inventory', 'bags', 'ui'])",
+      "Verify blizzhudtweaks.json includes relevant tags",
+      "Verify cooldown-manager.json includes relevant tags (e.g., ['cooldowns', 'ui', 'tracking'])",
+      "Verify tags are lowercase and hyphen-separated for consistency",
+      "Verify all addon JSON files load correctly with new tags field"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Display tags on addon cards and detail pages",
+    "steps": [
+      "Verify tags displayed on collapsed bento cards (ExportCard component)",
+      "Verify tags styled as small badges/pills with glass effect",
+      "Verify tags positioned appropriately without interfering with other card elements",
+      "Verify tags displayed on addon detail page near title or description",
+      "Verify tags are visually consistent across both views",
+      "Verify tags responsive on mobile/tablet/desktop viewports",
+      "Verify tags maintain readability with proper contrast and spacing",
+      "Verify empty/missing tags handled gracefully (no tags displayed if array empty)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Enhanced search to include tag-based filtering on frontpage",
+    "steps": [
+      "Verify search query filters addons by both name AND tags (union search)",
+      "Verify search in HomePage component updated to check addon.export.tags array",
+      "Verify tag search is case-insensitive",
+      "Verify partial tag matching works (e.g., 'name' matches 'nameplates')",
+      "Verify search results show addons matching either name or any tag",
+      "Verify search performance remains acceptable with tag filtering",
+      "Verify empty tag arrays don't cause errors in search logic",
+      "Verify SearchBar component continues to work correctly with enhanced filtering"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Dependencies",
+    "description": "Install shadcn Command component dependencies",
+    "steps": [
+      "Verify cmdk package installed (bun add cmdk)",
+      "Verify @radix-ui/react-dialog installed (bun add @radix-ui/react-dialog) for command modal wrapper",
+      "Verify package.json updated with new dependencies",
+      "Verify TypeScript types available for cmdk and radix-ui dialog",
+      "Verify bun.lockb updated with new dependency tree"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Create shadcn Command component",
+    "steps": [
+      "Verify src/components/ui/command.tsx created following shadcn patterns",
+      "Verify Command component includes: Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandSeparator sub-components",
+      "Verify Command component styled with glass/glassmorphism effects matching app design",
+      "Verify Command component uses Radix UI Dialog as wrapper for modal behavior",
+      "Verify keyboard navigation works (arrow keys, enter, escape)",
+      "Verify Command component accessible (proper ARIA labels, focus management)",
+      "Verify TypeScript types properly exported for all sub-components"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Implement global command bar with keyboard shortcut",
+    "steps": [
+      "Verify CommandBar component created in src/components/command-bar.tsx",
+      "Verify CommandBar displays all addons as command items",
+      "Verify CommandBar includes 'Home' navigation item to return to frontpage",
+      "Verify CommandBar searches through addon names and tags in real-time",
+      "Verify CommandBar triggered via keyboard shortcut (Cmd+K on Mac, Ctrl+K on Windows/Linux)",
+      "Verify keyboard shortcut registered globally using useEffect with keydown event listener",
+      "Verify keyboard shortcut prevented from triggering when typing in input fields",
+      "Verify CommandBar state managed with useState (open/closed)",
+      "Verify CommandBar integrates with react-router-dom for navigation (useNavigate hook)",
+      "Verify selecting addon in CommandBar navigates to /a/:id route and closes modal",
+      "Verify selecting 'Home' in CommandBar navigates to / route and closes modal",
+      "Verify Escape key closes CommandBar",
+      "Verify clicking outside CommandBar closes modal (Dialog overlay behavior)",
+      "Verify CommandBar mounted in App component so it's available on all routes",
+      "Verify CommandBar search is case-insensitive and supports partial matches",
+      "Verify CommandBar displays 'No results found' message when search yields no matches",
+      "Verify CommandBar accessible via screen readers and keyboard-only navigation"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Implement View Transition API for route navigation",
+    "steps": [
+      "Verify browser View Transition API support detection implemented (document.startViewTransition check)",
+      "Verify custom hook or utility created for view transitions (e.g., useViewTransition or startViewTransition wrapper)",
+      "Verify view transition triggered when navigating from home to addon detail page",
+      "Verify view transition triggered when navigating from addon detail back to home",
+      "Verify shared elements identified with view-transition-name CSS property (e.g., addon title, images)",
+      "Verify bento card image persists/morphs into detail page carousel during transition",
+      "Verify addon title persists/morphs from card to detail page heading",
+      "Verify transition animation smooth and natural (default browser behavior or custom timing)",
+      "Verify fallback behavior for browsers without View Transition API support (instant navigation, no errors)",
+      "Verify Link component navigation integration with view transitions (intercept navigation with onClick)",
+      "Verify browser back button triggers view transition in reverse",
+      "Verify view transitions respect prefers-reduced-motion accessibility setting",
+      "Verify no layout shift or jank during transitions",
+      "Verify transitions perform well on lower-end devices",
+      "Verify view-transition-name values are unique per addon (dynamic based on addon.id)",
+      "Verify transitions work correctly when navigating between different addon pages",
+      "Verify no console errors or warnings related to view transitions"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Polish",
+    "description": "Add visual indicator for command bar keyboard shortcut",
+    "steps": [
+      "Verify keyboard shortcut hint displayed in UI (e.g., in SearchBar or header)",
+      "Verify hint shows platform-appropriate key (⌘K on Mac, Ctrl+K on Windows/Linux)",
+      "Verify hint styled subtly to not distract from main content",
+      "Verify hint uses KBD HTML element or styled component for semantic keyboard display",
+      "Verify hint responsive and hidden on very narrow mobile viewports if needed"
+    ],
+    "passes": false
   }
 ]
