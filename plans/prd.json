@@ -119,6 +119,6 @@
       "Verify invalid/non-existent addon IDs in URL parameter are handled gracefully (no errors, card stays collapsed)",
       "Verify query parameter is cleared/removed when card is collapsed (clean URL state)"
     ],
-    "passes": true
+    "passes": false
   }
 ]

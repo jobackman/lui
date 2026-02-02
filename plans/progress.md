@@ -12,4 +12,3 @@ Work continues on the remaining features in prd.json.
 
 - Added 5 new addon JSON files: sensei-resource-bar, waypoint-ui, baganator, blizzhudtweaks, cooldown-manager. Mix of exportString/externalUrl types. All with images, setup instructions, metadata. Build+tests pass.
 - Automated addon imports in loadExports.ts using import.meta.glob. Vite glob imports auto-detect all JSON files in data/exports/. Fallback for Bun tests. All 8 addons load. Build+tests pass.
-- URL state mgmt: Added nuqs. Migrated expandedCardId to useQueryState('expanded'). Full-width expanded cards via conditional col-span logic (!isExpanded check). Deep linking works. Browser back/forward nav collapses cards. Wrapped App in NuqsAdapter for React. Build+tests pass.
