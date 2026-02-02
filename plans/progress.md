@@ -1194,3 +1194,66 @@ Bottom layout complete. Cards now showcase images with minimal UI interference. 
 
 ---
 
+### UI - Visual Indicator Dots for Multi-Image Cards
+**Status**: Completed
+
+Added indicator dots for multi-image card galleries with manual navigation:
+
+**Updated Files:**
+- `src/components/export-card.tsx` - Added indicator dot system
+
+**Implementation:**
+
+**Conditional Rendering:**
+- Dots only render when `images.length > 1` (hasMultipleImages check)
+- No dots shown for single-image or no-image cards
+
+**Positioning:**
+- Absolute positioning: `bottom-20 left-1/2 -translate-x-1/2` (bottom-center)
+- z-10 for proper layering above gradient, below card content
+- Positioned above glassmorphism container (px-3 py-2 rounded-full)
+
+**Visual Design:**
+- Active dot: `w-2 h-2 bg-white shadow-lg shadow-white/50` (larger, filled, glowing)
+- Inactive dots: `w-1.5 h-1.5 bg-white/40 hover:bg-white/60` (smaller, translucent)
+- Smooth 300ms transitions with ease-out timing
+- Glass-subtle container for frosted backdrop effect
+- Gap-1 spacing for clear visual separation
+
+**Interactivity:**
+- Dots clickable to manually navigate: `onClick={() => setCurrentImageIndex(index)}`
+- Large touch targets: min-w-[44px] min-h-[44px] with p-2 padding
+- Inner dot small (2px/1.5px) for visual clarity, outer button large for accessibility
+- Hover states on inactive dots (bg-white/60)
+
+**Accessibility:**
+- ARIA labels: `aria-label="View image ${index + 1} of ${images.length}"`
+- Title tooltips for hover context
+- Motion-reduce respected: `motion-reduce:transition-none` (instant switching)
+- 44x44px minimum touch targets for mobile usability
+- White shadow on active dot for visibility against varied backgrounds
+
+**Verification:**
+- Build: 300.77ms ✓
+- Tests: 26 pass, 80 expect() ✓
+- Conditional render: hasMultipleImages check ✓
+- Bottom-center positioning: left-1/2 -translate-x-1/2 ✓
+- Z-10 layering above gradient ✓
+- Dot count matches images.length ✓
+- Active dot: larger (2px) + white + shadow ✓
+- Inactive: smaller (1.5px) + white/40 ✓
+- Glass-subtle container with backdrop-blur ✓
+- 300ms transitions on active change ✓
+- Clickable navigation works ✓
+- 44x44px touch targets ✓
+- Gap-1 visual separation ✓
+- White shadow for visibility ✓
+- ARIA labels for screen readers ✓
+- Motion-reduce instant switching ✓
+- Responsive absolute positioning ✓
+
+**PRD Updated:**
+- Marked "Add visual indicator dots" passes: true ✓
+
+---
+

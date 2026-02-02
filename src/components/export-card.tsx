@@ -67,6 +67,33 @@ export function ExportCard({ export: exportData }: ExportCardProps) {
       {/* Bottom gradient overlay for text readability - always visible */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90 pointer-events-none" />
 
+      {/* Image indicator dots - only shown for multiple images */}
+      {hasMultipleImages && (
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-3 py-2 glass-subtle rounded-full">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label={`View image ${index + 1} of ${images.length}`}
+              title={`Image ${index + 1} of ${images.length}`}
+            >
+              <div
+                className={`
+                  transition-all duration-300 ease-out rounded-full
+                  motion-reduce:transition-none
+                  ${
+                    index === currentImageIndex
+                      ? 'w-2 h-2 bg-white shadow-lg shadow-white/50'
+                      : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/60'
+                  }
+                `}
+              />
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Content Layer positioned at bottom */}
       <CardHeader className="absolute bottom-0 left-0 right-0 z-10 pb-6">
         <CardTitle className="text-white drop-shadow-lg shadow-black">
