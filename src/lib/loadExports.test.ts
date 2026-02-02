@@ -26,7 +26,7 @@ test("loadAllExports includes Platynator addon", () => {
 test("getAddonManifest returns list of addon ids and names", () => {
   const manifest = getAddonManifest();
   expect(Array.isArray(manifest)).toBe(true);
-  expect(manifest.length).toBe(3);
+  expect(manifest.length).toBe(8);
   
   const ids = manifest.map(item => item.id);
   expect(ids).toContain("details");

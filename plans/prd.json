@@ -37,7 +37,7 @@
       "Verify getAddonById() works correctly for all addon IDs",
       "Verify UI displays all addons from automated import system"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",

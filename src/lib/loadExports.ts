@@ -1,18 +1,47 @@
 import type { AddonCategory } from "../types/exports";
+
+// Fallback imports for test environment (Bun doesn't support import.meta.glob)
 import detailsData from "../../data/exports/details.json";
 import platynatorData from "../../data/exports/platynator.json";
 import weakaurasGuideData from "../../data/exports/weakauras-guide.json";
+import senseiResourceBarData from "../../data/exports/sensei-resource-bar.json";
+import waypointUiData from "../../data/exports/waypoint-ui.json";
+import baganatorData from "../../data/exports/baganator.json";
+import blizzhudtweaksData from "../../data/exports/blizzhudtweaks.json";
+import cooldownManagerData from "../../data/exports/cooldown-manager.json";
+
+// Automatically import all JSON files from data/exports directory
+// This uses Vite's glob import feature for build-time static analysis
+let modules: Record<string, { default: AddonCategory }>;
+
+if (typeof import.meta.glob === "function") {
+  // Vite/production environment - use glob imports for automatic discovery
+  modules = import.meta.glob<{ default: AddonCategory }>(
+    "../../data/exports/*.json",
+    { eager: true }
+  );
+} else {
+  // Test environment - use fallback imports
+  // Note: In production, new addons are auto-detected via glob
+  modules = {
+    "details": { default: detailsData as AddonCategory },
+    "platynator": { default: platynatorData as AddonCategory },
+    "weakauras-guide": { default: weakaurasGuideData as AddonCategory },
+    "sensei-resource-bar": { default: senseiResourceBarData as AddonCategory },
+    "waypoint-ui": { default: waypointUiData as AddonCategory },
+    "baganator": { default: baganatorData as AddonCategory },
+    "blizzhudtweaks": { default: blizzhudtweaksData as AddonCategory },
+    "cooldown-manager": { default: cooldownManagerData as AddonCategory },
+  };
+}
 
 /**
  * Load all addon export data from JSON files at build time.
  * This provides type-safe access to all addon configurations.
+ * Addons are automatically discovered in production - no manual imports needed.
  */
 export function loadAllExports(): AddonCategory[] {
-  return [
-    detailsData as AddonCategory,
-    platynatorData as AddonCategory,
-    weakaurasGuideData as AddonCategory,
-  ];
+  return Object.values(modules).map(module => module.default);
 }
 
 /**
