@@ -19,6 +19,27 @@
     "passes": true
   },
   {
+    "category": "Data",
+    "description": "Automate addon imports in loadExports.ts using glob imports",
+    "steps": [
+      "Verify import.meta.glob used to automatically import all JSON files from data/exports directory",
+      "Verify glob pattern matches '../../data/exports/*.json'",
+      "Verify eager:true flag set for build-time loading (no runtime overhead)",
+      "Verify type parameter specifies { default: AddonCategory } for type safety",
+      "Verify loadAllExports() function maps over Object.values(modules) to extract default exports",
+      "Verify manual imports removed (details.json, platynator.json, weakauras-guide.json)",
+      "Verify all existing addons still load correctly after automation",
+      "Verify new addon JSON files are automatically detected without code changes",
+      "Verify TypeScript compilation succeeds with glob import syntax",
+      "Verify build process (bun run build.ts) completes successfully",
+      "Verify no runtime errors when loading addons",
+      "Verify getAddonManifest() returns all addons including newly added ones",
+      "Verify getAddonById() works correctly for all addon IDs",
+      "Verify UI displays all addons from automated import system"
+    ],
+    "passes": false
+  },
+  {
     "category": "UI",
     "description": "Display last updated timestamp on collapsed (unexpanded) card view",
     "steps": [
