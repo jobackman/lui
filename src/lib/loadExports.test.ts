@@ -12,8 +12,7 @@ test("loadAllExports includes Details addon", () => {
   const details = exports.find(addon => addon.id === "details");
   expect(details).toBeDefined();
   expect(details?.name).toBe("Details");
-  expect(details?.exports).toBeDefined();
-  expect(details?.exports.length).toBeGreaterThan(0);
+  expect(details?.export).toBeDefined();
 });
 
 test("loadAllExports includes Platynator addon", () => {
@@ -21,8 +20,7 @@ test("loadAllExports includes Platynator addon", () => {
   const platynator = exports.find(addon => addon.id === "platynator");
   expect(platynator).toBeDefined();
   expect(platynator?.name).toBe("Platynator");
-  expect(platynator?.exports).toBeDefined();
-  expect(platynator?.exports.length).toBeGreaterThan(0);
+  expect(platynator?.export).toBeDefined();
 });
 
 test("getAddonManifest returns list of addon ids and names", () => {
@@ -50,16 +48,21 @@ test("getAddonById returns undefined for invalid id", () => {
 test("export data has correct structure", () => {
   const exports = loadAllExports();
   const firstAddon = exports[0];
-  const firstExport = firstAddon.exports[0];
+  const addonExport = firstAddon.export;
   
-  expect(firstExport).toBeDefined();
-  expect(firstExport.name).toBeDefined();
-  expect(firstExport.description).toBeDefined();
-  expect(firstExport.exportString).toBeDefined();
-  expect(firstExport.lastUpdated).toBeDefined();
+  expect(addonExport).toBeDefined();
+  expect(addonExport.name).toBeDefined();
+  expect(addonExport.description).toBeDefined();
+  expect(addonExport.exportString).toBeDefined();
+  expect(addonExport.lastUpdated).toBeDefined();
   
-  expect(typeof firstExport.name).toBe("string");
-  expect(typeof firstExport.description).toBe("string");
-  expect(typeof firstExport.exportString).toBe("string");
-  expect(typeof firstExport.lastUpdated).toBe("string");
+  expect(typeof addonExport.name).toBe("string");
+  expect(typeof addonExport.description).toBe("string");
+  expect(typeof addonExport.exportString).toBe("string");
+  expect(typeof addonExport.lastUpdated).toBe("string");
+  
+  // downloadUrl is optional, but if present should be a string
+  if (addonExport.downloadUrl) {
+    expect(typeof addonExport.downloadUrl).toBe("string");
+  }
 });

@@ -1,24 +1,11 @@
 {
   "id": "platynator",
   "name": "Platynator",
-  "exports": [
-    {
-      "name": "Main Plates",
-      "description": "Default nameplate configuration with threat colors and debuff tracking",
-      "exportString": "!WA:2!Pv1Y8nT13LXKOjdT0kqtT0Y7kqMZ9KqMWqMY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7",
-      "lastUpdated": "2026-01-26T16:20:00Z"
-    },
-    {
-      "name": "PvP Plates",
-      "description": "Arena and battleground nameplates with cooldown tracking",
-      "exportString": "!WA:2!Qv1Y8nT13LXKOjdT0kqtT0Y7kqMZ9KqMWqMY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7",
-      "lastUpdated": "2026-01-23T09:00:00Z"
-    },
-    {
-      "name": "Tank Focus",
-      "description": "Tank-optimized plates with aggro warnings and cast bars",
-      "exportString": "!WA:2!Rv1Y8nT13LXKOjdT0kqtT0Y7kqMZ9KqMWqMY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7",
-      "lastUpdated": "2026-01-22T12:30:00Z"
-    }
-  ]
+  "export": {
+    "name": "Main Plates",
+    "description": "Default nameplate configuration with threat colors and debuff tracking",
+    "exportString": "!WA:2!Pv1Y8nT13LXKOjdT0kqtT0Y7kqMZ9KqMWqMY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7kqjY7",
+    "lastUpdated": "2026-01-26T16:20:00Z",
+    "downloadUrl": "https://www.curseforge.com/wow/addons/plater-nameplates"
+  }
 }

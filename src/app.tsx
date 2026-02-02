@@ -4,32 +4,28 @@ import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
 import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
 import { loadAllExports } from '@/lib/loadExports';
-import type { AddonExport } from '@/types/exports';
 import './index.css';
 
 export function App() {
   const allAddons = loadAllExports();
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter all exports globally across all addon categories
-  const filteredAddonGroups = useMemo(() => {
+  // Filter addons based on search query (searches export name)
+  const filteredAddons = useMemo(() => {
     if (!searchQuery.trim()) {
-      // No search query - show all addons with all their exports
+      // No search query - show all addons
       return allAddons;
     }
 
     const query = searchQuery.toLowerCase();
     
-    // Filter each addon's exports, only include addons that have matching exports
-    return allAddons
-      .map((addon) => ({
-        ...addon,
-        exports: addon.exports.filter((exp) => exp.name.toLowerCase().includes(query)),
-      }))
-      .filter((addon) => addon.exports.length > 0);
+    // Filter addons where the export name matches the search query
+    return allAddons.filter((addon) => 
+      addon.export.name.toLowerCase().includes(query)
+    );
   }, [allAddons, searchQuery]);
 
-  const totalExports = filteredAddonGroups.reduce((sum, addon) => sum + addon.exports.length, 0);
+  const totalExports = filteredAddons.length;
 
   return (
     <div className="min-h-screen relative">
@@ -53,19 +49,15 @@ export function App() {
             </div>
           ) : (
             <div className="space-y-12">
-              {filteredAddonGroups.map((addon) => (
+              {filteredAddons.map((addon) => (
                 <section key={addon.id} className="space-y-4">
                   {/* Section Header with Glassmorphism */}
                   <div className="glass-subtle rounded-lg px-6 py-4 border border-white/10">
                     <h2 className="text-2xl font-bold tracking-tight">{addon.name}</h2>
                   </div>
 
-                  {/* Export Cards Grid */}
-                  <div className="grid gap-4">
-                    {addon.exports.map((exp, index) => (
-                      <ExportCard key={`${addon.id}-${exp.name}-${index}`} export={exp} />
-                    ))}
-                  </div>
+                  {/* Export Card */}
+                  <ExportCard export={addon.export} />
                 </section>
               ))}
             </div>

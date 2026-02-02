@@ -10,6 +10,8 @@ export interface AddonExport {
   exportString: string;
   /** ISO 8601 date string of when this export was last updated */
   lastUpdated: string;
+  /** Optional download URL for the addon */
+  downloadUrl?: string;
 }
 
 /**
@@ -20,6 +22,6 @@ export interface AddonCategory {
   id: string;
   /** Display name for the addon */
   name: string;
-  /** List of export configurations for this addon */
-  exports: AddonExport[];
+  /** Single export configuration for this addon */
+  export: AddonExport;
 }

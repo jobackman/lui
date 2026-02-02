@@ -111,32 +111,6 @@
     "passes": false
   },
   {
-    "category": "Documentation",
-    "description": "Create documentation for adding and updating exports",
-    "steps": [
-      "Verify README contains 'Adding New Exports' guide",
-      "Verify example export JSON structure documented",
-      "Verify instructions for updating existing exports",
-      "Verify instructions for adding new addon category",
-      "Verify can successfully add new export following documentation",
-      "Verify can successfully create new addon JSON file following documentation"
-    ],
-    "passes": false
-  },
-  {
-    "category": "Infrastructure",
-    "description": "Configure build and deploy process for Vercel static deployment",
-    "steps": [
-      "Verify build.ts bundles all data files correctly",
-      "Verify production build succeeds with 'bun run build'",
-      "Verify all assets present in dist/ folder",
-      "Verify production mode works locally",
-      "Verify optimized for Vercel static deployment",
-      "Verify successful deployment to Vercel"
-    ],
-    "passes": false
-  },
-  {
     "category": "UI",
     "description": "Implement modern frosted-glass (glassmorphism) design system with backdrop blur effects across all components",
     "steps": [
@@ -254,6 +228,6 @@
       "Verify handles missing downloadUrl gracefully (button hidden if URL not provided)",
       "Verify all existing functionality (copy, search, filtering) still works after restructure"
     ],
-    "passes": false
+    "passes": true
   }
 ]

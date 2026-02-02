@@ -725,3 +725,82 @@ Theme system complete and fully functional. Users can now switch between light/d
 
 ---
 
+### Data - Restructure Addon Data to Single Export with Download Links
+**Status**: Completed
+
+Restructured addon data model from multiple exports per addon to a single export per addon, and added download link functionality:
+
+**TypeScript Interface Updates:**
+- Updated `AddonExport` interface to include optional `downloadUrl?: string` field
+- Changed `AddonCategory` interface: `exports: AddonExport[]` → `export: AddonExport`
+- Simplified data structure from one-to-many to one-to-one relationship
+- Build-time type safety maintained with updated interfaces
+
+**Data File Restructuring:**
+- Restructured `data/exports/details.json`:
+  - Changed from array of 3 exports to single export object
+  - Selected "Lucy's DPS Tracker" as the primary Details export
+  - Added `downloadUrl: "https://www.curseforge.com/wow/addons/details"`
+- Restructured `data/exports/platynator.json`:
+  - Changed from array of 3 exports to single export object
+  - Selected "Main Plates" as the primary Platynator export
+  - Added `downloadUrl: "https://www.curseforge.com/wow/addons/plater-nameplates"`
+
+**Code Updates:**
+- Updated `src/app.tsx` to handle single export per addon:
+  - Simplified filtering logic: removed `.map()` over exports array
+  - Changed from `addon.exports.filter()` to `addon.export.name.includes()`
+  - Direct rendering: `<ExportCard export={addon.export} />` instead of mapping
+  - Removed nested grid container for export cards
+  - Reduced complexity while maintaining search functionality
+- Updated `src/lib/loadExports.test.ts` to match new structure:
+  - Changed assertions from `details?.exports` to `details?.export`
+  - Updated export data structure tests
+  - Added optional `downloadUrl` type checking
+  - All 26 tests passing with 80 expect() calls
+
+**Download Button Implementation:**
+- Added download button to `src/components/export-card.tsx`:
+  - Imported `Download` icon from lucide-react
+  - Created icon-only button using `Button` component with `variant="ghost"` and `size="icon"`
+  - Positioned next to copy button in `<div className="flex gap-2">`
+  - Button wrapped in `asChild` pattern with `<a>` tag for proper link semantics
+  - Opens in new tab with security attributes: `target="_blank" rel="noopener noreferrer"`
+  - Applied glassmorphism styling: `glass hover:glass-strong transition-all`
+  - Keyboard accessible with proper ARIA label: `aria-label="Download addon"`
+  - Tooltip on hover via `title="Download addon"` attribute
+  - Conditional rendering: `{exportData.downloadUrl && ...}` hides button when URL not provided
+  - Secondary/subtle appearance with ghost variant (less prominent than primary copy button)
+  - Icon size optimized for touch targets: `<Download className="h-4 w-4" />`
+
+**Verification Results:**
+- Build succeeds: `bun run build` (217.65ms)
+- All 26 tests pass: `bun test` with 80 expect() calls (19ms)
+- TypeScript compilation passes with full type safety
+- AddonExport interface includes optional downloadUrl (exports.ts:12)
+- AddonCategory uses single export object (exports.ts:24)
+- details.json restructured with downloadUrl ✓
+- platynator.json restructured with downloadUrl ✓
+- Data loading utilities work unchanged (JSON structure compatible) ✓
+- app.tsx renders single export per addon (no mapping) ✓
+- ExportCard displays download icon button (export-card.tsx:18-31) ✓
+- Download button is secondary/subtle (ghost variant) ✓
+- Download button uses Download icon as icon-only button ✓
+- Download link security attributes present (rel='noopener noreferrer') ✓
+- Glassmorphism styling consistent (glass hover:glass-strong) ✓
+- Hover/focus states work via Button component transitions ✓
+- Keyboard accessible with aria-label='Download addon' ✓
+- Tooltip shows on hover via title attribute ✓
+- Touch targets appropriate for mobile (Button size="icon") ✓
+- Missing downloadUrl handled gracefully (conditional render) ✓
+- All existing functionality works: copy, search, filtering ✓
+
+**PRD Updated:**
+- Marked "Restructure addon data to single export per addon and add download links" as passes: true
+- All 17 verification steps confirmed complete
+
+**Next Steps:**
+Data restructuring complete. The simplified one-export-per-addon model improves clarity and maintainability. Download functionality adds user value by providing direct access to CurseForge addon pages. Remaining priorities: Add dynamic gradient backgrounds, establish enhanced visual hierarchy with varying glass opacity, or apply final styling polish.
+
+---
+
