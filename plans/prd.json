@@ -304,7 +304,7 @@
       "Verify accessibility: proper heading hierarchy (h2 for section headers) for screen readers",
       "Verify AddonTabs component file can be safely deleted or deprecated"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
