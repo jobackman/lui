@@ -216,6 +216,9 @@ export function ExportCard({ export: exportData, addonId, isExpanded, onToggleEx
           <CardTitle className="text-white drop-shadow-lg shadow-black">
             {exportData.name}
           </CardTitle>
+          <p className="text-white/80 text-sm drop-shadow-md mt-2">
+            Updated {formatRelativeTime(exportData.lastUpdated)}
+          </p>
         </CardHeader>
       )}
 

@@ -53,7 +53,7 @@
       "Verify timestamp responsive on mobile/tablet/desktop",
       "Verify timestamp does not interfere with buttons or card interactivity"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
