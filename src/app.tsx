@@ -48,10 +48,19 @@ export function App() {
               )}
             </div>
           ) : (
-            <div className="space-y-4">
-              {filteredAddons.map((addon) => (
-                <ExportCard key={addon.id} export={addon.export} />
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
+              {filteredAddons.map((addon, index) => {
+                // Create bento-style asymmetric layout with varying column spans
+                // Pattern: 2-col, 1-col, 1-col repeats (creates visual variety)
+                const spanPattern = index % 3;
+                const colSpan = spanPattern === 0 ? 'md:col-span-2' : 'md:col-span-1';
+                
+                return (
+                  <div key={addon.id} className={colSpan}>
+                    <ExportCard export={addon.export} />
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

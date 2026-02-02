@@ -108,7 +108,7 @@
       "Verify accessibility standards met (contrast ratios, focus states)",
       "Verify no WoW fantasy theming present"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
@@ -276,6 +276,6 @@
       "Verify accessibility maintained (screen reader order follows DOM order, proper focus management)",
       "Verify empty state displays centered when no results match search"
     ],
-    "passes": false
+    "passes": true
   }
 ]
