@@ -10,7 +10,7 @@ Use @plans/prd.json @plans/progress.md
 2. Check that the types are okay via bun run build and that the tests pass via "bun test"
 3. Update the PRD with the work that was done.
 4. Append your progress to the progress.txt file. Use this to leave a note for the next person working in the codebase.
-5. Stage the files for a commit and await confirmation from the user if everything looks good
+5. If everything looks good commit the changes with a descriptive message following conventional commits.
 
 ONLY WORK ON A SINGLE FEATURE.
 If, while implementing the feature, you notice the PRD is complete, output <promise>COMPLETE</promise>
