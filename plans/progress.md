@@ -1296,3 +1296,49 @@ Redesigned card layout for better visual hierarchy and cleaner appearance:
 
 ---
 
+### UI - Minimize Indicator Dot Component Size
+**Status**: Completed
+
+Made indicator dots much more compact to avoid intersection with card title:
+
+**Updated Files:**
+- `src/components/export-card.tsx` - Reduced all dimensions of indicator component
+
+**Size Reductions:**
+
+**Container:**
+- Padding: `px-2 py-1.5` → `px-1.5 py-1` (33% smaller)
+- Position: `bottom-4` → `bottom-3` (closer to bottom edge)
+- Gap between dots: `gap-1` → `gap-0.5` (tighter spacing)
+
+**Buttons (Desktop/Hover devices):**
+- Padding: `p-2` → `p-1.5` (25% smaller)
+- Removed fixed `min-w-[44px] min-h-[44px]` on desktop
+- Compact clickable area for pointer devices
+
+**Buttons (Mobile/Touch devices):**
+- Uses `[@media(hover:none)]` to detect touch devices
+- Touch only: `p-2 min-w-[44px] min-h-[44px]` for accessibility
+- Maintains 44x44px touch targets per WCAG on mobile
+
+**Dot Indicators:**
+- Active: `w-2 h-2` → `w-1.5 h-1.5` (25% smaller)
+- Inactive: `w-1.5 h-1.5` → `w-1 h-1` (33% smaller)
+- Still clearly visible with white glow shadow
+
+**Result:**
+- Much smaller footprint on desktop (minimal visual interference)
+- No intersection with card title anymore
+- Maintains full accessibility on mobile devices
+- Responsive design adapts appropriately
+
+**Verification:**
+- Build: 327.71ms ✓
+- Tests: 26 pass, 80 expect() ✓
+- Compact desktop size (p-1.5, small dots) ✓
+- Full touch targets on mobile (44x44px) ✓
+- No title intersection ✓
+- All interactions work ✓
+
+---
+

@@ -103,12 +103,12 @@ export function ExportCard({ export: exportData }: ExportCardProps) {
 
       {/* Image indicator dots - compact, at very bottom */}
       {hasMultipleImages && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-2 py-1.5 glass-subtle rounded-full">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-0.5 px-1.5 py-1 glass-subtle rounded-full">
           {images.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentImageIndex(index)}
-              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-1.5 [@media(hover:none)]:p-2 [@media(hover:none)]:min-w-[44px] [@media(hover:none)]:min-h-[44px] flex items-center justify-center"
               aria-label={`View image ${index + 1} of ${images.length}`}
               title={`Image ${index + 1} of ${images.length}`}
             >
@@ -118,8 +118,8 @@ export function ExportCard({ export: exportData }: ExportCardProps) {
                   motion-reduce:transition-none
                   ${
                     index === currentImageIndex
-                      ? 'w-2 h-2 bg-white shadow-lg shadow-white/50'
-                      : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/60'
+                      ? 'w-1.5 h-1.5 bg-white shadow-lg shadow-white/50'
+                      : 'w-1 h-1 bg-white/40 hover:bg-white/60'
                   }
                 `}
               />
