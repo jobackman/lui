@@ -257,7 +257,7 @@
       "Verify TypeScript types available for cmdk and radix-ui dialog",
       "Verify bun.lockb updated with new dependency tree"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
@@ -271,7 +271,7 @@
       "Verify Command component accessible (proper ARIA labels, focus management)",
       "Verify TypeScript types properly exported for all sub-components"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",
@@ -295,7 +295,7 @@
       "Verify CommandBar displays 'No results found' message when search yields no matches",
       "Verify CommandBar accessible via screen readers and keyboard-only navigation"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",
