@@ -1,6 +1,6 @@
 export function Hero() {
   return (
-    <div className="text-center py-12 px-4 border-b">
+    <div className="glass-subtle text-center py-12 px-4 border-b-0">
       <h1 className="text-4xl md:text-5xl font-bold mb-3">
         lui
       </h1>

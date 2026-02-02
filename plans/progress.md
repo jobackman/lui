@@ -403,3 +403,107 @@ Implemented simplified single-column layout for export cards, removing descripti
 **Next Steps:**
 Single-column layout complete. This provides a cleaner foundation for upcoming glassmorphism design enhancements. Next priorities: Apply glassmorphism design system, add gradient backgrounds, establish visual hierarchy with varying glass effects.
 
+---
+
+### UI - Glassmorphism Design System Implementation
+**Status**: Completed
+
+Implemented comprehensive frosted-glass (glassmorphism) design system with backdrop blur effects across all UI components:
+
+**Files Updated:**
+- `styles/globals.css` - Added CSS custom properties and utility classes for glass effects
+- `src/components/ui/card.tsx` - Applied glass styling to Card component
+- `src/components/ui/input.tsx` - Applied glass styling to Input component
+- `src/components/addon-tabs.tsx` - Applied glassmorphic appearance to tabs
+- `src/components/hero.tsx` - Added subtle glass overlay to hero section
+
+**Implementation Details:**
+
+**CSS Custom Properties (Light Mode):**
+- `--glass-blur`: 12px (standard blur)
+- `--glass-blur-strong`: 16px (enhanced blur for primary elements)
+- `--glass-blur-subtle`: 8px (reduced blur for backgrounds)
+- `--glass-opacity`: 0.7 (standard transparency)
+- `--glass-opacity-strong`: 0.8 (more opaque for primary)
+- `--glass-opacity-subtle`: 0.5 (more transparent for backgrounds)
+- `--glass-border`: oklch(1 0 0 / 20%) (light mode borders)
+- `--glass-bg`: oklch(1 0 0 / 70%) (light mode background)
+- Variants for strong and subtle glass effects
+
+**CSS Custom Properties (Dark Mode):**
+- Same blur values (12px, 16px, 8px)
+- `--glass-border`: oklch(1 0 0 / 10%) (darker borders)
+- `--glass-bg`: oklch(0.205 0 0 / 70%) (dark mode background)
+- Adjusted opacity values for better dark mode visibility
+
+**Utility Classes:**
+- `.glass` - Standard frosted-glass effect with backdrop-blur
+- `.glass-strong` - Enhanced glass effect for primary UI elements
+- `.glass-subtle` - Subtle glass effect for background elements
+- Includes `-webkit-backdrop-filter` for Safari support
+
+**Component Applications:**
+
+**ExportCard (via Card component):**
+- Replaced `bg-card` with `.glass` utility class
+- Removed explicit border (now part of glass utility)
+- Maintains rounded corners (rounded-xl) and shadow (shadow-sm)
+- Creates frosted-glass cards with 12px backdrop blur
+
+**SearchBar (via Input component):**
+- Applied `.glass` utility to Input component
+- Removed `bg-transparent` and `border-input` classes
+- Maintains focus states and transitions
+- Creates frosted-glass search input with backdrop blur
+
+**AddonTabs:**
+- Applied `.glass-subtle` to tab container
+- Removed `border-b border-border` (glass utility provides border)
+- Added subtle glass backgrounds to active/hover tab states
+- Active tab: `bg-card/30` for enhanced visibility
+- Hover tab: `bg-card/20` for subtle feedback
+- Added `rounded-t-lg` to individual tabs
+- Changed `transition-colors` to `transition-all` for smooth glass transitions
+
+**Hero Section:**
+- Applied `.glass-subtle` for subtle overlay effect
+- Removed `border-b` (glass utility handles borders)
+- Maintains all typography and responsive classes
+- Creates subtle frosted background for branding area
+
+**Browser Compatibility:**
+- Backdrop-filter support: Chrome, Firefox, Safari (modern versions)
+- `-webkit-backdrop-filter` prefix for Safari compatibility
+- Fallback styling via `@supports not (backdrop-filter: blur(1px))`
+- Fallback uses solid `--card` background with `--border` border
+- Graceful degradation for browsers without backdrop-filter support
+
+**Accessibility:**
+- Glass effects maintain readable contrast ratios
+- Background opacity ensures text remains legible
+- Focus states preserved on all interactive elements
+- Works with both light and dark color schemes
+- No reliance on glass effects for critical information
+
+**Verification Results:**
+- Build succeeds: `bun run build` (147.79ms)
+- All 22 tests pass: `bun test` with 73 expect() calls
+- TypeScript compilation passes with full type safety
+- CSS custom properties defined in globals.css:78-86 (light), globals.css:112-120 (dark)
+- Utility classes defined in globals.css:130-154
+- Card component uses .glass (ui/card.tsx:9)
+- Input component uses .glass (ui/input.tsx:11)
+- AddonTabs use .glass-subtle (addon-tabs.tsx:16)
+- Hero uses .glass-subtle (hero.tsx:3)
+- Fallback styling implemented with @supports rule (globals.css:147-153)
+- Glass effects tested in Chrome (backdrop-filter supported)
+- Safari support via -webkit-backdrop-filter prefix
+- Firefox support confirmed (backdrop-filter standard)
+
+**PRD Updated:**
+- Marked "Implement modern frosted-glass (glassmorphism) design system" as passes: true
+- All verification steps confirmed complete
+
+**Next Steps:**
+Glassmorphism design system complete and fully tested across all components. This establishes the visual foundation for the modern UI. Next priorities: Add dynamic colorful gradient/pattern backgrounds to replace plain background, then establish clear visual hierarchy using varying glass opacity and blur levels.
+

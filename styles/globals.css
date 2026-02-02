@@ -74,6 +74,17 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --glass-blur: 12px;
+  --glass-opacity: 0.7;
+  --glass-border: oklch(1 0 0 / 20%);
+  --glass-bg: oklch(1 0 0 / 70%);
+  --glass-blur-strong: 16px;
+  --glass-opacity-strong: 0.8;
+  --glass-bg-strong: oklch(1 0 0 / 80%);
+  --glass-blur-subtle: 8px;
+  --glass-opacity-subtle: 0.5;
+  --glass-bg-subtle: oklch(1 0 0 / 50%);
 }
 
 .dark {
@@ -108,6 +119,17 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --glass-blur: 12px;
+  --glass-opacity: 0.7;
+  --glass-border: oklch(1 0 0 / 10%);
+  --glass-bg: oklch(0.205 0 0 / 70%);
+  --glass-blur-strong: 16px;
+  --glass-opacity-strong: 0.8;
+  --glass-bg-strong: oklch(0.205 0 0 / 80%);
+  --glass-blur-subtle: 8px;
+  --glass-opacity-subtle: 0.5;
+  --glass-bg-subtle: oklch(0.205 0 0 / 50%);
 }
 
 @layer base {
@@ -116,5 +138,37 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+  }
+  
+  .glass-strong {
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur-strong));
+    -webkit-backdrop-filter: blur(var(--glass-blur-strong));
+  }
+  
+  .glass-subtle {
+    background: var(--glass-bg-subtle);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur-subtle));
+    -webkit-backdrop-filter: blur(var(--glass-blur-subtle));
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass,
+    .glass-strong,
+    .glass-subtle {
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
   }
 }

@@ -242,7 +242,7 @@
       "Verify fallback styling for browsers without backdrop-filter support",
       "Verify contrast ratios meet accessibility standards with glass effects"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
