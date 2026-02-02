@@ -315,7 +315,7 @@
       "Verify placeholder images (e.g., picsum.photos, unsplash source) display correctly during development",
       "Verify image cycling respects prefers-reduced-motion accessibility setting"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",

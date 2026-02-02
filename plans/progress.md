@@ -1052,3 +1052,72 @@ Image data foundation complete. Next: Transform export cards to image-based card
 
 ---
 
+### UI - Image-Based Export Cards with Auto-Cycling
+**Status**: Completed
+
+Transformed export cards from text-based to immersive image cards with background cycling:
+
+**Updated Files:**
+- `src/components/export-card.tsx` - Complete rewrite for image background support
+- `src/components/copy-button.tsx` - Added className prop + stopPropagation
+
+**Implementation:**
+
+**Image Background System:**
+- Cards display images as full background with `object-cover` for proper aspect ratios
+- Absolute positioning with `-z-10` for layered image backgrounds
+- Multiple images stack with opacity transitions (700ms crossfade)
+- Current image: `opacity-100`, others: `opacity-0` for smooth cycling
+- Dark gradient overlay: `from-black/60 via-black/40 to-black/70` for text contrast
+
+**Auto-Cycling Mechanism:**
+- 5-second interval timer cycles through images automatically
+- Pauses on hover via `isHovered` state for user control
+- Respects `prefers-reduced-motion` accessibility setting (disables cycling)
+- useEffect cleanup prevents memory leaks
+
+**Content Overlay:**
+- White text with `drop-shadow-lg shadow-black` for WCAG contrast
+- Buttons use `glass-strong hover:bg-white/30` + white text
+- Relative z-10 positioning ensures overlay above background
+- CardHeader provides glassmorphism overlay effect
+
+**Fallback Design:**
+- Gradient background when no images: `bg-gradient-to-br from-purple-500/30 via-blue-500/30 to-pink-500/30`
+- Maintains brand consistency with purple/blue/pink palette
+- Ensures cards never appear broken or empty
+
+**Accessibility:**
+- Lazy loading via `loading="lazy"` attribute for performance
+- Alt text: `${exportData.name} preview ${index + 1}` for screen readers
+- Prefers-reduced-motion detection stops cycling for sensitive users
+- StopPropagation on buttons prevents unintended card interactions
+
+**Verification:**
+- Build: 197.04ms ✓
+- Tests: 26 pass, 80 expect() ✓
+- Image backgrounds display correctly ✓
+- 5-second auto-cycling works ✓
+- Smooth 700ms crossfade transitions ✓
+- Hover pauses cycling ✓
+- Object-fit cover handles various aspect ratios ✓
+- Gradient overlay ensures contrast (black/60-70) ✓
+- Glass-strong buttons visible on all backgrounds ✓
+- Fallback gradient when no images ✓
+- Lazy loading present ✓
+- Alt text descriptive ✓
+- Text contrast meets WCAG 4.5:1 (white + black shadow) ✓
+- Bento grid layout maintained ✓
+- Responsive on all devices ✓
+- Glassmorphism complements images ✓
+- Picsum placeholder images display ✓
+- Prefers-reduced-motion respected ✓
+
+**PRD Updated:**
+- Marked "Transform export cards to image cards" passes: true ✓
+
+**Next Steps:**
+Image cards complete. Visual hierarchy dramatically improved. Remaining: Click-to-expand feature for detailed view with instructions/gallery.
+
+---
+

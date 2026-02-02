@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface CopyButtonProps {
   text: string;
   onCopy?: () => void;
+  className?: string;
 }
 
-export function CopyButton({ text, onCopy }: CopyButtonProps) {
+export function CopyButton({ text, onCopy, className }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async () => {
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click events
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
@@ -40,7 +43,7 @@ export function CopyButton({ text, onCopy }: CopyButtonProps) {
       onClick={handleCopy}
       variant={copied ? "secondary" : "default"}
       size="sm"
-      className="transition-all"
+      className={cn("transition-all", className)}
     >
       {copied ? "Copied!" : "Copy"}
     </Button>
