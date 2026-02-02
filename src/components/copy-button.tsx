@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface CopyButtonProps {
-  text: string;
+  text?: string;
   onCopy?: () => void;
   className?: string;
 }
@@ -13,6 +13,7 @@ export function CopyButton({ text, onCopy, className }: CopyButtonProps) {
 
   const handleCopy = async (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click events
+    if (!text) return; // Don't copy if no text provided
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);

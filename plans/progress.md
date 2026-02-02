@@ -1387,3 +1387,56 @@ Implemented inline card expansion with image gallery, setup instructions, keyboa
 - ALL PRD FEATURES NOW COMPLETE ✓
 
 ---
+
+## 2026-01-28 (Continued)
+
+### Data & UI - External Link Support for Addons
+**Status**: Completed
+
+Added support for addons that provide external links instead of direct export strings:
+
+**TypeScript Interface Updates:**
+- AddonExport.exportString: string → exportString?: string (optional)
+- Added externalUrl?: string field for external guide URLs
+- CopyButton.text prop made optional with null guard
+
+**Sample Data:**
+- Created weakauras-guide.json with externalUrl instead of exportString
+- Demonstrates external link pattern (Wago.io integration)
+- Added to loadExports.ts imports
+
+**ExportCard Updates:**
+- Conditional rendering: CopyButton shown only if exportString exists
+- ExternalLink button shown when externalUrl present
+- ExternalLink icon from lucide-react
+- Same glassmorphism + slide-in animation as other buttons
+- Opens in new tab with rel='noopener noreferrer' security
+- aria-label='Open external guide', title='View on external site'
+- Expanded view shows helpful message for external-only addons
+
+**Testing:**
+- Updated loadExports.test.ts: expect 3 addons (was 2)
+- Added test for weakauras-guide with externalUrl
+- Removed exportString requirement from structure test
+- All 27 tests pass (84 expect() calls)
+
+**Verification:**
+- Build: 333.77ms ✓
+- Tests: 27 pass, 0 fail ✓
+- Types optional: exportString?, externalUrl? ✓
+- CopyButton hidden when no exportString ✓
+- ExternalLink button with ExternalLink icon ✓
+- Security: target="_blank" rel="noopener noreferrer" ✓
+- Glassmorphism: glass-strong hover:bg-white/30 ✓
+- Slide-in animation on hover ✓
+- Accessibility: aria-label + title ✓
+- Expanded view messaging for external-only ✓
+
+**PRD Updated:**
+- "Support external link-only addons" passes: true ✓
+- "Update ExportCard to handle external link-only addons" passes: true ✓
+
+**Next Steps:**
+Addon flexibility improved. Users can now add external guide links for addons without shareable strings. Remaining: Add more addon JSONs, display timestamps on collapsed cards, add height transitions, remove thumbnail nav.
+
+---

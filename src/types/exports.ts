@@ -6,8 +6,10 @@ export interface AddonExport {
   name: string;
   /** Short description of what this export contains */
   description: string;
-  /** The actual export string to be copied to clipboard */
-  exportString: string;
+  /** The actual export string to be copied to clipboard (optional if externalUrl is provided) */
+  exportString?: string;
+  /** External URL where users can find the export string (e.g., WoWHead, Icy Veins, external guide) */
+  externalUrl?: string;
   /** ISO 8601 date string of when this export was last updated */
   lastUpdated: string;
   /** Optional download URL for the addon */

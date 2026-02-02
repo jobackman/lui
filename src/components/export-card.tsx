@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardTitle, CardAction, CardDescription } from "@/components/ui/card";
 import { CopyButton } from "@/components/copy-button";
 import { Button } from "@/components/ui/button";
-import { Download, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Download, ChevronLeft, ChevronRight, X, ExternalLink } from "lucide-react";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import type { AddonExport } from "@/types/exports";
 
@@ -176,14 +176,38 @@ export function ExportCard({ export: exportData, addonId, isExpanded, onToggleEx
             </a>
           </Button>
         )}
-        <CopyButton 
-          text={exportData.exportString}
-          className={`glass-strong hover:bg-white/30 text-white transition-all duration-300 ease-out motion-reduce:transition-none ${
-            isExpanded 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0'
-          }`}
-        />
+        {exportData.exportString ? (
+          <CopyButton 
+            text={exportData.exportString}
+            className={`glass-strong hover:bg-white/30 text-white transition-all duration-300 ease-out motion-reduce:transition-none ${
+              isExpanded 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0'
+            }`}
+          />
+        ) : exportData.externalUrl ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            asChild
+            className={`glass-strong hover:bg-white/30 text-white transition-all duration-300 ease-out motion-reduce:transition-none ${
+              isExpanded 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0'
+            }`}
+            title="View on external site"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <a
+              href={exportData.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open external guide"
+            >
+              <ExternalLink className="h-4 w-4" />
+            </a>
+          </Button>
+        ) : null}
       </div>
 
       {/* Collapsed view - Title at bottom */}
@@ -292,6 +316,18 @@ export function ExportCard({ export: exportData, addonId, isExpanded, onToggleEx
                   </p>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Note for external-link-only addons */}
+          {!exportData.exportString && exportData.externalUrl && (
+            <div className="glass-strong rounded-lg p-6">
+              <h3 className="text-white text-xl font-semibold mb-4 drop-shadow-lg">
+                Import from External Source
+              </h3>
+              <p className="text-white/90 drop-shadow-md">
+                This configuration is available from an external source. Click the External Link button above to visit the source and copy the import string.
+              </p>
             </div>
           )}
         </div>

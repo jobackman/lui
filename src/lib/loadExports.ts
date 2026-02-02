@@ -1,6 +1,7 @@
 import type { AddonCategory } from "../types/exports";
 import detailsData from "../../data/exports/details.json";
 import platynatorData from "../../data/exports/platynator.json";
+import weakaurasGuideData from "../../data/exports/weakauras-guide.json";
 
 /**
  * Load all addon export data from JSON files at build time.
@@ -10,6 +11,7 @@ export function loadAllExports(): AddonCategory[] {
   return [
     detailsData as AddonCategory,
     platynatorData as AddonCategory,
+    weakaurasGuideData as AddonCategory,
   ];
 }
 

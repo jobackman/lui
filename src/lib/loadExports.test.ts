@@ -26,11 +26,12 @@ test("loadAllExports includes Platynator addon", () => {
 test("getAddonManifest returns list of addon ids and names", () => {
   const manifest = getAddonManifest();
   expect(Array.isArray(manifest)).toBe(true);
-  expect(manifest.length).toBe(2);
+  expect(manifest.length).toBe(3);
   
   const ids = manifest.map(item => item.id);
   expect(ids).toContain("details");
   expect(ids).toContain("platynator");
+  expect(ids).toContain("weakauras-guide");
 });
 
 test("getAddonById returns correct addon for valid id", () => {
@@ -53,16 +54,32 @@ test("export data has correct structure", () => {
   expect(addonExport).toBeDefined();
   expect(addonExport.name).toBeDefined();
   expect(addonExport.description).toBeDefined();
-  expect(addonExport.exportString).toBeDefined();
   expect(addonExport.lastUpdated).toBeDefined();
   
   expect(typeof addonExport.name).toBe("string");
   expect(typeof addonExport.description).toBe("string");
-  expect(typeof addonExport.exportString).toBe("string");
   expect(typeof addonExport.lastUpdated).toBe("string");
+  
+  // exportString is optional, but if present should be a string
+  if (addonExport.exportString) {
+    expect(typeof addonExport.exportString).toBe("string");
+  }
+  
+  // externalUrl is optional, but if present should be a string
+  if (addonExport.externalUrl) {
+    expect(typeof addonExport.externalUrl).toBe("string");
+  }
   
   // downloadUrl is optional, but if present should be a string
   if (addonExport.downloadUrl) {
     expect(typeof addonExport.downloadUrl).toBe("string");
   }
+});
+
+test("weakauras-guide addon has externalUrl instead of exportString", () => {
+  const weakaurasGuide = getAddonById("weakauras-guide");
+  expect(weakaurasGuide).toBeDefined();
+  expect(weakaurasGuide?.export.externalUrl).toBeDefined();
+  expect(typeof weakaurasGuide?.export.externalUrl).toBe("string");
+  expect(weakaurasGuide?.export.exportString).toBeUndefined();
 });

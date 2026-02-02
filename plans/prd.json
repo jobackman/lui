@@ -397,7 +397,7 @@
       "Verify data loading utilities handle optional exportString correctly",
       "Verify TypeScript compilation succeeds with updated types"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
@@ -415,7 +415,7 @@
       "Verify expanded view shows appropriate messaging when no exportString present",
       "Verify setup instructions can explain how to use external source"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Data",
