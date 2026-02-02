@@ -1,10 +1,12 @@
 import { ThemeToggle } from './theme-toggle';
+import { BackgroundToggle } from './background-toggle';
 
 export function Hero() {
   return (
     <div className="text-center py-12 px-4 border-b-0 relative">
-      {/* Theme Toggle - Positioned in top right */}
-      <div className="absolute top-4 right-4">
+      {/* Theme and Background Toggles - Positioned in top right */}
+      <div className="absolute top-4 right-4 flex gap-2">
+        <BackgroundToggle />
         <ThemeToggle />
       </div>
       

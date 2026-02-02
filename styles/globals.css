@@ -138,6 +138,70 @@
   }
   body {
     @apply bg-background text-foreground;
+    position: relative;
+  }
+  
+  /* Background styles - default gradient */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.75 0.2 280 / 0.4), transparent),
+      radial-gradient(ellipse 60% 80% at 100% 50%, oklch(0.7 0.2 200 / 0.3), transparent),
+      radial-gradient(ellipse 60% 80% at 0% 50%, oklch(0.7 0.2 340 / 0.3), transparent),
+      radial-gradient(ellipse 100% 100% at 50% 100%, oklch(0.65 0.15 240 / 0.2), transparent);
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .dark body::before {
+    background: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.45 0.2 280 / 0.5), transparent),
+      radial-gradient(ellipse 60% 80% at 100% 50%, oklch(0.4 0.2 200 / 0.4), transparent),
+      radial-gradient(ellipse 60% 80% at 0% 50%, oklch(0.4 0.2 340 / 0.4), transparent),
+      radial-gradient(ellipse 100% 100% at 50% 100%, oklch(0.35 0.15 240 / 0.3), transparent);
+  }
+  
+  /* Mesh background style */
+  body[data-background-style="mesh"]::before {
+    background: 
+      linear-gradient(90deg, oklch(0.7 0.15 280 / 0.05) 1px, transparent 1px),
+      linear-gradient(0deg, oklch(0.7 0.15 280 / 0.05) 1px, transparent 1px),
+      radial-gradient(ellipse 100% 100% at 50% 0%, oklch(0.7 0.2 260 / 0.3), transparent),
+      radial-gradient(ellipse 80% 80% at 0% 100%, oklch(0.65 0.18 320 / 0.25), transparent),
+      radial-gradient(ellipse 80% 80% at 100% 100%, oklch(0.65 0.18 200 / 0.25), transparent);
+    background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%;
+    background-position: 0 0, 0 0, center, left bottom, right bottom;
+  }
+  
+  .dark body[data-background-style="mesh"]::before {
+    background: 
+      linear-gradient(90deg, oklch(0.4 0.15 280 / 0.08) 1px, transparent 1px),
+      linear-gradient(0deg, oklch(0.4 0.15 280 / 0.08) 1px, transparent 1px),
+      radial-gradient(ellipse 100% 100% at 50% 0%, oklch(0.4 0.2 260 / 0.4), transparent),
+      radial-gradient(ellipse 80% 80% at 0% 100%, oklch(0.35 0.18 320 / 0.35), transparent),
+      radial-gradient(ellipse 80% 80% at 100% 100%, oklch(0.35 0.18 200 / 0.35), transparent);
+    background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%, 100% 100%;
+    background-position: 0 0, 0 0, center, left bottom, right bottom;
+  }
+  
+  /* Waves background style */
+  body[data-background-style="waves"]::before {
+    background: 
+      radial-gradient(ellipse 120% 80% at 20% 0%, oklch(0.7 0.18 340 / 0.35), transparent),
+      radial-gradient(ellipse 100% 60% at 80% 20%, oklch(0.68 0.2 280 / 0.3), transparent),
+      radial-gradient(ellipse 90% 70% at 40% 100%, oklch(0.65 0.16 220 / 0.3), transparent),
+      radial-gradient(ellipse 110% 90% at 60% 50%, oklch(0.72 0.19 260 / 0.25), transparent);
+  }
+  
+  .dark body[data-background-style="waves"]::before {
+    background: 
+      radial-gradient(ellipse 120% 80% at 20% 0%, oklch(0.4 0.18 340 / 0.45), transparent),
+      radial-gradient(ellipse 100% 60% at 80% 20%, oklch(0.38 0.2 280 / 0.4), transparent),
+      radial-gradient(ellipse 90% 70% at 40% 100%, oklch(0.35 0.16 220 / 0.4), transparent),
+      radial-gradient(ellipse 110% 90% at 60% 50%, oklch(0.42 0.19 260 / 0.35), transparent);
   }
 }
 

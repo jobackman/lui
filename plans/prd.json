@@ -137,7 +137,7 @@
       "Verify background works on all device sizes",
       "Verify sufficient contrast between background and foreground elements"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",

@@ -9,12 +9,15 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./app";
 import { ThemeProvider } from "./contexts/theme-context";
+import { BackgroundProvider } from "./contexts/background-context";
 
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
     <ThemeProvider>
-      <App />
+      <BackgroundProvider>
+        <App />
+      </BackgroundProvider>
     </ThemeProvider>
   </StrictMode>
 );
