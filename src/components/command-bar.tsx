@@ -10,12 +10,10 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { loadAllExports } from '@/lib/loadExports';
-import { useViewTransition } from '@/hooks/useViewTransition';
 
 export function CommandBar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const { startViewTransition } = useViewTransition();
   const addons = loadAllExports();
 
   useEffect(() => {
@@ -41,7 +39,7 @@ export function CommandBar() {
 
   const handleSelect = (callback: () => void) => {
     setOpen(false);
-    startViewTransition(callback);
+    callback();
   };
 
   return (

@@ -319,7 +319,7 @@
       "Verify transitions work correctly when navigating between different addon pages",
       "Verify no console errors or warnings related to view transitions"
     ],
-    "passes": true
+    "passes": false
   },
   {
     "category": "Polish",
