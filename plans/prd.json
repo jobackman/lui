@@ -141,14 +141,25 @@
   },
   {
     "category": "UI",
-    "description": "Establish clear visual hierarchy using varying glass opacity and blur levels",
+    "description": "Reduce frosted glass opacity to increase transparency and establish clear visual hierarchy using varying glass opacity and blur levels",
     "steps": [
+      "Verify CSS custom properties for glass opacity reduced (e.g., from 0.8 to 0.4-0.6 range)",
+      "Verify ExportCard components have increased transparency with lower background opacity",
+      "Verify SearchBar glass effect has reduced opacity for more background visibility",
+      "Verify Hero section glass overlays have increased transparency",
+      "Verify theme toggle component glass effects have reduced opacity",
       "Verify primary UI elements (cards, modals) have strongest glass effect",
       "Verify secondary elements (backgrounds, containers) have subtler glass effect",
       "Verify proper z-index layering for glass elements",
       "Verify hover/focus states enhance glass effect appropriately",
       "Verify transitions between glass states are smooth",
-      "Verify hierarchy is clear and improves usability"
+      "Verify hierarchy is clear and improves usability",
+      "Verify glass effects work in both light and dark theme modes with new opacity",
+      "Verify backdrop-blur values adjusted if needed to maintain frosted effect with lower opacity",
+      "Verify text contrast ratios still meet WCAG accessibility standards (4.5:1 for normal text, 3:1 for large)",
+      "Verify readability maintained across all backgrounds despite increased transparency",
+      "Verify changes tested across Chrome, Firefox, and Safari",
+      "Verify mobile/tablet/desktop responsive behavior maintained"
     ],
     "passes": false
   },
