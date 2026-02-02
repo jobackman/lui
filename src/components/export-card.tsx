@@ -46,6 +46,9 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       className="relative overflow-hidden group !p-0 min-h-[300px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      style={{
+        viewTransitionName: `card-${addonId}`,
+      } as React.CSSProperties}
     >
       {/* Background Image Layer */}
       {hasImages ? (

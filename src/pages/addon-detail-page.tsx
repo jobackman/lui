@@ -8,10 +8,12 @@ import { CopyButton } from '@/components/copy-button';
 import { getAddonById } from '@/lib/loadExports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { ArrowLeft, Download, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useViewTransition } from '@/hooks/useViewTransition';
 
 export function AddonDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { startViewTransition } = useViewTransition();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   // Handle invalid addon IDs
@@ -34,7 +36,9 @@ export function AddonDetailPage() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        navigate('/');
+        startViewTransition(() => {
+          navigate('/');
+        });
       } else if (hasMultipleImages) {
         if (e.key === 'ArrowLeft') {
           e.preventDefault();
@@ -48,7 +52,7 @@ export function AddonDetailPage() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [navigate, hasMultipleImages, images.length]);
+  }, [navigate, hasMultipleImages, images.length, startViewTransition]);
 
   // Update document title
   useEffect(() => {
@@ -76,13 +80,24 @@ export function AddonDetailPage() {
           <Link 
             to="/"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 group"
+            onClick={(e) => {
+              e.preventDefault();
+              startViewTransition(() => {
+                navigate('/');
+              });
+            }}
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             Back to home
           </Link>
 
           {/* Main Content Card */}
-          <Card className="glass-strong p-6 sm:p-8">
+          <Card 
+            className="glass-strong p-6 sm:p-8"
+            style={{
+              viewTransitionName: `card-${id}`,
+            } as React.CSSProperties}
+          >
             {/* Header */}
             <div className="mb-6">
               <h1 className="text-3xl sm:text-4xl font-bold mb-3">{addon.export.name}</h1>

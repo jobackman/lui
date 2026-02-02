@@ -61,3 +61,13 @@
     animation: none !important;
   }
 }
+
+/* View Transitions API support */
+/* Respect prefers-reduced-motion setting */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

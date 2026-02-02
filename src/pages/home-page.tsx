@@ -1,14 +1,17 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
 import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
 import { loadAllExports } from '@/lib/loadExports';
+import { useViewTransition } from '@/hooks/useViewTransition';
 
 export function HomePage() {
   const allAddons = loadAllExports();
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  const { startViewTransition } = useViewTransition();
 
   // Filter addons based on search query (searches export name and tags)
   const filteredAddons = useMemo(() => {
@@ -62,7 +65,16 @@ export function HomePage() {
                 
                 return (
                   <div key={addon.id} className={colSpan}>
-                    <Link to={`/a/${addon.id}`} className="block h-full">
+                    <Link 
+                      to={`/a/${addon.id}`} 
+                      className="block h-full"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        startViewTransition(() => {
+                          navigate(`/a/${addon.id}`);
+                        });
+                      }}
+                    >
                       <ExportCard 
                         export={addon.export}
                         addonId={addon.id}
