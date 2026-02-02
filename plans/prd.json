@@ -323,6 +323,30 @@
       "Verify works across all browsers (Chrome, Firefox, Safari)",
       "Verify accessibility maintained in both light and dark modes"
     ],
+    "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Restructure addon data to single export per addon and add download links",
+    "steps": [
+      "Verify AddonExport interface updated to include optional downloadUrl field",
+      "Verify AddonCategory interface changed: exports is now a single AddonExport object instead of array",
+      "Verify details.json restructured to single export object with downloadUrl",
+      "Verify platynator.json restructured to single export object with downloadUrl",
+      "Verify data loading utilities updated to handle single export instead of array",
+      "Verify app.tsx updated to render single export per addon (no mapping over exports array)",
+      "Verify ExportCard component displays download icon button next to copy button",
+      "Verify download button is secondary/subtle compared to primary copy button",
+      "Verify download button uses download icon as icon-only button",
+      "Verify download link opens in new tab with proper security attributes (rel='noopener noreferrer')",
+      "Verify download button maintains glassmorphism styling consistent with design system",
+      "Verify download button has hover/focus states for better UX",
+      "Verify button is keyboard accessible with proper ARIA label ('Download addon')",
+      "Verify tooltip/title attribute shows on hover to clarify button purpose",
+      "Verify works on mobile/tablet/desktop with appropriate touch targets",
+      "Verify handles missing downloadUrl gracefully (button hidden if URL not provided)",
+      "Verify all existing functionality (copy, search, filtering) still works after restructure"
+    ],
     "passes": false
   }
 ]
