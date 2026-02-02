@@ -229,5 +229,42 @@
       "Verify all existing functionality (copy, search, filtering) still works after restructure"
     ],
     "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Remove standalone section headers for addon grouping and simplify layout",
+    "steps": [
+      "Verify addon section headers (e.g., h2 elements for Details, Platynator) removed from app.tsx",
+      "Verify glass panel containers wrapping individual addon groups removed",
+      "Verify exports display in flat, unified list without visual grouping by addon",
+      "Verify spacing between export cards remains consistent",
+      "Verify search functionality still filters across all addons",
+      "Verify empty state still displays when no results match",
+      "Verify responsive layout maintained on all device sizes"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Implement Bento Grid layout for addon cards (Aceternity style)",
+    "steps": [
+      "Verify CSS Grid layout implemented with grid-template-columns (e.g., repeat(auto-fit, minmax(300px, 1fr)) or fixed column count)",
+      "Verify ExportCard components assigned varying grid-column-span and grid-row-span values for asymmetric layout",
+      "Verify cards placed using CSS grid properties (grid-column, grid-row) to create intentional bento-style composition",
+      "Verify responsive breakpoints: 1 column mobile, 2 columns tablet, 3-4 columns desktop",
+      "Verify some cards span 2 columns, some span 1 column for visual variety (similar to Aceternity bento grids)",
+      "Verify some cards span 2 rows for larger focal points (optional, based on content)",
+      "Verify grid layout pattern repeats logically or randomly distributes span variations",
+      "Verify glassmorphism styling maintained on all cards with proper backdrop-blur",
+      "Verify copy and download buttons remain accessible and functional in bento layout",
+      "Verify search filtering works smoothly (cards reflow gracefully when filtered)",
+      "Verify keyboard navigation remains logical in grid layout (left-to-right, top-to-bottom)",
+      "Verify grid gap spacing is consistent and visually balanced",
+      "Verify cards align properly in grid cells without overflow issues",
+      "Verify performance is acceptable with multiple export cards",
+      "Verify accessibility maintained (screen reader order follows DOM order, proper focus management)",
+      "Verify empty state displays centered when no results match search"
+    ],
+    "passes": false
   }
 ]
