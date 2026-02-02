@@ -160,7 +160,7 @@
       "Verify Hero and SearchBar components remain on home page",
       "Verify clicking card navigates to /a/:id route without full page reload"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",

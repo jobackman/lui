@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Routes, Route, useParams, Navigate } from 'react-router-dom';
+import { Routes, Route, useParams, Navigate, Link } from 'react-router-dom';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
@@ -19,7 +19,6 @@ export function App() {
 function HomePage() {
   const allAddons = loadAllExports();
   const [searchQuery, setSearchQuery] = useState('');
-  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 
   // Filter addons based on search query (searches export name)
   const filteredAddons = useMemo(() => {
@@ -68,12 +67,12 @@ function HomePage() {
                 
                 return (
                   <div key={addon.id} className={colSpan}>
-                    <ExportCard 
-                      export={addon.export}
-                      addonId={addon.id}
-                      isExpanded={expandedCardId === addon.id}
-                      onToggleExpand={(id) => setExpandedCardId(expandedCardId === id ? null : id)}
-                    />
+                    <Link to={`/a/${addon.id}`} className="block h-full">
+                      <ExportCard 
+                        export={addon.export}
+                        addonId={addon.id}
+                      />
+                    </Link>
                   </div>
                 );
               })}
