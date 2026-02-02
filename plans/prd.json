@@ -277,5 +277,68 @@
       "Verify empty state displays centered when no results match search"
     ],
     "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Extend AddonExport type definition to support optional image assets stored in public folder",
+    "steps": [
+      "Verify AddonExport interface updated to include optional `images` field (array of image paths)",
+      "Verify AddonExport interface updated to include optional `setupInstructions` field (string or markdown for import/setup guidance)",
+      "Verify public/images/addons/ folder structure created for storing addon images",
+      "Verify image paths use relative public URLs (e.g., \"/images/addons/details-preview.png\")",
+      "Verify placeholder images (picsum.photos or similar) used for testing functionality",
+      "Verify sample placeholder images added to details.json and platynator.json to demonstrate feature",
+      "Verify TypeScript compilation validates new image fields correctly",
+      "Verify image loading handles missing/optional images gracefully"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Transform export cards from text-based to image cards with information overlaid on images",
+    "steps": [
+      "Verify ExportCard displays image as card background",
+      "Verify card automatically cycles through multiple images on timer (e.g., 5-second intervals) if multiple images provided",
+      "Verify only one image displayed at a time with smooth crossfade transitions",
+      "Verify timer pauses on hover to allow viewing current image",
+      "Verify card uses CSS object-fit (cover/contain) to handle various image aspect ratios",
+      "Verify addon name overlaid on image with readable contrast (text shadow, gradient overlay, or frosted backdrop)",
+      "Verify copy and download buttons overlaid on image with glassmorphism styling",
+      "Verify fallback design when no image provided (gradient background or placeholder)",
+      "Verify image loads with lazy loading for performance",
+      "Verify proper alt text for accessibility",
+      "Verify overlay text maintains WCAG contrast ratios (4.5:1 minimum)",
+      "Verify bento grid layout still works with image-based cards",
+      "Verify responsive behavior on mobile/tablet/desktop",
+      "Verify glassmorphism effects complement image backgrounds",
+      "Verify buttons remain clearly visible and interactive on various image backgrounds",
+      "Verify placeholder images (e.g., picsum.photos, unsplash source) display correctly during development",
+      "Verify image cycling respects prefers-reduced-motion accessibility setting"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Implement click-to-expand card behavior with inline expansion showing additional information and full-size images",
+    "steps": [
+      "Verify clicking card body (not buttons) expands card inline within bento grid",
+      "Verify clicking copy/download buttons does NOT trigger card expansion",
+      "Verify only one card can be expanded at a time (expanding new card collapses previous)",
+      "Verify expanded card spans full width of grid container",
+      "Verify expanded view displays description, timestamp, and setup/import instructions",
+      "Verify expanded view shows all images in gallery/carousel format with navigation controls",
+      "Verify expanded view image carousel has prev/next buttons and optional thumbnail navigation",
+      "Verify expanded state uses glassmorphism styling consistent with design system",
+      "Verify collapse functionality (click card again, click collapse button, or click different card)",
+      "Verify smooth expand/collapse animations with height transitions",
+      "Verify keyboard accessibility (Enter/Space to expand, ESC to collapse, arrow keys for image navigation)",
+      "Verify focus management (returns to card after closing)",
+      "Verify ARIA attributes for expanded state (aria-expanded, role=\"button\" for clickable card)",
+      "Verify mobile touch interactions work smoothly (swipe for image navigation)",
+      "Verify expanded view scrollable if content exceeds viewport",
+      "Verify layout reflows gracefully when card expands/collapses within bento grid",
+      "Verify smooth scroll to expanded card if it's partially off-screen"
+    ],
+    "passes": false
   }
 ]
