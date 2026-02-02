@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import plugin from "bun-plugin-tailwind";
 import { existsSync } from "fs";
-import { rm } from "fs/promises";
+import { rm, readFile, writeFile } from "fs/promises";
 import path from "path";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
@@ -120,6 +120,13 @@ const start = performance.now();
 const entrypoints = [...new Bun.Glob("**.html").scanSync("src")]
   .map(a => path.resolve("src", a))
   .filter(dir => !dir.includes("node_modules"));
+
+// Add theme-init.ts as a separate entrypoint
+const themeInitPath = path.resolve("src", "theme-init.ts");
+if (existsSync(themeInitPath)) {
+  entrypoints.push(themeInitPath);
+}
+
 console.log(`📄 Found ${entrypoints.length} HTML ${entrypoints.length === 1 ? "file" : "files"} to process\n`);
 
 const result = await Bun.build({
@@ -136,6 +143,18 @@ const result = await Bun.build({
 });
 
 const end = performance.now();
+
+// Post-process index.html to add theme-init.js script
+const indexHtmlPath = path.join(outdir, "index.html");
+if (existsSync(indexHtmlPath)) {
+  const html = await readFile(indexHtmlPath, "utf-8");
+  // Add theme-init.js script before the closing </head> tag
+  const modifiedHtml = html.replace(
+    "</head>",
+    '  <script src="./theme-init.js"></script>\n  </head>'
+  );
+  await writeFile(indexHtmlPath, modifiedHtml);
+}
 
 const outputTable = result.outputs.map(output => ({
   File: path.relative(process.cwd(), output.path),
