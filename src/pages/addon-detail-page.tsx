@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Navigate, Link, useNavigate } from 'react-router-dom';
 import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
 import { Card } from '@/components/ui/card';
@@ -15,7 +15,6 @@ export function AddonDetailPage() {
   const navigate = useNavigate();
   const { startViewTransition } = useViewTransition();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const cardRef = useRef<HTMLDivElement>(null);
   
   // Handle invalid addon IDs
   if (!id) {
@@ -32,13 +31,6 @@ export function AddonDetailPage() {
   const images = addon.export.images || [];
   const hasImages = images.length > 0;
   const hasMultipleImages = images.length > 1;
-
-  // Set view-transition-name using ref
-  useEffect(() => {
-    if (cardRef.current && id) {
-      (cardRef.current.style as any).viewTransitionName = `card-${id}`;
-    }
-  }, [id]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -101,8 +93,10 @@ export function AddonDetailPage() {
 
           {/* Main Content Card */}
           <Card 
-            ref={cardRef}
-            className="glass-strong p-6 sm:p-8"
+            className="glass-strong p-6 sm:p-8 [view-transition-name:var(--vt-name)]"
+            style={{
+              ['--vt-name' as any]: `card-${id}`,
+            }}
           >
             {/* Header */}
             <div className="mb-6">
