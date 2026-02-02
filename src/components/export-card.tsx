@@ -20,6 +20,13 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
   const hasImages = images.length > 0;
   const hasMultipleImages = images.length > 1;
 
+  // Set view-transition-name using ref
+  useEffect(() => {
+    if (cardRef.current) {
+      (cardRef.current.style as any).viewTransitionName = `card-${addonId}`;
+    }
+  }, [addonId]);
+
   // Auto-cycle through images every 5 seconds when not hovered
   useEffect(() => {
     if (!hasMultipleImages || isHovered) return;
@@ -46,9 +53,6 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       className="relative overflow-hidden group !p-0 min-h-[300px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{
-        viewTransitionName: `card-${addonId}`,
-      } as React.CSSProperties}
     >
       {/* Background Image Layer */}
       {hasImages ? (
