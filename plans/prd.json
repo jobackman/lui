@@ -340,5 +340,49 @@
       "Verify smooth scroll to expanded card if it's partially off-screen"
     ],
     "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Redesign card layout to position titles and buttons at bottom with gradient overlay for text visibility, and implement button slide-in animation on hover",
+    "steps": [
+      "Verify card content (CardHeader with title and buttons) repositioned to bottom of card using absolute positioning or flexbox",
+      "Verify gradient overlay changed from full-card coverage to bottom gradient (e.g., from-transparent via-black/60 to-black/90)",
+      "Verify gradient starts from transparent at top, transitions to semi-transparent in middle, and becomes more opaque at bottom for optimal text readability",
+      "Verify addon title remains visible at bottom over gradient",
+      "Verify buttons (copy & download) hidden by default with CSS (opacity-0, translate-y)",
+      "Verify buttons slide into visibility on card hover using CSS transforms and opacity transitions",
+      "Verify button animation is smooth (e.g., transition duration 200-300ms with ease-out)",
+      "Verify buttons slide up from below or fade in (transform: translateY(10px) to translateY(0))",
+      "Verify hover state uses group-hover utility for consistent parent-child hover behavior",
+      "Verify buttons remain keyboard accessible (focus makes them visible even without hover)",
+      "Verify focus-visible styles applied for keyboard navigation",
+      "Verify touch devices show buttons by default or on tap (no hover state on mobile)",
+      "Verify gradient maintains WCAG contrast ratios for title text (4.5:1 minimum)",
+      "Verify responsive behavior on mobile/tablet/desktop",
+      "Verify animation respects prefers-reduced-motion accessibility setting"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Add visual indicator dots to show which image is currently displayed in multi-image card galleries",
+    "steps": [
+      "Verify indicator dots rendered only when multiple images exist (images.length > 1)",
+      "Verify dots positioned at bottom-center or bottom-right of card using absolute positioning",
+      "Verify dots container positioned above gradient overlay but below card content (proper z-index layering)",
+      "Verify number of dots matches number of images in gallery",
+      "Verify active dot highlighted with different styling (filled circle, larger size, different opacity, or color change)",
+      "Verify inactive dots use subtle styling (outline circle, smaller size, lower opacity)",
+      "Verify dots use glassmorphism styling consistent with design system (backdrop-blur, semi-transparent background)",
+      "Verify smooth transition animation when active dot changes during image cycling",
+      "Verify dots clickable to manually navigate to specific image (optional enhancement)",
+      "Verify dots have sufficient size for touch targets on mobile (minimum 44x44px touch area)",
+      "Verify dots spacing provides clear visual separation",
+      "Verify dots maintain visibility against various image backgrounds (white border/shadow if needed)",
+      "Verify dots hidden or accessible alternative provided for screen readers (aria-label indicating \"Image X of Y\")",
+      "Verify dots respect prefers-reduced-motion setting (instant switching instead of animated transitions)",
+      "Verify responsive positioning on mobile/tablet/desktop"
+    ],
+    "passes": false
   }
 ]
