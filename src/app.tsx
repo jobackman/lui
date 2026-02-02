@@ -9,6 +9,7 @@ import './index.css';
 export function App() {
   const allAddons = loadAllExports();
   const [searchQuery, setSearchQuery] = useState('');
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 
   // Filter addons based on search query (searches export name)
   const filteredAddons = useMemo(() => {
@@ -57,7 +58,12 @@ export function App() {
                 
                 return (
                   <div key={addon.id} className={colSpan}>
-                    <ExportCard export={addon.export} />
+                    <ExportCard 
+                      export={addon.export}
+                      addonId={addon.id}
+                      isExpanded={expandedCardId === addon.id}
+                      onToggleExpand={(id) => setExpandedCardId(expandedCardId === id ? null : id)}
+                    />
                   </div>
                 );
               })}

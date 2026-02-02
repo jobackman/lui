@@ -339,7 +339,7 @@
       "Verify layout reflows gracefully when card expands/collapses within bento grid",
       "Verify smooth scroll to expanded card if it's partially off-screen"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",

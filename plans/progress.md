@@ -1342,3 +1342,48 @@ Made indicator dots much more compact to avoid intersection with card title:
 
 ---
 
+
+### Feature - Click-to-Expand Card Behavior
+**Status**: Completed
+
+Implemented inline card expansion with image gallery, setup instructions, keyboard nav:
+
+**State Management:**
+- Lifted expandedCardId state to App.tsx (only one card expands at a time)
+- Pass isExpanded + onToggleExpand props to ExportCard
+- Clicking different card collapses previous ✓
+
+**Card Interaction:**
+- Click card body (not buttons) expands inline ✓
+- stopPropagation on all buttons prevents unwanted expansion ✓
+- role="button" + tabIndex={0} for keyboard access ✓
+- aria-expanded attribute for screen readers ✓
+
+**Expanded View:**
+- col-span-full spans full grid width ✓
+- min-h-[600px] → smooth 500ms transitions ✓
+- Displays: title, description, timestamp, setup instructions ✓
+- Image carousel: prev/next buttons, thumbnail nav ✓
+- Glassmorphism: glass-strong panels consistent with design ✓
+
+**Keyboard Navigation:**
+- Enter/Space to toggle expansion ✓
+- ESC to collapse when expanded ✓
+- Arrow Left/Right to navigate images ✓
+- useEffect keyboard listener cleanup ✓
+
+**Accessibility:**
+- Scroll to card if partially off-screen (smooth behavior) ✓
+- overflow-y-auto for scrollable content ✓
+- ARIA labels on all interactive elements ✓
+- Touch targets 44x44px on thumbnails ✓
+
+**Verification:**
+- Build: 339.82ms ✓
+- Tests: 26 pass, 80 expect() ✓
+
+**PRD Updated:**
+- Marked "Implement click-to-expand card behavior" passes: true ✓
+- ALL PRD FEATURES NOW COMPLETE ✓
+
+---
