@@ -93,5 +93,32 @@
       "Verify responsive behavior maintained on mobile/tablet/desktop"
     ],
     "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Make expanded card take full width of bento grid using URL state management",
+    "steps": [
+      "Verify nuqs package installed as dependency (npm install nuqs or bun add nuqs)",
+      "Verify useQueryState hook imported from nuqs in app.tsx",
+      "Verify expandedCardId state migrated from useState to useQueryState('expanded')",
+      "Verify query parameter syncs with URL when card expands/collapses",
+      "Verify browser back/forward buttons work correctly (collapse expanded card when navigating back)",
+      "Verify URL updates without page reload (shallow routing)",
+      "Verify sharing URL with ?expanded=addon-id parameter opens page with that card expanded",
+      "Verify conditional col-span class on wrapper div in app.tsx: apply bento pattern (md:col-span-2 or md:col-span-1) only when card is NOT expanded",
+      "Verify wrapper div has no col-span constraint when addon.id === expandedCardId",
+      "Verify expanded card uses col-span-full class (already present in export-card.tsx line 95)",
+      "Verify expanded card spans full width across all breakpoints (mobile, tablet, desktop)",
+      "Verify expanded card internal content (setup instructions, carousel, description) has more horizontal space",
+      "Verify bento grid reflows correctly when card expands (other cards wrap appropriately)",
+      "Verify bento grid reflows correctly when card collapses (original asymmetric pattern restored)",
+      "Verify transition animation remains smooth during width change",
+      "Verify no layout shift or jumping when expanding/collapsing",
+      "Verify expanded card maintains proper spacing and padding at full width",
+      "Verify responsive behavior on narrow viewports (full width works gracefully on mobile)",
+      "Verify invalid/non-existent addon IDs in URL parameter are handled gracefully (no errors, card stays collapsed)",
+      "Verify query parameter is cleared/removed when card is collapsed (clean URL state)"
+    ],
+    "passes": false
   }
 ]
