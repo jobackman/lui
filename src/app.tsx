@@ -48,17 +48,9 @@ export function App() {
               )}
             </div>
           ) : (
-            <div className="space-y-12">
+            <div className="space-y-4">
               {filteredAddons.map((addon) => (
-                <section key={addon.id} className="space-y-4">
-                  {/* Section Header with Glassmorphism */}
-                  <div className="glass-subtle rounded-lg px-6 py-4 border border-white/10">
-                    <h2 className="text-2xl font-bold tracking-tight">{addon.name}</h2>
-                  </div>
-
-                  {/* Export Card */}
-                  <ExportCard export={addon.export} />
-                </section>
+                <ExportCard key={addon.id} export={addon.export} />
               ))}
             </div>
           )}

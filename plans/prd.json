@@ -242,7 +242,7 @@
       "Verify empty state still displays when no results match",
       "Verify responsive layout maintained on all device sizes"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
