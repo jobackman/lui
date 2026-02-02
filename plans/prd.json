@@ -72,7 +72,8 @@
       "Verify no content overflow or clipping during transition",
       "Verify animation works correctly when rapidly expanding/collapsing multiple cards"
     ],
-    "passes": false
+    "passes": false,
+    "cancelled": true
   },
   {
     "category": "UI",
@@ -92,7 +93,8 @@
       "Verify setup instructions and description have more breathing room",
       "Verify responsive behavior maintained on mobile/tablet/desktop"
     ],
-    "passes": false
+    "passes": false,
+    "cancelled": true
   },
   {
     "category": "UI",
@@ -118,6 +120,72 @@
       "Verify responsive behavior on narrow viewports (full width works gracefully on mobile)",
       "Verify invalid/non-existent addon IDs in URL parameter are handled gracefully (no errors, card stays collapsed)",
       "Verify query parameter is cleared/removed when card is collapsed (clean URL state)"
+    ],
+    "passes": false,
+    "cancelled": true
+  },
+  {
+    "category": "Architecture",
+    "description": "Add Routing Infrastructure",
+    "steps": [
+      "Verify react-router-dom package installed as dependency (bun add react-router-dom @types/react-router-dom)",
+      "Verify BrowserRouter wrapper added in frontend.tsx around App component",
+      "Verify Routes and Route components imported from react-router-dom",
+      "Verify route structure created in app.tsx with two routes: '/' for home page (bento grid) and '/a/:id' for individual addon detail page",
+      "Verify routing preserves ThemeProvider and BackgroundProvider context wrappers",
+      "Verify browser back/forward navigation works correctly",
+      "Verify direct URL navigation works (e.g., visiting /a/platynator directly)",
+      "Verify 404/not found handling for invalid addon IDs",
+      "Verify no console errors or warnings related to routing",
+      "Verify hot module reloading continues to work with routing setup"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Convert Home Page to Navigable Bento Grid",
+    "steps": [
+      "Verify expandedCardId state and onToggleExpand logic removed from app.tsx",
+      "Verify isExpanded prop removed from ExportCard component interface",
+      "Verify ExportCard component converted to collapsed-only view (no expansion state)",
+      "Verify cards wrap in Link component (from react-router-dom) with href='/a/{addonId}'",
+      "Verify card onClick handler replaced with navigation behavior",
+      "Verify hoverable buttons (Copy, Download, External Link) still visible on hover",
+      "Verify buttons maintain glass effect styling on collapsed cards",
+      "Verify bento grid asymmetric layout pattern maintained (2-col, 1-col, 1-col repeating)",
+      "Verify card transition animation adjusted for link navigation (no expansion animation)",
+      "Verify image carousel auto-cycling continues to work on collapsed cards",
+      "Verify accessibility: keyboard navigation (Enter/Space) triggers link navigation",
+      "Verify search functionality continues to filter cards on home page",
+      "Verify Hero and SearchBar components remain on home page",
+      "Verify clicking card navigates to /a/:id route without full page reload"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Create Dedicated Addon Detail Route/Page",
+    "steps": [
+      "Verify new AddonDetailPage component created (src/pages/addon-detail.tsx or similar)",
+      "Verify component uses useParams() hook to extract :id from URL",
+      "Verify getAddonById() utility used to fetch addon data by ID",
+      "Verify full-width layout for detail page (no bento grid constraints)",
+      "Verify addon name displayed prominently as page title",
+      "Verify addon description displayed below title",
+      "Verify last updated timestamp displayed using formatRelativeTime utility",
+      "Verify image carousel with navigation controls (prev/next arrows, indicator dots)",
+      "Verify setup instructions section displayed in glass-panel styling",
+      "Verify action buttons displayed (Copy Export String, Download, External Link) based on addon data",
+      "Verify 'Import from External Source' message shown for external-link-only addons",
+      "Verify back navigation to home page (browser back button or dedicated back link)",
+      "Verify smooth scroll behavior when navigating to detail page",
+      "Verify keyboard navigation for image carousel (ArrowLeft/ArrowRight)",
+      "Verify Escape key navigates back to home page",
+      "Verify responsive layout on mobile/tablet/desktop",
+      "Verify 404 or redirect to home for invalid addon IDs",
+      "Verify SEO-friendly: page title updates to include addon name",
+      "Verify BackgroundRippleEffect component displayed on detail page",
+      "Verify consistent glass/glassmorphism styling with rest of application"
     ],
     "passes": false
   }
