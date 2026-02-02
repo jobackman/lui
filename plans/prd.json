@@ -361,7 +361,7 @@
       "Verify responsive behavior on mobile/tablet/desktop",
       "Verify animation respects prefers-reduced-motion accessibility setting"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",

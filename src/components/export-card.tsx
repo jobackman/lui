@@ -58,16 +58,16 @@ export function ExportCard({ export: exportData }: ExportCardProps) {
               `}
             />
           ))}
-          {/* Dark overlay for better text contrast */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+          {/* Bottom gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black/90" />
         </div>
       ) : (
         // Fallback gradient background when no images
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-500/30 via-blue-500/30 to-pink-500/30" />
       )}
 
-      {/* Content Layer with Glass Effect */}
-      <CardHeader className="relative z-10">
+      {/* Content Layer positioned at bottom */}
+      <CardHeader className="absolute bottom-0 left-0 right-0 z-10">
         <CardTitle className="text-white drop-shadow-lg shadow-black">
           {exportData.name}
         </CardTitle>
@@ -78,7 +78,7 @@ export function ExportCard({ export: exportData }: ExportCardProps) {
                 variant="ghost"
                 size="icon"
                 asChild
-                className="glass-strong hover:bg-white/30 transition-all text-white"
+                className="glass-strong hover:bg-white/30 transition-all duration-300 ease-out text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
                 title="Download addon"
                 onClick={(e) => e.stopPropagation()}
               >
@@ -94,7 +94,7 @@ export function ExportCard({ export: exportData }: ExportCardProps) {
             )}
             <CopyButton 
               text={exportData.exportString}
-              className="glass-strong hover:bg-white/30 text-white"
+              className="glass-strong hover:bg-white/30 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 transition-all duration-300 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
             />
           </div>
         </CardAction>

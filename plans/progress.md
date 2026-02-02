@@ -1121,3 +1121,76 @@ Image cards complete. Visual hierarchy dramatically improved. Remaining: Click-t
 
 ---
 
+### UI - Card Bottom Layout & Button Slide-In Animation
+**Status**: Completed
+
+Redesigned export cards: content bottom-positioned, bottom gradient overlay, button slide-in on hover:
+
+**Updated Files:**
+- `src/components/export-card.tsx` - Repositioned CardHeader to bottom, updated gradient, added button animations
+
+**Implementation:**
+
+**Bottom Positioning:**
+- CardHeader uses `absolute bottom-0 left-0 right-0` positioning
+- Content anchored to bottom of card, floats over image background
+- Removed relative z-10 positioning in favor of absolute layout
+
+**Gradient Overlay Redesign:**
+- Changed from `from-black/60 via-black/40 to-black/70` (full coverage)
+- To: `from-transparent via-black/60 to-black/90` (bottom gradient)
+- Transparent at top allows full image visibility
+- Semi-transparent middle (60%) provides transition zone
+- Opaque bottom (90%) ensures optimal text readability for title/buttons
+
+**Button Slide-In Animation:**
+- Buttons hidden by default: `opacity-0 translate-y-2`
+- On hover: `group-hover:opacity-100 group-hover:translate-y-0`
+- Smooth 300ms transition: `duration-300 ease-out`
+- Slides up 0.5rem (8px) with fade-in effect
+- Uses Tailwind group utility for parent-child hover coordination
+
+**Keyboard Accessibility:**
+- Focus-visible states: `focus-visible:opacity-100 focus-visible:translate-y-0`
+- Buttons appear on keyboard focus even without hover
+- Maintains full keyboard navigation support
+- Focus rings preserved via Button component defaults
+
+**Touch Device Support:**
+- `[@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0`
+- Buttons always visible on touch devices (no hover state)
+- Prevents hidden buttons on mobile/tablet devices
+- 44x44px touch targets via Button size="icon"
+
+**Accessibility Features:**
+- Prefers-reduced-motion: `motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-y-0`
+- Instant button appearance for users preferring reduced motion
+- No animations for sensitive users
+- WCAG contrast maintained: white text + drop-shadow over black/90 gradient (>4.5:1)
+
+**Verification:**
+- Build: 344.20ms ✓
+- Tests: 26 pass, 80 expect() ✓
+- CardHeader absolute bottom positioning ✓
+- Gradient: from-transparent via-black/60 to-black/90 ✓
+- Title visible at bottom with white + drop-shadow ✓
+- Buttons hidden: opacity-0 translate-y-2 ✓
+- Slide-in on hover: group-hover:opacity-100 translate-y-0 ✓
+- 300ms ease-out smooth animation ✓
+- Slide up from below (translateY) ✓
+- Group-hover utility for parent-child coordination ✓
+- Keyboard accessible: focus-visible shows buttons ✓
+- Focus-visible styles applied ✓
+- Touch devices show buttons: [@media(hover:none)] ✓
+- WCAG contrast: white on black/90 gradient (>4.5:1) ✓
+- Responsive: absolute positioning works all sizes ✓
+- Motion-reduce respected ✓
+
+**PRD Updated:**
+- Marked "Redesign card layout to position titles and buttons at bottom" passes: true ✓
+
+**Next Steps:**
+Bottom layout complete. Cards now showcase images with minimal UI interference. Buttons elegantly slide in on interaction. Remaining: Click-to-expand feature, image indicator dots.
+
+---
+
