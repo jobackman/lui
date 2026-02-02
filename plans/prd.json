@@ -291,7 +291,7 @@
       "Verify TypeScript compilation validates new image fields correctly",
       "Verify image loading handles missing/optional images gracefully"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",

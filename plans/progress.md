@@ -1017,3 +1017,38 @@ Implemented asymmetric Bento Grid layout for addon cards with responsive breakpo
 
 ---
 
+### Data - Image Asset Support for Addon Exports
+**Status**: Completed
+
+Extended AddonExport type to support optional images and setup instructions:
+
+**TypeScript Interface Updates:**
+- Added `images?: string[]` field to AddonExport interface
+- Added `setupInstructions?: string` field for markdown-formatted import guidance
+- Both fields optional, backward compatible with existing data
+
+**Folder Structure:**
+- Created `public/images/addons/` directory for future local images
+- Public folder structure ready for static asset hosting
+
+**Sample Data:**
+- Added 3 placeholder images to details.json (picsum.photos/seed/details*)
+- Added 2 placeholder images to platynator.json (picsum.photos/seed/plater*)
+- Added step-by-step setup instructions to both exports
+- Instructions cover addon installation, in-game import, UI reload
+
+**Verification:**
+- Build: 246.40ms ✓
+- Tests: 26 pass, 80 expect() ✓
+- TypeScript validates optional fields correctly ✓
+- Placeholder images use picsum.photos external URLs ✓
+- Graceful handling: fields optional, no UI changes yet ✓
+
+**PRD Updated:**
+- Marked "Extend AddonExport type to support optional image assets" passes: true ✓
+
+**Next Steps:**
+Image data foundation complete. Next: Transform export cards to image-based cards with auto-cycling, overlays, glassmorphism.
+
+---
+

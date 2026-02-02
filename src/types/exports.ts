@@ -12,6 +12,10 @@ export interface AddonExport {
   lastUpdated: string;
   /** Optional download URL for the addon */
   downloadUrl?: string;
+  /** Optional array of image paths for the addon (relative to public folder) */
+  images?: string[];
+  /** Optional setup/import instructions for the addon (supports markdown) */
+  setupInstructions?: string;
 }
 
 /**
