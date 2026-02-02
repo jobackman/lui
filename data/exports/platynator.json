@@ -11,6 +11,7 @@
       "https://picsum.photos/seed/plater1/800/600",
       "https://picsum.photos/seed/plater2/800/600"
     ],
-    "setupInstructions": "1. Install Plater Nameplates from CurseForge\n2. Type `/plater` in-game to open settings\n3. Go to 'Profiles' tab\n4. Click 'Import' and paste the export string\n5. Click 'Okay' to apply the configuration"
+    "setupInstructions": "1. Install Plater Nameplates from CurseForge\n2. Type `/plater` in-game to open settings\n3. Go to 'Profiles' tab\n4. Click 'Import' and paste the export string\n5. Click 'Okay' to apply the configuration",
+    "tags": ["nameplates", "ui", "pvp", "threat", "debuffs"]
   }
 }

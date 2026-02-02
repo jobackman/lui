@@ -6,6 +6,7 @@ import { ExportCard } from '@/components/export-card';
 import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Tag } from '@/components/ui/tag';
 import { CopyButton } from '@/components/copy-button';
 import { loadAllExports, getAddonById } from '@/lib/loadExports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
@@ -25,7 +26,7 @@ function HomePage() {
   const allAddons = loadAllExports();
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter addons based on search query (searches export name)
+  // Filter addons based on search query (searches export name and tags)
   const filteredAddons = useMemo(() => {
     if (!searchQuery.trim()) {
       // No search query - show all addons
@@ -34,10 +35,15 @@ function HomePage() {
 
     const query = searchQuery.toLowerCase();
     
-    // Filter addons where the export name matches the search query
-    return allAddons.filter((addon) => 
-      addon.export.name.toLowerCase().includes(query)
-    );
+    // Filter addons where the export name OR any tag matches the search query
+    return allAddons.filter((addon) => {
+      const nameMatches = addon.export.name.toLowerCase().includes(query);
+      const tagMatches = addon.export.tags?.some((tag) => 
+        tag.toLowerCase().includes(query)
+      ) ?? false;
+      
+      return nameMatches || tagMatches;
+    });
   }, [allAddons, searchQuery]);
 
   const totalExports = filteredAddons.length;
@@ -169,9 +175,17 @@ function AddonDetailPage() {
               <p className="text-muted-foreground text-base sm:text-lg mb-2">
                 {addon.export.description}
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mb-3">
                 Updated {formatRelativeTime(addon.export.lastUpdated)}
               </p>
+              {/* Tags */}
+              {addon.export.tags && addon.export.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {addon.export.tags.map((tag) => (
+                    <Tag key={tag}>{tag}</Tag>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Image Carousel */}

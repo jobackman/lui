@@ -11,6 +11,7 @@
       "https://picsum.photos/seed/blizzhud1/800/600",
       "https://picsum.photos/seed/blizzhud2/800/600"
     ],
-    "setupInstructions": "1. Visit the GitHub repository via the external link\n2. Download the latest release from CurseForge\n3. Install to your WoW AddOns folder\n4. Type `/blizzhud` in-game to configure\n5. Enable specific tweaks you want to use\n6. Check GitHub readme for advanced configuration options"
+    "setupInstructions": "1. Visit the GitHub repository via the external link\n2. Download the latest release from CurseForge\n3. Install to your WoW AddOns folder\n4. Type `/blizzhud` in-game to configure\n5. Enable specific tweaks you want to use\n6. Check GitHub readme for advanced configuration options",
+    "tags": ["ui", "blizzard", "tweaks", "minimal", "hud"]
   }
 }

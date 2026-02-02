@@ -12,6 +12,7 @@
       "https://picsum.photos/seed/sensei2/800/600",
       "https://picsum.photos/seed/sensei3/800/600"
     ],
-    "setupInstructions": "1. Install Sensei Resource Bar from CurseForge\n2. Type `/sensei` in-game to open configuration\n3. Click 'Import Profile' in the settings menu\n4. Paste the export string provided above\n5. Adjust position and scale to your preference\n6. Click 'Save' to apply the configuration"
+    "setupInstructions": "1. Install Sensei Resource Bar from CurseForge\n2. Type `/sensei` in-game to open configuration\n3. Click 'Import Profile' in the settings menu\n4. Paste the export string provided above\n5. Adjust position and scale to your preference\n6. Click 'Save' to apply the configuration",
+    "tags": ["resource-bar", "ui", "mana", "energy", "tracking"]
   }
 }

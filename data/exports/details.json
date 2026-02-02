@@ -12,6 +12,7 @@
       "https://picsum.photos/seed/details2/800/600",
       "https://picsum.photos/seed/details3/800/600"
     ],
-    "setupInstructions": "1. Install Details addon from CurseForge\n2. Type `/details` in-game to open settings\n3. Click 'Import Profile' button\n4. Paste the export string and click OK\n5. Reload UI to apply changes"
+    "setupInstructions": "1. Install Details addon from CurseForge\n2. Type `/details` in-game to open settings\n3. Click 'Import Profile' button\n4. Paste the export string and click OK\n5. Reload UI to apply changes",
+    "tags": ["damage-meter", "ui", "pve", "tracking", "raid"]
   }
 }

@@ -18,6 +18,8 @@ export interface AddonExport {
   images?: string[];
   /** Optional setup/import instructions for the addon (supports markdown) */
   setupInstructions?: string;
+  /** Optional array of tags for categorization and search (e.g., ['ui', 'nameplates', 'pvp']) */
+  tags?: string[];
 }
 
 /**

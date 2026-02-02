@@ -11,6 +11,7 @@
       "https://picsum.photos/seed/waypoint1/800/600",
       "https://picsum.photos/seed/waypoint2/800/600"
     ],
-    "setupInstructions": "1. Download Waypoint UI from WoWInterface\n2. Extract all addon folders to your WoW AddOns directory\n3. Launch World of Warcraft\n4. Follow the in-game setup wizard on first login\n5. Visit the external link for detailed customization guides\n6. Use `/waypoint` to access settings and profiles"
+    "setupInstructions": "1. Download Waypoint UI from WoWInterface\n2. Extract all addon folders to your WoW AddOns directory\n3. Launch World of Warcraft\n4. Follow the in-game setup wizard on first login\n5. Visit the external link for detailed customization guides\n6. Use `/waypoint` to access settings and profiles",
+    "tags": ["ui", "complete-overhaul", "suite", "modern", "interface"]
   }
 }
