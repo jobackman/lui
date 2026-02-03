@@ -19,9 +19,7 @@ export const BackgroundRippleEffect = ({
     const updateDimensions = () => {
       if (ref.current) {
         const width = window.innerWidth;
-        // Use a large fixed height that will work well with gradients
-        // This creates enough cells to fill a very tall page
-        const height = Math.max(window.innerHeight * 3, 3000);
+        const height = window.innerHeight;
         const cols = Math.ceil(width / cellSize);
         const rows = Math.ceil(height / cellSize);
         setDimensions({ rows, cols });
@@ -37,34 +35,28 @@ export const BackgroundRippleEffect = ({
     <div
       ref={ref}
       className={cn(
-        "fixed left-0 top-0 overflow-hidden pointer-events-none",
+        "fixed inset-0 h-full w-full overflow-hidden",
         "[--cell-border-color:var(--color-neutral-300)] [--cell-fill-color:var(--color-neutral-100)] [--cell-shadow-color:var(--color-neutral-500)]",
         "dark:[--cell-border-color:var(--color-neutral-700)] dark:[--cell-fill-color:var(--color-neutral-900)] dark:[--cell-shadow-color:var(--color-neutral-800)]",
       )}
-      style={{
-        height: `${dimensions.rows * cellSize}px`,
-        width: '100vw',
-      }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background pointer-events-none z-10" />
       <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background pointer-events-none z-10" />
       
-      <div className="pointer-events-auto">
-        <DivGrid
-          key={`base-${rippleKey}`}
-          rows={dimensions.rows}
-          cols={dimensions.cols}
-          cellSize={cellSize}
-          borderColor="var(--cell-border-color)"
-          fillColor="var(--cell-fill-color)"
-          clickedCell={clickedCell}
-          onCellClick={(row, col) => {
-            setClickedCell({ row, col });
-            setRippleKey((k) => k + 1);
-          }}
-          interactive
-        />
-      </div>
+      <DivGrid
+        key={`base-${rippleKey}`}
+        rows={dimensions.rows}
+        cols={dimensions.cols}
+        cellSize={cellSize}
+        borderColor="var(--cell-border-color)"
+        fillColor="var(--cell-fill-color)"
+        clickedCell={clickedCell}
+        onCellClick={(row, col) => {
+          setClickedCell({ row, col });
+          setRippleKey((k) => k + 1);
+        }}
+        interactive
+      />
     </div>
   );
 };

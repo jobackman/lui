@@ -12,15 +12,13 @@ export function App() {
   return (
     <>
       <BackgroundRippleEffect cellSize={48} />
-      <div className="relative min-h-screen">
-        <CommandBar />
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/a/:id" element={<AddonDetailPage />} />
-          </Routes>
-        </AnimatePresence>
-      </div>
+      <CommandBar />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/a/:id" element={<AddonDetailPage />} />
+        </Routes>
+      </AnimatePresence>
     </>
   );
 }
