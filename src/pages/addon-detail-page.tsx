@@ -71,7 +71,7 @@ export function AddonDetailPage() {
       <BackgroundRippleEffect cellSize={48} />
       
       {/* Fixed Hero Header with Background Carousel */}
-      <div className="sticky top-0 z-30 h-[300px] sm:h-[400px] md:h-[500px] relative overflow-hidden">
+      <div className="sticky top-0 z-30 h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] relative overflow-hidden">
         {/* Background Images */}
         {hasImages && (
           <div className="absolute inset-0">
@@ -93,8 +93,13 @@ export function AddonDetailPage() {
           </div>
         )}
         
-        {/* Dark Gradient Overlay for text readability */}
+        {/* Multi-layer Gradient Overlays */}
+        {/* Bottom-to-top gradient for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/90" />
+        {/* Left and right edge fade-out for softer corners */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
+        {/* Top fade-out for seamless integration */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 to-transparent" />
         
         {/* Back Button - Top Left */}
         <Link 
