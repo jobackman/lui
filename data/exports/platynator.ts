@@ -10,8 +10,14 @@ export const platynator: AddonCategory = {
     lastUpdated: "2026-02-03T16:50:25.580Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/platynator",
     images: [
-      "https://picsum.photos/seed/plater1/800/600",
-      "https://picsum.photos/seed/plater2/800/600"
+      // Need to build support for video
+      // "https://i.imgur.com/HsRtH0D.mp4",
+      "https://i.imgur.com/BCTAU5v.png",
+      "https://i.imgur.com/o3BGLIw.png",
+      "https://i.imgur.com/a1JoxIw.png",
+      "https://i.imgur.com/5zuu6nQ.png",
+      "https://i.imgur.com/vvnO30c.png",
+      "https://i.imgur.com/drq3Quy.png",
     ],
     setupInstructions: `1. Run \`/platy\` to open settings
 2. Import the string

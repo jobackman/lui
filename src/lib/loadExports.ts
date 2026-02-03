@@ -5,7 +5,6 @@ import detailsData from "../../data/exports/details";
 import platynatorData from "../../data/exports/platynator";
 import senseiResourceBarData from "../../data/exports/sensei-resource-bar";
 import waypointUiData from "../../data/exports/waypoint-ui";
-import baganatorData from "../../data/exports/baganator";
 import blizzhudtweaksData from "../../data/exports/blizzhudtweaks";
 import cooldownManagerData from "../../data/exports/cooldown-manager";
 
@@ -27,7 +26,6 @@ if (typeof import.meta.glob === "function") {
     "details": { default: detailsData },
     "sensei-resource-bar": { default: senseiResourceBarData },
     "waypoint-ui": { default: waypointUiData },
-    "baganator": { default: baganatorData },
     "blizzhudtweaks": { default: blizzhudtweaksData },
     "cooldown-manager": { default: cooldownManagerData },
   };

@@ -13,7 +13,7 @@ export const blizzhudtweaks: AddonCategory = {
       "https://picsum.photos/seed/blizzhud1/800/600",
       "https://picsum.photos/seed/blizzhud2/800/600"
     ],
-    setupInstructions: `TBD`,
+    setupInstructions: `TBD: Not sure there is an easy way to export settings from this addon.`,
     tags: ["ui", "blizzard", "tweaks", "minimal", "fade"]
   }
 };

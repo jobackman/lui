@@ -9,11 +9,14 @@ export const waypointUi: AddonCategory = {
     lastUpdated: "2026-01-28T12:45:00Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/waypointui",
     images: [
-      "https://picsum.photos/seed/waypoint1/800/600",
-      "https://picsum.photos/seed/waypoint2/800/600"
+      "https://media.forgecdn.net/attachments/1365/397/slide1.png",
+      "https://media.forgecdn.net/attachments/1365/398/slide2.png",
+      "https://media.forgecdn.net/attachments/1365/399/slide3.png",
+      "https://media.forgecdn.net/attachments/1365/400/slide4.png",
+      "https://media.forgecdn.net/attachments/1398/615/trackguidepin-png.png",
+      "https://media.forgecdn.net/attachments/1418/835/tomtomwaypoint-jpg.jpg"
     ],
-    setupInstructions: `1. Download and use.
-2. There are more settings, but its defaults are quite good already.`,
+    setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
     tags: ["ui", "waypoint", "markers", "map", "pin"]
   }
 };

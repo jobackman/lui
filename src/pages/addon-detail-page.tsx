@@ -92,7 +92,7 @@ export function AddonDetailPage() {
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 group"
             >
               <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-              Back to home
+              Back
             </Link>
           </motion.div>
 
@@ -195,10 +195,7 @@ export function AddonDetailPage() {
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-3 mb-8">
                 {addon.export.exportString ? (
-                  <CopyButton 
-                    text={addon.export.exportString} 
-                    showIcon
-                  >
+                  <CopyButton text={addon.export.exportString} showIcon>
                     Copy Export String
                   </CopyButton>
                 ) : addon.export.externalUrl ? (
