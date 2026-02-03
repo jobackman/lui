@@ -1,35 +1,13 @@
 import type { AddonCategory } from "../types/exports";
 
-// Direct imports for all addon files
-import blizzhudtweaksData from "../../data/exports/blizzhudtweaks";
-import cooldownManagerData from "../../data/exports/cooldown-manager";
-import cooldownManagerCenteredData from "../../data/exports/cooldown-manager-centered";
-import detailsData from "../../data/exports/details";
-import editModeData from "../../data/exports/edit-mode";
-import healthbarColorData from "../../data/exports/healthbar-color";
-import platynatorData from "../../data/exports/platynator";
-import senseiResourceBarData from "../../data/exports/sensei-resource-bar";
-import waypointUiData from "../../data/exports/waypoint-ui";
-
-// Array of all addons for direct access
-const addons: AddonCategory[] = [
-  blizzhudtweaksData,
-  cooldownManagerData,
-  cooldownManagerCenteredData,
-  detailsData,
-  editModeData,
-  healthbarColorData,
-  platynatorData,
-  senseiResourceBarData,
-  waypointUiData,
-];
+import * as addons from '../../data/exports'
 
 /**
  * Load all addon export data.
  * This provides type-safe access to all addon configurations.
  */
 export function loadAllExports(): AddonCategory[] {
-  return addons;
+  return Object.values(addons);
 }
 
 /**

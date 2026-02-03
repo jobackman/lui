@@ -1,6 +1,6 @@
 import type { AddonCategory } from "../../src/types/exports";
 
-export const cooldownManager: AddonCategory = {
+export const cooldownManagerCentered: AddonCategory = {
   id: "cooldown-manager-centered",
   name: "Cooldown Manager Centered",
   export: {
@@ -22,4 +22,4 @@ export const cooldownManager: AddonCategory = {
   }
 };
 
-export default cooldownManager;
+export default cooldownManagerCentered;
