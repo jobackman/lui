@@ -386,6 +386,80 @@
       "Verify accessibility: ARIA labels maintained for carousel and screen reader announcements",
       "Verify prefers-reduced-motion respected (no auto-cycling if user prefers reduced motion)"
     ],
+    "passes": false,
+    "cancelled": true
+  },
+  {
+    "category": "UI Refactor",
+    "description": "Refactor button Tailwind classes using cn utility to reduce class clutter",
+    "steps": [
+      "Verify common button class patterns identified across components (glass-strong, hover states, transitions, responsive visibility)",
+      "Verify shared button variant helper functions created in lib/utils.ts for glass effects (e.g., glassButton(), glassIcon())",
+      "Verify ExportCard button classes refactored to use new helper utilities",
+      "Verify AddonDetailPage button classes refactored to use new helper utilities",
+      "Verify CopyButton component simplified using new utilities",
+      "Verify all button styling remains visually identical after refactor",
+      "Verify hover states, transitions, and responsive behavior preserved",
+      "Verify no TypeScript errors after refactoring",
+      "Verify accessibility (focus states, ARIA labels) maintained"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Add visible text to copy button on addon detail page",
+    "steps": [
+      "Verify CopyButton in AddonDetailPage displays 'Copy Export String' text with icon",
+      "Verify button uses size='default' instead of size='icon' to accommodate text",
+      "Verify button styling updated to match visual hierarchy on detail page",
+      "Verify text truncates appropriately on mobile viewports if needed",
+      "Verify button remains accessible with proper ARIA labels",
+      "Verify copied state shows 'Copied!' feedback text",
+      "Verify button maintains glass styling consistent with rest of page"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Remove tags display from front page cards",
+    "steps": [
+      "Verify tags section removed from ExportCard component (lines ~131-137 in export-card.tsx)",
+      "Verify tags continue to display on AddonDetailPage",
+      "Verify search/filter functionality by tags still works on HomePage",
+      "Verify CommandBar tag search remains functional",
+      "Verify no visual layout shift or spacing issues on cards after tag removal",
+      "Verify cards remain visually balanced without tags"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Enable tag-based search in command bar",
+    "steps": [
+      "Verify CommandItem value prop in CommandBar includes tags (line 63 in command-bar.tsx already includes tags)",
+      "Verify command bar filtering searches through both addon names and tags",
+      "Verify partial tag matches work in command bar search",
+      "Verify tag search is case-insensitive in command bar",
+      "Verify search performance remains acceptable with tag inclusion",
+      "Verify command bar displays relevant results when searching by tag keywords",
+      "Verify 'No results found' message displays when no name or tag matches query"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Redesign front page search bar styling with rounded appearance and transparency",
+    "steps": [
+      "Verify SearchBar Input component styling updated with increased border-radius (e.g., rounded-2xl or rounded-full)",
+      "Verify background transparency increased (e.g., bg-white/5 or bg-white/10 instead of current opacity)",
+      "Verify glass effect applied to search input (backdrop-blur, border styling)",
+      "Verify placeholder text remains readable with increased transparency",
+      "Verify text input contrast meets WCAG accessibility standards",
+      "Verify focus states remain clearly visible with new styling",
+      "Verify search bar responsive on mobile/tablet/desktop viewports",
+      "Verify input functionality unchanged (typing, clearing, value updates)",
+      "Verify search bar visually harmonizes with Hero component and card design"
+    ],
     "passes": false
   }
 ]
