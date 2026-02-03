@@ -643,5 +643,36 @@
       "Verify build process succeeds with simplified theme system"
     ],
     "passes": false
+  },
+  {
+    "category": "Data",
+    "description": "Convert export data format from JSON to TypeScript with template literals for easier content editing",
+    "steps": [
+      "Verify data/exports/ directory structure supports .ts files",
+      "Verify platynator.json converted to platynator.ts with AddonCategory export",
+      "Verify details.json converted to details.ts with AddonCategory export",
+      "Verify weakauras-guide.json converted to weakauras-guide.ts with AddonCategory export",
+      "Verify sensei-resource-bar.json converted to sensei-resource-bar.ts with AddonCategory export",
+      "Verify waypoint-ui.json converted to waypoint-ui.ts with AddonCategory export",
+      "Verify baganator.json converted to baganator.ts with AddonCategory export",
+      "Verify blizzhudtweaks.json converted to blizzhudtweaks.ts with AddonCategory export",
+      "Verify cooldown-manager.json converted to cooldown-manager.ts with AddonCategory export",
+      "Verify exportString fields use template literals (backticks) for multi-line support",
+      "Verify setupInstructions fields use template literals for better formatting",
+      "Verify all TypeScript files export const with descriptive name matching file",
+      "Verify all exports properly typed as AddonCategory with type import",
+      "Verify loadExports.ts updated to import TypeScript files instead of JSON",
+      "Verify loadExports.ts updated to use direct imports or glob pattern for .ts files",
+      "Verify TypeScript compilation succeeds with new format",
+      "Verify all addons load correctly in UI with new TypeScript format",
+      "Verify getAddonById() and getAddonManifest() work correctly with TS exports",
+      "Verify build process completes successfully with TypeScript data files",
+      "Verify no runtime errors when loading addon data",
+      "Verify template literals support pasting unescaped content (quotes, newlines, JSON, special characters)",
+      "Verify old JSON files removed after successful migration",
+      "Verify documentation created explaining TypeScript format for adding new addons",
+      "Verify example provided showing how to paste complex export strings without escaping"
+    ],
+    "passes": false
   }
 ]
