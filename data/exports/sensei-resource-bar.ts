@@ -1,0 +1,27 @@
+import type { AddonCategory } from "../../src/types/exports";
+
+export const senseiResourceBar: AddonCategory = {
+  id: "sensei-resource-bar",
+  name: "Sensei Resource Bar",
+  export: {
+    name: "Enhanced Resource Display",
+    description: "Customizable resource bar with class-specific tracking for mana, energy, rage, and more",
+    exportString: `!SRB:1!Rv2X9pU24MYLPkeU1lsuU2Z8mrNa0rqNXrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8mrqNZ8`,
+    lastUpdated: "2026-01-27T09:15:00Z",
+    downloadUrl: "https://www.curseforge.com/wow/addons/sensei-resource-bar",
+    images: [
+      "https://picsum.photos/seed/sensei1/800/600",
+      "https://picsum.photos/seed/sensei2/800/600",
+      "https://picsum.photos/seed/sensei3/800/600"
+    ],
+    setupInstructions: `1. Install Sensei Resource Bar from CurseForge
+2. Type \`/sensei\` in-game to open configuration
+3. Click 'Import Profile' in the settings menu
+4. Paste the export string provided above
+5. Adjust position and scale to your preference
+6. Click 'Save' to apply the configuration`,
+    tags: ["resource-bar", "ui", "mana", "energy", "tracking"]
+  }
+};
+
+export default senseiResourceBar;

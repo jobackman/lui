@@ -673,7 +673,7 @@
       "Verify documentation created explaining TypeScript format for adding new addons",
       "Verify example provided showing how to paste complex export strings without escaping"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI Cleanup",
