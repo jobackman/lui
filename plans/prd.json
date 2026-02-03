@@ -69,5 +69,25 @@
       "Test keyboard navigation doesn't conflict with carousel shortcuts"
     ],
     "passes": false
+  },
+  {
+    "category": "Refactoring",
+    "description": "Replace import.meta.glob with barrel export pattern in loadExports.ts for Bun compatibility",
+    "steps": [
+      "Verify all 9 addon files in data/exports/ directory",
+      "Remove import.meta.glob conditional logic (lines 13-32)",
+      "Import all addon files directly at top of loadExports.ts",
+      "Create addons array with all imported modules",
+      "Update loadAllExports() to return the addons array directly",
+      "Verify getAddonManifest() works with new implementation",
+      "Verify getAddonById() works with new implementation",
+      "Test that all 9 addons load correctly (including healthbar-color, edit-mode, cooldown-manager-centered)",
+      "Verify HomePage displays all addons",
+      "Verify detail pages work for all addons",
+      "Update comments to remove references to Vite and auto-discovery",
+      "Test build process with bun build",
+      "Verify no import errors in production bundle"
+    ],
+    "passes": false
   }
 ]
