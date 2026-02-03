@@ -591,5 +591,57 @@
     ],
     "passes": false,
     "cancelled": true
+  },
+  {
+    "category": "Bug Fix",
+    "description": "Fix overlap between last-updated timestamp and carousel indicators on small bento cards",
+    "steps": [
+      "Verify timestamp position on collapsed ExportCard component (currently positioned bottom-4 left-4)",
+      "Verify carousel indicator dots position on collapsed card (currently positioned bottom-4 center)",
+      "Verify overlap occurs on small card size (md:col-span-1 cards ~400px wide)",
+      "Verify solution implemented: reposition timestamp to top of card OR adjust carousel dots position",
+      "Verify timestamp moved to top-4 left-4 position with appropriate glass background for readability",
+      "Verify carousel indicators remain at bottom-center with sufficient spacing from edges",
+      "Verify both elements remain clearly visible without overlap on all card sizes",
+      "Verify text shadow/backdrop on timestamp ensures readability over carousel",
+      "Verify responsive behavior on mobile/tablet/desktop viewports",
+      "Verify no overlap occurs when multiple images present (carousel active)",
+      "Verify visual hierarchy maintained (both elements clearly visible and accessible)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI Cleanup",
+    "description": "Remove redundant 'Press Ctrl+K for quick search' text from search bar",
+    "steps": [
+      "Verify SearchBar component currently displays hint text alongside keyboard glyphs",
+      "Verify keyboard shortcut badges (⌘K or Ctrl+K) already visible on right side of search bar",
+      "Verify hint text removed from SearchBar placeholder or adjacent text",
+      "Verify keyboard shortcut badges remain visible and functional",
+      "Verify search bar placeholder text simplified (e.g., 'Search addons...' without keyboard hint)",
+      "Verify visual appearance cleaner without redundant instruction text",
+      "Verify keyboard shortcut (Cmd+K / Ctrl+K) continues to work correctly",
+      "Verify no regression in search functionality after text removal"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI Simplification",
+    "description": "Simplify addon styling by removing light mode and theme toggle",
+    "steps": [
+      "Verify current ThemeProvider implementation in app.tsx or theme context",
+      "Verify theme toggle component/button location in UI (header, settings, etc.)",
+      "Verify theme toggle UI element removed from all pages",
+      "Verify ThemeProvider simplified or removed entirely (enforce dark mode only)",
+      "Verify all components styled for single consistent theme (dark mode recommended)",
+      "Verify CSS variables and Tailwind config updated to remove light mode theme tokens",
+      "Verify glass effects and background styling optimized for dark mode only",
+      "Verify color contrast remains accessible (WCAG standards) in dark theme",
+      "Verify localStorage theme preference logic removed (no toggle to save)",
+      "Verify no visual regressions across all components (cards, buttons, inputs, modals)",
+      "Verify responsive behavior maintained on mobile/tablet/desktop",
+      "Verify build process succeeds with simplified theme system"
+    ],
+    "passes": false
   }
 ]
