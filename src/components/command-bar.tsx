@@ -60,14 +60,14 @@ export function CommandBar() {
           {addons.map((addon) => (
             <CommandItem
               key={addon.id}
-              value={`${addon.name} ${addon.tags?.join(' ') || ''}`}
+              value={`${addon.name} ${addon.export.tags?.join(' ') || ''}`}
               onSelect={() => handleSelect(() => navigate(`/a/${addon.id}`))}
               className="cursor-pointer"
             >
               <span className="font-medium">{addon.name}</span>
-              {addon.description && (
+              {addon.export.description && (
                 <span className="ml-2 text-xs text-muted-foreground truncate">
-                  {addon.description}
+                  {addon.export.description}
                 </span>
               )}
             </CommandItem>

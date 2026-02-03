@@ -444,7 +444,7 @@
       "Verify command bar displays relevant results when searching by tag keywords",
       "Verify 'No results found' message displays when no name or tag matches query"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
