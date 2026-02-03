@@ -93,13 +93,11 @@ export function AddonDetailPage() {
           </div>
         )}
         
-        {/* Multi-layer Gradient Overlays */}
+        {/* Gradient overlays */}
         {/* Bottom-to-top gradient for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/90" />
-        {/* Left and right edge fade-out for softer corners */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
-        {/* Top fade-out for seamless integration */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/90" />
+        {/* Edge fade-out to match app background */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_100%_at_50%_50%,transparent_0%,transparent_60%,hsl(var(--background))_100%)]" />
         
         {/* Back Button - Top Left */}
         <Link 
