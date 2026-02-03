@@ -50,19 +50,20 @@ export function HomePage() {
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
         </div>
 
-        <div className="container mx-auto w-full md:min-w-3xl px-8 pb-12">
+        <div className="container mx-auto w-full md:min-w-3xl px-4 sm:px-6 md:px-8 pb-12">
           {totalExports === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
               {searchQuery ? <p>No exports found matching "{searchQuery}"</p> : <p>No exports available</p>}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
               <AnimatePresence mode="popLayout">
                 {filteredAddons.map((addon, index) => {
                   // Create bento-style asymmetric layout with varying column spans
                   // Pattern: 2-col, 1-col, 1-col repeats (creates visual variety)
+                  // Only apply at lg breakpoint (3 columns) to prevent layout issues
                   const spanPattern = index % 3;
-                  const colSpan = spanPattern === 0 ? 'md:col-span-2' : 'md:col-span-1';
+                  const colSpan = spanPattern === 0 ? 'lg:col-span-2' : 'lg:col-span-1';
 
                   return (
                     <motion.div

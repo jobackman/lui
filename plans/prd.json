@@ -19,7 +19,7 @@
       "Verify responsive images and text sizing in cards",
       "Test on actual mobile devices if possible"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",
