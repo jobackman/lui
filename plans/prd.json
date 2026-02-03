@@ -570,6 +570,6 @@
       "Verify icon maintains pointer-events-none to allow clicking through to input",
       "Verify no visual regression on mobile/tablet/desktop viewports"
     ],
-    "passes": false
+    "passes": true
   }
 ]
