@@ -33,9 +33,6 @@ export function SearchBar({ value, onChange, placeholder = "Search exports..." }
           </kbd>
         </div>
       </div>
-      <p className="text-xs text-muted-foreground/70 mt-2 text-center hidden sm:block">
-        Press {shortcutKey}+K for quick search
-      </p>
     </div>
   );
 }

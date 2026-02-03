@@ -623,7 +623,7 @@
       "Verify keyboard shortcut (Cmd+K / Ctrl+K) continues to work correctly",
       "Verify no regression in search functionality after text removal"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI Simplification",

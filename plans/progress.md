@@ -31,4 +31,5 @@ Work continues on the remaining features in prd.json.
 - Fixed invisible SearchBar icon. Changed text-muted-foreground→text-foreground/80, added drop-shadow-sm. Icon now visible against light glass bg w/ gradient behind. WCAG contrast improved. Build+tests pass.
 - Added idle ripple animations. 4s idle threshold, 3s randomized intervals. Ripples spawn at random positions. Detects user activity (mousemove/click/touch/scroll/keydown) to reset timer. Respects prefers-reduced-motion. Configurable via props (idleThreshold/idleRippleInterval/enableIdleRipples). Works across all routes. Build+tests pass.
 - Fixed timestamp/carousel overlap on small cards. Moved timestamp from bottom to top-left w/ glass-subtle bg. Carousel dots stay bottom-center. Clear separation prevents overlap on md:col-span-1 cards. Build+tests pass.
+- Removed redundant keyboard shortcut text from SearchBar. Deleted "Press ⌘+K for quick search" helper text below input. Kbd badges already visible inside search bar. Cleaner UI. Build+tests pass.
 
