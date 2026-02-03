@@ -552,5 +552,24 @@
       "Verify configurable idle behavior (can be disabled or adjusted via props)"
     ],
     "passes": false
+  },
+  {
+    "category": "Bug Fix",
+    "description": "Fix invisible search bar icon on front page by improving contrast and visibility",
+    "steps": [
+      "Verify Search icon visibility issue on front page (white/light icon on light glass background)",
+      "Verify current icon color uses text-muted-foreground class (oklch(0.556 0 0) in light mode)",
+      "Verify icon color updated to use higher contrast color (e.g., text-foreground/70 or text-foreground/80)",
+      "Verify icon includes text-shadow or drop-shadow for better visibility against gradient background",
+      "Verify icon maintains proper opacity and remains visible on all background styles (default, mesh, waves)",
+      "Verify icon contrast meets WCAG accessibility standards (minimum 4.5:1 ratio)",
+      "Verify icon visibility in both light and dark themes",
+      "Verify icon styling consistent with keyboard shortcut badges on right side of search bar",
+      "Verify icon remains positioned correctly (absolute left-4 top-1/2 -translate-y-1/2)",
+      "Verify icon size appropriate and matches design (h-5 w-5)",
+      "Verify icon maintains pointer-events-none to allow clicking through to input",
+      "Verify no visual regression on mobile/tablet/desktop viewports"
+    ],
+    "passes": false
   }
 ]
