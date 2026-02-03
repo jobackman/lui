@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 interface SearchBarProps {
   value: string;
@@ -7,16 +8,34 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ value, onChange, placeholder = "Search exports..." }: SearchBarProps) {
+  // Detect platform for keyboard shortcut display
+  const isMac = typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  const shortcutKey = isMac ? '⌘' : 'Ctrl';
+
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <Input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="w-full"
-        aria-label="Search exports by name or description"
-      />
+    <div className="w-full max-w-2xl mx-auto relative">
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        <Input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="w-full pl-10 pr-16"
+          aria-label="Search exports by name or description"
+        />
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-1 pointer-events-none">
+          <kbd className="px-2 py-1 text-xs font-semibold text-muted-foreground bg-background/50 border border-border rounded shadow-sm">
+            {shortcutKey}
+          </kbd>
+          <kbd className="px-2 py-1 text-xs font-semibold text-muted-foreground bg-background/50 border border-border rounded shadow-sm">
+            K
+          </kbd>
+        </div>
+      </div>
+      <p className="text-xs text-muted-foreground/70 mt-2 text-center hidden sm:block">
+        Press {shortcutKey}+K for quick search
+      </p>
     </div>
   );
 }

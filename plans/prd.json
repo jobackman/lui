@@ -332,7 +332,7 @@
       "Verify hint uses KBD HTML element or styled component for semantic keyboard display",
       "Verify hint responsive and hidden on very narrow mobile viewports if needed"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Architecture",
