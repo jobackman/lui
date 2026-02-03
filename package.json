@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "bun --hot src/index.ts",
     "start": "NODE_ENV=production bun src/index.ts",
-    "build": "bun run build.ts"
+    "build": "bun run build.ts",
+    "update-timestamps": "bun run scripts/update-timestamps.ts",
+    "update-timestamps:all": "bun run scripts/update-timestamps.ts --all"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
