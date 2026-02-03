@@ -23,4 +23,5 @@ Work continues on the remaining features in prd.json.
 - Enhanced CopyButton w/ icon+text support. Added Copy/Check lucide icons, children prop, showIcon prop. Detail page now shows "Copy Export String" w/ icon instead of just "Copy". Copied state shows check icon. Fixed text visibility by adding text-foreground class. Build+tests pass.
 - Removed tags from front page cards. Cleaned up ExportCard component, removed Tag import+display. Tags still visible on AddonDetailPage, search/filter by tags still functional. Build+tests pass.
 - Fixed CommandBar tag search. Changed addon.tags→addon.export.tags in CommandItem value prop. Also fixed addon.description→addon.export.description. Created comprehensive test suite (command-bar.test.tsx) w/ 6 tests verifying tag searchability, value construction, specific addon examples. All 33 tests pass. Build succeeds.
+- Redesigned SearchBar w/ rounded-full styling. Increased height to h-12, rounded-full border-radius, larger search icon (h-5 w-5), adjusted padding (pl-12 pr-20). Glass effect already applied via existing Input component. Maintains accessibility (ARIA labels, focus states). Build+tests pass.
 

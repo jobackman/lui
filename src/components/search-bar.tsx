@@ -15,16 +15,16 @@ export function SearchBar({ value, onChange, placeholder = "Search exports..." }
   return (
     <div className="w-full max-w-2xl mx-auto relative">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
         <Input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full pl-10 pr-16"
+          className="w-full pl-12 pr-20 rounded-full h-12 text-base"
           aria-label="Search exports by name or description"
         />
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-1 pointer-events-none">
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-1 pointer-events-none">
           <kbd className="px-2 py-1 text-xs font-semibold text-muted-foreground bg-background/50 border border-border rounded shadow-sm">
             {shortcutKey}
           </kbd>
