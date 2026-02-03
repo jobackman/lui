@@ -689,7 +689,7 @@
       "Verify no visual regression on cards with single or multiple images",
       "Verify responsive behavior maintained on mobile/tablet/desktop viewports"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Bug Fix",

@@ -70,7 +70,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       )}
 
       {/* Gradient overlays for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-transparent to-black/90 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-transparent to-transparent pointer-events-none" />
 
       {/* Title and timestamp positioned at top */}
       <CardHeader className="absolute top-0 left-0 right-0 z-10 pt-4">
