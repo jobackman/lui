@@ -589,6 +589,6 @@
       "Verify responsive behavior maintained on mobile/tablet/desktop viewports",
       "Verify z-index layering correct (background behind content, gradients appropriately positioned)"
     ],
-    "passes": false
+    "passes": true
   }
 ]
