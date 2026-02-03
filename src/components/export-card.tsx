@@ -69,17 +69,27 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 via-blue-500/30 to-pink-500/30" />
       )}
 
-      {/* Bottom gradient overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90 pointer-events-none" />
+      {/* Gradient overlays for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-transparent to-black/90 pointer-events-none" />
 
-      {/* Buttons positioned at top-right */}
-      <div className="absolute top-4 right-4 z-10 flex gap-2">
+      {/* Title and timestamp positioned at top */}
+      <CardHeader className="absolute top-0 left-0 right-0 z-10 pt-4">
+        <CardTitle className="text-white drop-shadow-lg shadow-black">
+          {exportData.name}
+        </CardTitle>
+        <p className="text-white/80 text-sm drop-shadow-md mt-2">
+          Updated {formatRelativeTime(exportData.lastUpdated)}
+        </p>
+      </CardHeader>
+
+      {/* Buttons positioned at center */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex gap-2">
         {exportData.downloadUrl && (
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className={glassButtonVariants({ glass: "card" })}
+            className={glassButtonVariants({ glass: "carousel" })}
             title="Download addon"
           >
             <a
@@ -96,14 +106,14 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
         {exportData.exportString ? (
           <CopyButton 
             text={exportData.exportString}
-            className={glassButtonVariants({ glass: "card" })}
+            className={glassButtonVariants({ glass: "carousel" })}
           />
         ) : exportData.externalUrl ? (
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className={glassButtonVariants({ glass: "card" })}
+            className={glassButtonVariants({ glass: "carousel" })}
             title="View on external site"
           >
             <a
@@ -118,16 +128,6 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
           </Button>
         ) : null}
       </div>
-
-      {/* Collapsed view - Title at bottom */}
-      <CardHeader className="absolute bottom-0 left-0 right-0 z-10 pb-6">
-        <CardTitle className="text-white drop-shadow-lg shadow-black">
-          {exportData.name}
-        </CardTitle>
-        <p className="text-white/80 text-sm drop-shadow-md mt-2">
-          Updated {formatRelativeTime(exportData.lastUpdated)}
-        </p>
-      </CardHeader>
 
       {/* Image indicator dots */}
       {hasMultipleImages && (

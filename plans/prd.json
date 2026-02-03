@@ -608,7 +608,7 @@
       "Verify no overlap occurs when multiple images present (carousel active)",
       "Verify visual hierarchy maintained (both elements clearly visible and accessible)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI Cleanup",
