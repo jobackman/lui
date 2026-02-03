@@ -7,7 +7,6 @@ import { Tag } from '@/components/ui/tag';
 import { CopyButton } from '@/components/copy-button';
 import { getAddonById } from '@/lib/loadExports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
-import { glassButtonVariants, cn } from '@/lib/utils';
 import { ArrowLeft, Download, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export function AddonDetailPage() {
@@ -145,13 +144,10 @@ export function AddonDetailPage() {
                     <>
                       {/* Previous Button */}
                       <Button
-                        variant="ghost"
+                        variant="default"
                         size="icon"
                         onClick={handlePrevImage}
-                        className={cn(
-                          "absolute left-4 top-1/2 -translate-y-1/2 z-10",
-                          glassButtonVariants({ glass: "carousel" })
-                        )}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
                         aria-label="Previous image"
                       >
                         <ChevronLeft className="h-6 w-6" />
@@ -159,13 +155,10 @@ export function AddonDetailPage() {
 
                       {/* Next Button */}
                       <Button
-                        variant="ghost"
+                        variant="default"
                         size="icon"
                         onClick={handleNextImage}
-                        className={cn(
-                          "absolute right-4 top-1/2 -translate-y-1/2 z-10",
-                          glassButtonVariants({ glass: "carousel" })
-                        )}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 z-10"
                         aria-label="Next image"
                       >
                         <ChevronRight className="h-6 w-6" />
@@ -204,13 +197,12 @@ export function AddonDetailPage() {
                 {addon.export.exportString ? (
                   <CopyButton 
                     text={addon.export.exportString} 
-                    className={cn("text-foreground", glassButtonVariants({ glass: "action" }))} 
                     showIcon
                   >
                     Copy Export String
                   </CopyButton>
                 ) : addon.export.externalUrl ? (
-                  <Button variant="ghost" asChild className={glassButtonVariants({ glass: "action" })}>
+                  <Button variant="ghost" asChild>
                     <a href={addon.export.externalUrl} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="h-4 w-4 mr-2" />
                       View External Guide
@@ -219,7 +211,7 @@ export function AddonDetailPage() {
                 ) : null}
 
                 {addon.export.downloadUrl && (
-                  <Button variant="ghost" asChild className={glassButtonVariants({ glass: "action" })}>
+                  <Button variant="ghost" asChild>
                     <a href={addon.export.downloadUrl} target="_blank" rel="noopener noreferrer">
                       <Download className="h-4 w-4 mr-2" />
                       Download Addon

@@ -4,7 +4,6 @@ import { CopyButton } from "@/components/copy-button";
 import { Button } from "@/components/ui/button";
 import { Download, ExternalLink } from "lucide-react";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
-import { glassButtonVariants } from "@/lib/utils";
 import type { AddonExport } from "@/types/exports";
 
 interface ExportCardProps {
@@ -86,10 +85,9 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex gap-2 opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
         {exportData.downloadUrl && (
           <Button
-            variant="ghost"
+            variant="default"
             size="icon"
             asChild
-            className={glassButtonVariants({ glass: "carousel" })}
             title="Download addon"
           >
             <a
@@ -106,14 +104,12 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
         {exportData.exportString ? (
           <CopyButton 
             text={exportData.exportString}
-            className={glassButtonVariants({ glass: "carousel" })}
           />
         ) : exportData.externalUrl ? (
           <Button
-            variant="ghost"
+            variant="default"
             size="icon"
             asChild
-            className={glassButtonVariants({ glass: "carousel" })}
             title="View on external site"
           >
             <a
