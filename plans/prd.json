@@ -674,5 +674,62 @@
       "Verify example provided showing how to paste complex export strings without escaping"
     ],
     "passes": false
+  },
+  {
+    "category": "UI Cleanup",
+    "description": "Remove unnecessary bottom gradient from front page addon cards",
+    "steps": [
+      "Verify current gradient overlay on ExportCard uses bg-gradient-to-b from-black/90 via-transparent to-black/90 (line 73)",
+      "Verify bottom gradient (to-black/90) is no longer needed since timestamp moved to top of card",
+      "Verify gradient updated to bg-gradient-to-b from-black/90 via-transparent to-transparent",
+      "Verify top gradient remains to ensure title and timestamp readability over images",
+      "Verify bottom area of card no longer has dark gradient overlay",
+      "Verify carousel indicator dots remain visible without bottom gradient",
+      "Verify buttons positioned at center remain visible and accessible",
+      "Verify no visual regression on cards with single or multiple images",
+      "Verify responsive behavior maintained on mobile/tablet/desktop viewports"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Bug Fix",
+    "description": "Restore frosted glass effect to ExportCard action buttons",
+    "steps": [
+      "Verify current button styling uses glassButtonVariants({ glass: 'carousel' }) helper",
+      "Verify glassButtonVariants function in lib/utils.ts returns proper glass effect classes",
+      "Verify buttons have backdrop-blur-md or backdrop-blur-lg for frosted glass appearance",
+      "Verify buttons have semi-transparent background (e.g., bg-white/10 or bg-black/20)",
+      "Verify buttons have subtle border (e.g., border border-white/20)",
+      "Verify buttons have hover state with increased opacity (e.g., hover:bg-white/20)",
+      "Verify glass effect visible over card background images",
+      "Verify download button (Download icon) has proper glass styling",
+      "Verify copy button (Copy icon) has proper glass styling",
+      "Verify external link button (ExternalLink icon) has proper glass styling",
+      "Verify buttons maintain accessibility with sufficient contrast for icons",
+      "Verify no visual regression compared to previous glass effect implementation"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI Enhancement",
+    "description": "Make ExportCard action buttons appear only on hover",
+    "steps": [
+      "Verify button container div (line 86) wraps all action buttons (Download, Copy, External Link)",
+      "Verify Card component has group class applied (already present on line 46)",
+      "Verify button container has opacity-0 class by default (hidden state)",
+      "Verify button container has group-hover:opacity-100 class for hover reveal",
+      "Verify button container has transition-opacity duration-200 for smooth fade animation",
+      "Verify buttons fade in smoothly when mouse enters card area",
+      "Verify buttons fade out smoothly when mouse leaves card area",
+      "Verify carousel indicator dots remain always visible (not affected by hover state)",
+      "Verify buttons remain keyboard accessible even when visually hidden (focus makes them appear)",
+      "Verify button focus states trigger visibility (opacity-100 when any button receives focus)",
+      "Verify touch devices show buttons on touch/tap (consider [@media(hover:none)]:opacity-100 for touch screens)",
+      "Verify animation respects prefers-reduced-motion accessibility setting",
+      "Verify buttons clickable immediately when visible (no delay between fade-in and interactivity)",
+      "Verify no layout shift when buttons appear/disappear",
+      "Verify hover behavior works correctly on all card sizes (small and large bento cards)"
+    ],
+    "passes": false
   }
 ]
