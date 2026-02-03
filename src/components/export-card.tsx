@@ -79,7 +79,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
             variant="ghost"
             size="icon"
             asChild
-            className={glassButtonVariants({ variant: "card" })}
+            className={glassButtonVariants({ glass: "card" })}
             title="Download addon"
             onClick={(e) => e.stopPropagation()}
           >
@@ -96,14 +96,14 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
         {exportData.exportString ? (
           <CopyButton 
             text={exportData.exportString}
-            className={glassButtonVariants({ variant: "card" })}
+            className={glassButtonVariants({ glass: "card" })}
           />
         ) : exportData.externalUrl ? (
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className={glassButtonVariants({ variant: "card" })}
+            className={glassButtonVariants({ glass: "card" })}
             title="View on external site"
             onClick={(e) => e.stopPropagation()}
           >

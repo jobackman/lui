@@ -130,7 +130,7 @@ export function AddonDetailPage() {
                       onClick={handlePrevImage}
                       className={cn(
                         "absolute left-4 top-1/2 -translate-y-1/2 z-10",
-                        glassButtonVariants({ variant: "carousel" })
+                        glassButtonVariants({ glass: "carousel" })
                       )}
                       aria-label="Previous image"
                     >
@@ -144,7 +144,7 @@ export function AddonDetailPage() {
                       onClick={handleNextImage}
                       className={cn(
                         "absolute right-4 top-1/2 -translate-y-1/2 z-10",
-                        glassButtonVariants({ variant: "carousel" })
+                        glassButtonVariants({ glass: "carousel" })
                       )}
                       aria-label="Next image"
                     >
@@ -184,13 +184,13 @@ export function AddonDetailPage() {
               {addon.export.exportString ? (
                 <CopyButton 
                   text={addon.export.exportString} 
-                  className={cn("text-foreground", glassButtonVariants({ variant: "action" }))} 
+                  className={cn("text-foreground", glassButtonVariants({ glass: "action" }))} 
                   showIcon
                 >
                   Copy Export String
                 </CopyButton>
               ) : addon.export.externalUrl ? (
-                <Button variant="ghost" asChild className={glassButtonVariants({ variant: "action" })}>
+                <Button variant="ghost" asChild className={glassButtonVariants({ glass: "action" })}>
                   <a href={addon.export.externalUrl} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     View External Guide
@@ -199,7 +199,7 @@ export function AddonDetailPage() {
               ) : null}
 
               {addon.export.downloadUrl && (
-                <Button variant="ghost" asChild className={glassButtonVariants({ variant: "action" })}>
+                <Button variant="ghost" asChild className={glassButtonVariants({ glass: "action" })}>
                   <a href={addon.export.downloadUrl} target="_blank" rel="noopener noreferrer">
                     <Download className="h-4 w-4 mr-2" />
                     Download Addon
