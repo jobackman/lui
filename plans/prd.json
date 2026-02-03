@@ -482,5 +482,53 @@
       "Verify no console errors when clicking buttons on cards"
     ],
     "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Add entry and exit animations on front page cards and detail page",
+    "steps": [
+      "Verify animation library dependency added (framer-motion recommended: bun add framer-motion)",
+      "Verify ExportCard component wrapped with motion component for entry/exit animations",
+      "Verify cards animate on mount with staggered delay for bento grid (each card delays by ~100-150ms)",
+      "Verify card entry animation includes fade-in and slide-up effect (opacity 0→1, translateY 20px→0)",
+      "Verify card entry animation duration appropriate (300-500ms)",
+      "Verify card exit animation includes fade-out when filtering/searching",
+      "Verify AddonDetailPage content wrapped with motion component for page transitions",
+      "Verify detail page animates on mount with fade-in and slight scale effect",
+      "Verify detail page hero section animates separately from content (layered animation)",
+      "Verify setup instructions card animates with slide-up effect after hero animation",
+      "Verify animation easing functions provide natural motion (ease-out for entry, ease-in for exit)",
+      "Verify animations respect prefers-reduced-motion accessibility setting (disable animations when user prefers reduced motion)",
+      "Verify animations don't interfere with user interactions (buttons clickable during animation)",
+      "Verify animation performance acceptable on various devices (no jank or lag)",
+      "Verify AnimatePresence component used for exit animations when navigating away",
+      "Verify stagger animation on bento grid uses proper container/children pattern"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Add smooth transition animations when navigating between routes",
+    "steps": [
+      "Verify AnimatePresence component wraps Routes in app.tsx for route transitions",
+      "Verify route location key prop configured for AnimatePresence to detect route changes",
+      "Verify HomePage wrapped with motion component for route exit/entry",
+      "Verify AddonDetailPage wrapped with motion component for route exit/entry",
+      "Verify transition animation when navigating from home to detail page (fade + slide)",
+      "Verify transition animation when navigating from detail to home (fade + slide reverse)",
+      "Verify exit animation completes before entry animation begins (mode='wait' on AnimatePresence)",
+      "Verify transition duration appropriate (300-400ms for route changes)",
+      "Verify transition doesn't conflict with page-specific entry animations",
+      "Verify browser back/forward navigation triggers transitions correctly",
+      "Verify transitions work with CommandBar navigation (Cmd+K selections)",
+      "Verify transition animation respects prefers-reduced-motion setting",
+      "Verify scroll position resets to top on route transitions",
+      "Verify no layout shift or content flash during transitions",
+      "Verify loading states handled gracefully during transitions",
+      "Verify transitions perform smoothly without blocking UI interactions",
+      "Verify TypeScript types for motion components properly configured",
+      "Verify build process succeeds with animation library"
+    ],
+    "passes": false
   }
 ]
