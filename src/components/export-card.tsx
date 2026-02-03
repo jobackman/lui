@@ -81,13 +81,13 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
             asChild
             className={glassButtonVariants({ glass: "card" })}
             title="Download addon"
-            onClick={(e) => e.stopPropagation()}
           >
             <a
               href={exportData.downloadUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Download addon"
+              onClick={(e) => e.stopPropagation()}
             >
               <Download className="h-4 w-4" />
             </a>
@@ -105,13 +105,13 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
             asChild
             className={glassButtonVariants({ glass: "card" })}
             title="View on external site"
-            onClick={(e) => e.stopPropagation()}
           >
             <a
               href={exportData.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Open external guide"
+              onClick={(e) => e.stopPropagation()}
             >
               <ExternalLink className="h-4 w-4" />
             </a>

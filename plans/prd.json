@@ -461,5 +461,24 @@
       "Verify search bar visually harmonizes with Hero component and card design"
     ],
     "passes": true
+  },
+  {
+    "category": "Bug Fix",
+    "description": "Fix button click propagation to prevent unwanted navigation when clicking interactive elements on cards",
+    "steps": [
+      "Verify Download button (anchor tag with asChild) prevents Link navigation when clicked",
+      "Verify External Link button (anchor tag with asChild) prevents Link navigation when clicked",
+      "Verify CopyButton prevents Link navigation when clicked",
+      "Verify carousel indicator dot buttons prevent Link navigation when clicked",
+      "Verify onClick handlers on anchor elements call stopPropagation() instead of on Button wrapper",
+      "Verify clicking card background/title/timestamp area still navigates to detail page correctly",
+      "Verify keyboard navigation (Enter/Tab+Enter) on buttons doesn't trigger card navigation",
+      "Verify buttons remain accessible with proper focus states and ARIA labels",
+      "Verify all interactive elements maintain proper event handling without side effects",
+      "Verify TypeScript compilation succeeds after event handler changes",
+      "Verify build process completes successfully",
+      "Verify no console errors when clicking buttons on cards"
+    ],
+    "passes": true
   }
 ]
