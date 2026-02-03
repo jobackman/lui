@@ -15,6 +15,7 @@ export function CopyButton({ text, onCopy, className, children, showIcon = false
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent default link behavior
     e.stopPropagation(); // Prevent card click events
     if (!text) return; // Don't copy if no text provided
     try {
@@ -47,6 +48,7 @@ export function CopyButton({ text, onCopy, className, children, showIcon = false
 
   return (
     <Button
+      type="button"
       onClick={handleCopy}
       variant={copied ? "secondary" : "default"}
       size="sm"

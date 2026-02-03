@@ -471,6 +471,8 @@
       "Verify CopyButton prevents Link navigation when clicked",
       "Verify carousel indicator dot buttons prevent Link navigation when clicked",
       "Verify onClick handlers on anchor elements call stopPropagation() instead of on Button wrapper",
+      "Verify all button elements have type='button' attribute to prevent form submission behavior",
+      "Verify all onClick handlers call both preventDefault() and stopPropagation()",
       "Verify clicking card background/title/timestamp area still navigates to detail page correctly",
       "Verify keyboard navigation (Enter/Tab+Enter) on buttons doesn't trigger card navigation",
       "Verify buttons remain accessible with proper focus states and ARIA labels",

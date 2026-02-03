@@ -135,7 +135,9 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
           {images.map((_, index) => (
             <button
               key={index}
+              type="button"
               onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 setCurrentImageIndex(index);
               }}
