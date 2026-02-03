@@ -3,7 +3,6 @@ import type { AddonCategory } from "../types/exports";
 // Fallback imports for test environment (Bun doesn't support import.meta.glob)
 import detailsData from "../../data/exports/details";
 import platynatorData from "../../data/exports/platynator";
-import weakaurasGuideData from "../../data/exports/weakauras-guide";
 import senseiResourceBarData from "../../data/exports/sensei-resource-bar";
 import waypointUiData from "../../data/exports/waypoint-ui";
 import baganatorData from "../../data/exports/baganator";
@@ -24,9 +23,8 @@ if (typeof import.meta.glob === "function") {
   // Test environment - use fallback imports
   // Note: In production, new addons are auto-detected via glob
   modules = {
-    "details": { default: detailsData },
     "platynator": { default: platynatorData },
-    "weakauras-guide": { default: weakaurasGuideData },
+    "details": { default: detailsData },
     "sensei-resource-bar": { default: senseiResourceBarData },
     "waypoint-ui": { default: waypointUiData },
     "baganator": { default: baganatorData },
