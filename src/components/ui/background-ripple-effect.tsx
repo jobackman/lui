@@ -4,8 +4,14 @@ import { cn } from "@/lib/utils";
 
 export const BackgroundRippleEffect = ({
   cellSize = 56,
+  idleThreshold = 4000,
+  idleRippleInterval = 3000,
+  enableIdleRipples = true,
 }: {
   cellSize?: number;
+  idleThreshold?: number;
+  idleRippleInterval?: number;
+  enableIdleRipples?: boolean;
 }) => {
   const [clickedCell, setClickedCell] = useState<{
     row: number;
@@ -13,8 +19,12 @@ export const BackgroundRippleEffect = ({
   } | null>(null);
   const [rippleKey, setRippleKey] = useState(0);
   const [dimensions, setDimensions] = useState({ rows: 10, cols: 30 });
+  const [isIdle, setIsIdle] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const idleRippleIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Update dimensions on resize
   useEffect(() => {
     const updateDimensions = () => {
       if (ref.current) {
@@ -30,6 +40,89 @@ export const BackgroundRippleEffect = ({
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);
   }, [cellSize]);
+
+  // Idle detection and automatic ripple generation
+  useEffect(() => {
+    if (!enableIdleRipples) return;
+
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const resetIdleTimer = () => {
+      setIsIdle(false);
+      
+      // Clear existing timers
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current);
+      }
+      if (idleRippleIntervalRef.current) {
+        clearInterval(idleRippleIntervalRef.current);
+      }
+
+      // Set new idle timer
+      idleTimerRef.current = setTimeout(() => {
+        setIsIdle(true);
+      }, idleThreshold);
+    };
+
+    // User interaction events
+    const events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'];
+    events.forEach(event => {
+      window.addEventListener(event, resetIdleTimer);
+    });
+
+    // Initialize idle timer
+    resetIdleTimer();
+
+    return () => {
+      events.forEach(event => {
+        window.removeEventListener(event, resetIdleTimer);
+      });
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current);
+      }
+      if (idleRippleIntervalRef.current) {
+        clearInterval(idleRippleIntervalRef.current);
+      }
+    };
+  }, [idleThreshold, enableIdleRipples]);
+
+  // Generate automatic ripples when idle
+  useEffect(() => {
+    if (!isIdle || !enableIdleRipples) return;
+
+    const generateIdleRipple = () => {
+      if (dimensions.rows > 0 && dimensions.cols > 0) {
+        // Generate random position
+        const randomRow = Math.floor(Math.random() * dimensions.rows);
+        const randomCol = Math.floor(Math.random() * dimensions.cols);
+        
+        setClickedCell({ row: randomRow, col: randomCol });
+        setRippleKey((k) => k + 1);
+      }
+    };
+
+    // Generate first ripple immediately
+    generateIdleRipple();
+
+    // Set up interval for subsequent ripples with randomization
+    const startInterval = () => {
+      const randomizedInterval = idleRippleInterval + (Math.random() - 0.5) * 1000;
+      idleRippleIntervalRef.current = setTimeout(() => {
+        generateIdleRipple();
+        startInterval(); // Schedule next ripple
+      }, randomizedInterval);
+    };
+
+    startInterval();
+
+    return () => {
+      if (idleRippleIntervalRef.current) {
+        clearTimeout(idleRippleIntervalRef.current);
+      }
+    };
+  }, [isIdle, dimensions, idleRippleInterval, enableIdleRipples]);
 
   return (
     <div

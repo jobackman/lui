@@ -551,7 +551,7 @@
       "Verify idle state detection works across all routes (HomePage and AddonDetailPage)",
       "Verify configurable idle behavior (can be disabled or adjusted via props)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Bug Fix",
