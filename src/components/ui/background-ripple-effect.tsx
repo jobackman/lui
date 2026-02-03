@@ -19,7 +19,9 @@ export const BackgroundRippleEffect = ({
     const updateDimensions = () => {
       if (ref.current) {
         const width = window.innerWidth;
-        const height = window.innerHeight;
+        // Use a large fixed height that will work well with gradients
+        // This creates enough cells to fill a very tall page
+        const height = Math.max(window.innerHeight * 3, 3000);
         const cols = Math.ceil(width / cellSize);
         const rows = Math.ceil(height / cellSize);
         setDimensions({ rows, cols });
@@ -35,10 +37,13 @@ export const BackgroundRippleEffect = ({
     <div
       ref={ref}
       className={cn(
-        "fixed inset-0 h-full w-full overflow-hidden",
+        "absolute inset-0 w-full overflow-hidden",
         "[--cell-border-color:var(--color-neutral-300)] [--cell-fill-color:var(--color-neutral-100)] [--cell-shadow-color:var(--color-neutral-500)]",
         "dark:[--cell-border-color:var(--color-neutral-700)] dark:[--cell-fill-color:var(--color-neutral-900)] dark:[--cell-shadow-color:var(--color-neutral-800)]",
       )}
+      style={{
+        height: `${dimensions.rows * cellSize}px`,
+      }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background pointer-events-none z-10" />
       <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background pointer-events-none z-10" />
