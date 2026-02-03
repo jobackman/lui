@@ -10,16 +10,13 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./app";
 import { ThemeProvider } from "./contexts/theme-context";
-import { BackgroundProvider } from "./contexts/background-context";
 
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>
-        <BackgroundProvider>
-          <App />
-        </BackgroundProvider>
+        <App />
       </ThemeProvider>
     </BrowserRouter>
   </StrictMode>

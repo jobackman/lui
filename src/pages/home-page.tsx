@@ -18,14 +18,12 @@ export function HomePage() {
     }
 
     const query = searchQuery.toLowerCase();
-    
+
     // Filter addons where the export name OR any tag matches the search query
     return allAddons.filter((addon) => {
       const nameMatches = addon.export.name.toLowerCase().includes(query);
-      const tagMatches = addon.export.tags?.some((tag) => 
-        tag.toLowerCase().includes(query)
-      ) ?? false;
-      
+      const tagMatches = addon.export.tags?.some((tag) => tag.toLowerCase().includes(query)) ?? false;
+
       return nameMatches || tagMatches;
     });
   }, [allAddons, searchQuery]);
@@ -35,7 +33,7 @@ export function HomePage() {
   return (
     <div className="min-h-screen relative">
       <BackgroundRippleEffect cellSize={48} />
-      
+
       <div className="relative z-20">
         <Hero />
 
@@ -46,11 +44,7 @@ export function HomePage() {
         <div className="container mx-auto w-full md:min-w-3xl px-8 pb-12">
           {totalExports === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
-              {searchQuery ? (
-                <p>No exports found matching "{searchQuery}"</p>
-              ) : (
-                <p>No exports available</p>
-              )}
+              {searchQuery ? <p>No exports found matching "{searchQuery}"</p> : <p>No exports available</p>}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
@@ -59,14 +53,11 @@ export function HomePage() {
                 // Pattern: 2-col, 1-col, 1-col repeats (creates visual variety)
                 const spanPattern = index % 3;
                 const colSpan = spanPattern === 0 ? 'md:col-span-2' : 'md:col-span-1';
-                
+
                 return (
                   <div key={addon.id} className={colSpan}>
                     <Link to={`/a/${addon.id}`} className="block h-full">
-                      <ExportCard 
-                        export={addon.export}
-                        addonId={addon.id}
-                      />
+                      <ExportCard export={addon.export} addonId={addon.id} />
                     </Link>
                   </div>
                 );

@@ -13,14 +13,14 @@ export function AddonDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
   // Handle invalid addon IDs
   if (!id) {
     return <Navigate to="/" replace />;
   }
 
   const addon = getAddonById(id);
-  
+
   // 404 handling - redirect to home for invalid addon IDs
   if (!addon) {
     return <Navigate to="/" replace />;
@@ -69,11 +69,11 @@ export function AddonDetailPage() {
   return (
     <div className="min-h-screen relative">
       <BackgroundRippleEffect cellSize={48} />
-      
+
       <div className="relative z-20">
         <div className="container mx-auto max-w-6xl px-4 sm:px-8 py-8 sm:py-12">
           {/* Back Button */}
-          <Link 
+          <Link
             to="/"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 group"
           >
@@ -86,9 +86,7 @@ export function AddonDetailPage() {
             {/* Header */}
             <div className="mb-6">
               <h1 className="text-3xl sm:text-4xl font-bold mb-3">{addon.export.name}</h1>
-              <p className="text-muted-foreground text-base sm:text-lg mb-2">
-                {addon.export.description}
-              </p>
+              <p className="text-muted-foreground text-base sm:text-lg mb-2">{addon.export.description}</p>
               <p className="text-sm text-muted-foreground mb-3">
                 Updated {formatRelativeTime(addon.export.lastUpdated)}
               </p>
@@ -177,38 +175,19 @@ export function AddonDetailPage() {
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 mb-8">
               {addon.export.exportString ? (
-                <CopyButton 
-                  text={addon.export.exportString}
-                  className="glass hover:bg-white/20"
-                />
+                <CopyButton text={addon.export.exportString} className="glass hover:bg-white/20" />
               ) : addon.export.externalUrl ? (
-                <Button
-                  variant="ghost"
-                  asChild
-                  className="glass hover:bg-white/20"
-                >
-                  <a
-                    href={addon.export.externalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                <Button variant="ghost" asChild className="glass hover:bg-white/20">
+                  <a href={addon.export.externalUrl} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     View External Guide
                   </a>
                 </Button>
               ) : null}
-              
+
               {addon.export.downloadUrl && (
-                <Button
-                  variant="ghost"
-                  asChild
-                  className="glass hover:bg-white/20"
-                >
-                  <a
-                    href={addon.export.downloadUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                <Button variant="ghost" asChild className="glass hover:bg-white/20">
+                  <a href={addon.export.downloadUrl} target="_blank" rel="noopener noreferrer">
                     <Download className="h-4 w-4 mr-2" />
                     Download Addon
                   </a>
@@ -232,8 +211,7 @@ export function AddonDetailPage() {
             {!addon.export.exportString && addon.export.externalUrl && !addon.export.setupInstructions && (
               <div className="glass p-6 rounded-lg text-center">
                 <p className="text-muted-foreground">
-                  This addon requires importing from an external source.
-                  Click the button above to view the guide.
+                  This addon requires importing from an external source. Click the button above to view the guide.
                 </p>
               </div>
             )}
