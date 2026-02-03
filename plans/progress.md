@@ -21,4 +21,5 @@ Work continues on the remaining features in prd.json.
 - Implemented global command bar. Installed cmdk+@radix-ui/react-dialog. Created shadcn Dialog+Command components w/ glass styling. Built CommandBar component w/ Cmd/Ctrl+K shortcut, prevents trigger in input fields, searches addon names+tags, shows Home nav item, integrates w/ react-router. Mounted in App for global access. Build+tests pass.
 - Added keyboard shortcut indicator to SearchBar. Shows platform-appropriate hint (⌘K on Mac, Ctrl+K on Windows/Linux) as kbd elements in search input. Added Search icon. Helper text below bar. Hidden on mobile. Build+tests pass.
 - Enhanced CopyButton w/ icon+text support. Added Copy/Check lucide icons, children prop, showIcon prop. Detail page now shows "Copy Export String" w/ icon instead of just "Copy". Copied state shows check icon. Fixed text visibility by adding text-foreground class. Build+tests pass.
+- Removed tags from front page cards. Cleaned up ExportCard component, removed Tag import+display. Tags still visible on AddonDetailPage, search/filter by tags still functional. Build+tests pass.
 

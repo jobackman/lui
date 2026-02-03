@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardTitle, CardAction, CardDescription } from "@/components/ui/card";
 import { CopyButton } from "@/components/copy-button";
 import { Button } from "@/components/ui/button";
-import { Tag } from "@/components/ui/tag";
 import { Download, ExternalLink } from "lucide-react";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import type { AddonExport } from "@/types/exports";
@@ -127,14 +126,6 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
         <p className="text-white/80 text-sm drop-shadow-md mt-2">
           Updated {formatRelativeTime(exportData.lastUpdated)}
         </p>
-        {/* Tags */}
-        {exportData.tags && exportData.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {exportData.tags.map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
-          </div>
-        )}
       </CardHeader>
 
       {/* Image indicator dots */}

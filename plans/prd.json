@@ -430,7 +430,7 @@
       "Verify no visual layout shift or spacing issues on cards after tag removal",
       "Verify cards remain visually balanced without tags"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",
