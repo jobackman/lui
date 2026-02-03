@@ -1,43 +1,35 @@
 import type { AddonCategory } from "../types/exports";
 
-// Fallback imports for test environment (Bun doesn't support import.meta.glob)
+// Direct imports for all addon files
+import blizzhudtweaksData from "../../data/exports/blizzhudtweaks";
+import cooldownManagerData from "../../data/exports/cooldown-manager";
+import cooldownManagerCenteredData from "../../data/exports/cooldown-manager-centered";
 import detailsData from "../../data/exports/details";
+import editModeData from "../../data/exports/edit-mode";
+import healthbarColorData from "../../data/exports/healthbar-color";
 import platynatorData from "../../data/exports/platynator";
 import senseiResourceBarData from "../../data/exports/sensei-resource-bar";
 import waypointUiData from "../../data/exports/waypoint-ui";
-import blizzhudtweaksData from "../../data/exports/blizzhudtweaks";
-import cooldownManagerData from "../../data/exports/cooldown-manager";
 
-// Automatically import all TypeScript files from data/exports directory
-// This uses Vite's glob import feature for build-time static analysis
-let modules: Record<string, { default: AddonCategory }>;
-
-if (typeof import.meta.glob === "function") {
-  // Vite/production environment - use glob imports for automatic discovery
-  modules = import.meta.glob<{ default: AddonCategory }>(
-    "../../data/exports/*.ts",
-    { eager: true }
-  );
-} else {
-  // Test environment - use fallback imports
-  // Note: In production, new addons are auto-detected via glob
-  modules = {
-    "platynator": { default: platynatorData },
-    "details": { default: detailsData },
-    "sensei-resource-bar": { default: senseiResourceBarData },
-    "waypoint-ui": { default: waypointUiData },
-    "blizzhudtweaks": { default: blizzhudtweaksData },
-    "cooldown-manager": { default: cooldownManagerData },
-  };
-}
+// Array of all addons for direct access
+const addons: AddonCategory[] = [
+  blizzhudtweaksData,
+  cooldownManagerData,
+  cooldownManagerCenteredData,
+  detailsData,
+  editModeData,
+  healthbarColorData,
+  platynatorData,
+  senseiResourceBarData,
+  waypointUiData,
+];
 
 /**
- * Load all addon export data from TypeScript files at build time.
+ * Load all addon export data.
  * This provides type-safe access to all addon configurations.
- * Addons are automatically discovered in production - no manual imports needed.
  */
 export function loadAllExports(): AddonCategory[] {
-  return Object.values(modules).map(module => module.default);
+  return addons;
 }
 
 /**

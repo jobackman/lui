@@ -47,25 +47,25 @@ test('specific addon tags are searchable (Platynator example)', () => {
   
   const searchValue = `${platynator!.name} ${platynator!.export.tags?.join(' ') || ''}`;
   
-  // Platynator should have nameplates, ui, pvp tags
+  // Platynator should have nameplates, threat, ui tags
   expect(searchValue.toLowerCase()).toContain('nameplates');
+  expect(searchValue.toLowerCase()).toContain('threat');
   expect(searchValue.toLowerCase()).toContain('ui');
-  expect(searchValue.toLowerCase()).toContain('pvp');
 });
 
-test('specific addon tags are searchable (Baganator example)', () => {
+test('specific addon tags are searchable (Details example)', () => {
   const addons = loadAllExports();
-  const baganator = addons.find(addon => addon.id === 'baganator');
+  const details = addons.find(addon => addon.id === 'details');
   
-  expect(baganator).toBeDefined();
-  expect(baganator!.export.tags).toBeDefined();
+  expect(details).toBeDefined();
+  expect(details!.export.tags).toBeDefined();
   
-  const searchValue = `${baganator!.name} ${baganator!.export.tags?.join(' ') || ''}`;
+  const searchValue = `${details!.name} ${details!.export.tags?.join(' ') || ''}`;
   
-  // Baganator should have inventory, bags, ui tags
-  expect(searchValue.toLowerCase()).toContain('inventory');
-  expect(searchValue.toLowerCase()).toContain('bags');
-  expect(searchValue.toLowerCase()).toContain('ui');
+  // Details should have dmg, raid, meter tags
+  expect(searchValue.toLowerCase()).toContain('dmg');
+  expect(searchValue.toLowerCase()).toContain('raid');
+  expect(searchValue.toLowerCase()).toContain('meter');
 });
 
 test('all unique tags can be extracted from addons', () => {

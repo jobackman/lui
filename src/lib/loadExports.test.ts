@@ -26,12 +26,12 @@ test("loadAllExports includes Platynator addon", () => {
 test("getAddonManifest returns list of addon ids and names", () => {
   const manifest = getAddonManifest();
   expect(Array.isArray(manifest)).toBe(true);
-  expect(manifest.length).toBe(8);
+  expect(manifest.length).toBe(9);
   
   const ids = manifest.map(item => item.id);
   expect(ids).toContain("details");
   expect(ids).toContain("platynator");
-  expect(ids).toContain("weakauras-guide");
+  expect(ids).toContain("edit-mode");
 });
 
 test("getAddonById returns correct addon for valid id", () => {
@@ -76,10 +76,10 @@ test("export data has correct structure", () => {
   }
 });
 
-test("weakauras-guide addon has externalUrl instead of exportString", () => {
-  const weakaurasGuide = getAddonById("weakauras-guide");
-  expect(weakaurasGuide).toBeDefined();
-  expect(weakaurasGuide?.export.externalUrl).toBeDefined();
-  expect(typeof weakaurasGuide?.export.externalUrl).toBe("string");
-  expect(weakaurasGuide?.export.exportString).toBeUndefined();
+test("blizzhudtweaks addon has externalUrl instead of exportString", () => {
+  const blizzhudtweaks = getAddonById("blizzhudtweaks");
+  expect(blizzhudtweaks).toBeDefined();
+  expect(blizzhudtweaks?.export.externalUrl).toBeDefined();
+  expect(typeof blizzhudtweaks?.export.externalUrl).toBe("string");
+  expect(blizzhudtweaks?.export.exportString).toBeUndefined();
 });
