@@ -10,16 +10,18 @@ export function App() {
   const location = useLocation();
 
   return (
-    <div className="relative min-h-screen">
+    <>
       <BackgroundRippleEffect cellSize={48} />
-      <CommandBar />
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/a/:id" element={<AddonDetailPage />} />
-        </Routes>
-      </AnimatePresence>
-    </div>
+      <div className="relative min-h-screen">
+        <CommandBar />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/a/:id" element={<AddonDetailPage />} />
+          </Routes>
+        </AnimatePresence>
+      </div>
+    </>
   );
 }
 

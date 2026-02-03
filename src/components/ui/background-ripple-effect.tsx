@@ -37,12 +37,11 @@ export const BackgroundRippleEffect = ({
     <div
       ref={ref}
       className={cn(
-        "absolute left-0 right-0 overflow-hidden",
+        "fixed left-0 top-0 overflow-hidden pointer-events-none",
         "[--cell-border-color:var(--color-neutral-300)] [--cell-fill-color:var(--color-neutral-100)] [--cell-shadow-color:var(--color-neutral-500)]",
         "dark:[--cell-border-color:var(--color-neutral-700)] dark:[--cell-fill-color:var(--color-neutral-900)] dark:[--cell-shadow-color:var(--color-neutral-800)]",
       )}
       style={{
-        top: 0,
         height: `${dimensions.rows * cellSize}px`,
         width: '100vw',
       }}
@@ -50,20 +49,22 @@ export const BackgroundRippleEffect = ({
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background pointer-events-none z-10" />
       <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background pointer-events-none z-10" />
       
-      <DivGrid
-        key={`base-${rippleKey}`}
-        rows={dimensions.rows}
-        cols={dimensions.cols}
-        cellSize={cellSize}
-        borderColor="var(--cell-border-color)"
-        fillColor="var(--cell-fill-color)"
-        clickedCell={clickedCell}
-        onCellClick={(row, col) => {
-          setClickedCell({ row, col });
-          setRippleKey((k) => k + 1);
-        }}
-        interactive
-      />
+      <div className="pointer-events-auto">
+        <DivGrid
+          key={`base-${rippleKey}`}
+          rows={dimensions.rows}
+          cols={dimensions.cols}
+          cellSize={cellSize}
+          borderColor="var(--cell-border-color)"
+          fillColor="var(--cell-fill-color)"
+          clickedCell={clickedCell}
+          onCellClick={(row, col) => {
+            setClickedCell({ row, col });
+            setRippleKey((k) => k + 1);
+          }}
+          interactive
+        />
+      </div>
     </div>
   );
 };
