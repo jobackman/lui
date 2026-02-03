@@ -175,7 +175,7 @@ export function AddonDetailPage() {
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 mb-8">
               {addon.export.exportString ? (
-                <CopyButton text={addon.export.exportString} className="glass hover:bg-white/20" showIcon>
+                <CopyButton text={addon.export.exportString} className="glass hover:bg-white/20 text-foreground" showIcon>
                   Copy Export String
                 </CopyButton>
               ) : addon.export.externalUrl ? (
