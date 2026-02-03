@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Hero } from '@/components/hero';
@@ -10,6 +10,11 @@ import { loadAllExports } from '@/lib/loadExports';
 export function HomePage() {
   const allAddons = loadAllExports();
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Reset scroll position on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Filter addons based on search query (searches export name and tags)
   const filteredAddons = useMemo(() => {
@@ -32,7 +37,13 @@ export function HomePage() {
   const totalExports = filteredAddons.length;
 
   return (
-    <div className="min-h-screen relative">
+    <motion.div 
+      className="min-h-screen relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <BackgroundRippleEffect cellSize={48} />
 
       <div className="relative z-20">
@@ -81,6 +92,6 @@ export function HomePage() {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

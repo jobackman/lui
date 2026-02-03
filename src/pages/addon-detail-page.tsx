@@ -32,6 +32,11 @@ export function AddonDetailPage() {
   const hasImages = images.length > 0;
   const hasMultipleImages = images.length > 1;
 
+  // Reset scroll position on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
