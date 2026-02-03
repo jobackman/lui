@@ -72,9 +72,12 @@ export function AddonDetailPage() {
       
       {/* Fixed Hero Header with Background Carousel */}
       <div className="sticky top-0 z-30 h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] relative overflow-hidden">
-        {/* Background Images */}
+        {/* Background Images with edge mask */}
         {hasImages && (
-          <div className="absolute inset-0">
+          <div className="absolute inset-0" style={{
+            maskImage: 'radial-gradient(ellipse 85% 100% at 50% 50%, black 50%, transparent 100%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 85% 100% at 50% 50%, black 50%, transparent 100%)'
+          }}>
             {images.map((image, index) => (
               <div
                 key={image}
@@ -93,11 +96,8 @@ export function AddonDetailPage() {
           </div>
         )}
         
-        {/* Gradient overlays */}
-        {/* Bottom-to-top gradient for text readability */}
+        {/* Gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/90" />
-        {/* Edge fade-out to match app background */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_100%_at_50%_50%,transparent_0%,transparent_60%,hsl(var(--background))_100%)]" />
         
         {/* Back Button - Top Left */}
         <Link 
