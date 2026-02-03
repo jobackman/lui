@@ -571,5 +571,24 @@
       "Verify no visual regression on mobile/tablet/desktop viewports"
     ],
     "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Change background ripple positioning from fixed to static to enable scrolling",
+    "steps": [
+      "Verify BackgroundRippleEffect wrapper div className changed from 'fixed inset-0' to 'absolute inset-0' or remove positioning entirely",
+      "Verify parent containers (HomePage and AddonDetailPage) have 'relative' positioning to contain the absolute positioned background",
+      "Verify background ripple grid dimensions calculate based on document/content height instead of viewport height",
+      "Verify background ripples scroll naturally with page content",
+      "Verify gradient overlays (top/bottom fade) still work correctly with new positioning",
+      "Verify ripple click interactions continue to work when scrolling",
+      "Verify cell dimensions and grid layout remain correct at different scroll positions",
+      "Verify no visual glitches or layout shifts when scrolling",
+      "Verify background remains visible on long content pages (extends to full content height)",
+      "Verify performance acceptable with larger grid for full page height",
+      "Verify responsive behavior maintained on mobile/tablet/desktop viewports",
+      "Verify z-index layering correct (background behind content, gradients appropriately positioned)"
+    ],
+    "passes": false
   }
 ]
