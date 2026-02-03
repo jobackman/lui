@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Copy, Check } from "lucide-react";
 
 interface CopyButtonProps {
   text?: string;
   onCopy?: () => void;
   className?: string;
+  children?: React.ReactNode;
+  showIcon?: boolean;
 }
 
-export function CopyButton({ text, onCopy, className }: CopyButtonProps) {
+export function CopyButton({ text, onCopy, className, children, showIcon = false }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (e: React.MouseEvent) => {
@@ -39,6 +42,9 @@ export function CopyButton({ text, onCopy, className }: CopyButtonProps) {
     }
   };
 
+  const defaultContent = copied ? "Copied!" : "Copy";
+  const displayContent = children ? (copied ? "Copied!" : children) : defaultContent;
+
   return (
     <Button
       onClick={handleCopy}
@@ -46,7 +52,14 @@ export function CopyButton({ text, onCopy, className }: CopyButtonProps) {
       size="sm"
       className={cn("transition-all", className)}
     >
-      {copied ? "Copied!" : "Copy"}
+      {showIcon && (
+        copied ? (
+          <Check className="h-4 w-4 mr-2" />
+        ) : (
+          <Copy className="h-4 w-4 mr-2" />
+        )
+      )}
+      {displayContent}
     </Button>
   );
 }

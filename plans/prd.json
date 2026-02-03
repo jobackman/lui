@@ -417,7 +417,7 @@
       "Verify copied state shows 'Copied!' feedback text",
       "Verify button maintains glass styling consistent with rest of page"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
