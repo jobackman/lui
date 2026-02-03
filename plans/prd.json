@@ -708,7 +708,7 @@
       "Verify buttons maintain accessibility with sufficient contrast for icons",
       "Verify no visual regression compared to previous glass effect implementation"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI Enhancement",

@@ -34,4 +34,5 @@ Work continues on the remaining features in prd.json.
 - Removed redundant keyboard shortcut text from SearchBar. Deleted "Press ⌘+K for quick search" helper text below input. Kbd badges already visible inside search bar. Cleaner UI. Build+tests pass.
 - Made ExportCard action buttons appear only on hover. Added opacity-0/group-hover:opacity-100/focus-within:opacity-100 w/ 200ms transition. Touch devices always show buttons via [@media(hover:none)]:opacity-100. Respects prefers-reduced-motion. Cleaner card UI at rest. Build+tests pass.
 - Removed bottom gradient from ExportCard. Changed to-black/90→to-transparent. Timestamp now at top, bottom gradient unnecessary. More image visible, carousel dots still clear. Build+tests pass.
+- Fixed glass effect on ExportCard action buttons. Modified Button component className merge order: cn(buttonVariants({variant,size}),className) instead of cn(buttonVariants({variant,size,className})). Allows glassButtonVariants to properly override Button variant styles. Buttons now display frosted glass (backdrop-blur, semi-transparent bg, glass-strong border). Build+tests pass.
 
