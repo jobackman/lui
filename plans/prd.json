@@ -642,7 +642,7 @@
       "Verify responsive behavior maintained on mobile/tablet/desktop",
       "Verify build process succeeds with simplified theme system"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Data",
