@@ -504,7 +504,7 @@
       "Verify AnimatePresence component used for exit animations when navigating away",
       "Verify stagger animation on bento grid uses proper container/children pattern"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",

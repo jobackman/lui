@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
@@ -48,20 +49,34 @@ export function HomePage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
-              {filteredAddons.map((addon, index) => {
-                // Create bento-style asymmetric layout with varying column spans
-                // Pattern: 2-col, 1-col, 1-col repeats (creates visual variety)
-                const spanPattern = index % 3;
-                const colSpan = spanPattern === 0 ? 'md:col-span-2' : 'md:col-span-1';
+              <AnimatePresence mode="popLayout">
+                {filteredAddons.map((addon, index) => {
+                  // Create bento-style asymmetric layout with varying column spans
+                  // Pattern: 2-col, 1-col, 1-col repeats (creates visual variety)
+                  const spanPattern = index % 3;
+                  const colSpan = spanPattern === 0 ? 'md:col-span-2' : 'md:col-span-1';
 
-                return (
-                  <div key={addon.id} className={colSpan}>
-                    <Link to={`/a/${addon.id}`} className="block h-full">
-                      <ExportCard export={addon.export} addonId={addon.id} />
-                    </Link>
-                  </div>
-                );
-              })}
+                  return (
+                    <motion.div
+                      key={addon.id}
+                      className={colSpan}
+                      layout
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: index * 0.1,
+                        ease: [0.22, 1, 0.36, 1], // Custom easing for smooth motion
+                      }}
+                    >
+                      <Link to={`/a/${addon.id}`} className="block h-full">
+                        <ExportCard export={addon.export} addonId={addon.id} />
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
             </div>
           )}
         </div>
