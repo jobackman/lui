@@ -530,5 +530,27 @@
       "Verify build process succeeds with animation library"
     ],
     "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Add automatic idle ripple animations to background when user is inactive",
+    "steps": [
+      "Verify idle timer implemented in BackgroundRippleEffect component to detect user inactivity",
+      "Verify idle threshold configured (e.g., 3-5 seconds without interaction)",
+      "Verify automatic ripple generation triggers at intervals when idle (e.g., every 2-4 seconds)",
+      "Verify idle ripples spawn at random positions across the viewport",
+      "Verify idle ripples use varied sizes and intensities for natural appearance",
+      "Verify idle ripple animation respects existing ripple physics and fade-out behavior",
+      "Verify user interaction (mouse move, click, touch) resets idle timer",
+      "Verify idle ripples stop when user becomes active again",
+      "Verify idle ripple interval randomized to avoid predictable patterns",
+      "Verify idle animations respect prefers-reduced-motion accessibility setting",
+      "Verify idle ripples don't interfere with user-triggered ripples",
+      "Verify performance remains acceptable with automatic ripple generation",
+      "Verify idle ripple density doesn't overwhelm the visual design (max 1-2 ripples visible at once)",
+      "Verify idle state detection works across all routes (HomePage and AddonDetailPage)",
+      "Verify configurable idle behavior (can be disabled or adjusted via props)"
+    ],
+    "passes": false
   }
 ]
