@@ -4,6 +4,7 @@ import { CopyButton } from "@/components/copy-button";
 import { Button } from "@/components/ui/button";
 import { Download, ExternalLink } from "lucide-react";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
+import { glassButtonVariants } from "@/lib/utils";
 import type { AddonExport } from "@/types/exports";
 
 interface ExportCardProps {
@@ -78,7 +79,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
             variant="ghost"
             size="icon"
             asChild
-            className="glass-strong hover:bg-white/30 text-white transition-all duration-300 ease-out motion-reduce:transition-none opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
+            className={glassButtonVariants({ variant: "card" })}
             title="Download addon"
             onClick={(e) => e.stopPropagation()}
           >
@@ -95,14 +96,14 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
         {exportData.exportString ? (
           <CopyButton 
             text={exportData.exportString}
-            className="glass-strong hover:bg-white/30 text-white transition-all duration-300 ease-out motion-reduce:transition-none opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
+            className={glassButtonVariants({ variant: "card" })}
           />
         ) : exportData.externalUrl ? (
           <Button
             variant="ghost"
             size="icon"
             asChild
-            className="glass-strong hover:bg-white/30 text-white transition-all duration-300 ease-out motion-reduce:transition-none opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 focus-visible:opacity-100 focus-visible:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
+            className={glassButtonVariants({ variant: "card" })}
             title="View on external site"
             onClick={(e) => e.stopPropagation()}
           >
