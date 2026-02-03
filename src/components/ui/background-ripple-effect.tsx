@@ -19,12 +19,7 @@ export const BackgroundRippleEffect = ({
     const updateDimensions = () => {
       if (ref.current) {
         const width = window.innerWidth;
-        // Use document height instead of viewport height to allow scrolling
-        const height = Math.max(
-          document.documentElement.scrollHeight,
-          document.body.scrollHeight,
-          window.innerHeight
-        );
+        const height = window.innerHeight;
         const cols = Math.ceil(width / cellSize);
         const rows = Math.ceil(height / cellSize);
         setDimensions({ rows, cols });
@@ -33,28 +28,17 @@ export const BackgroundRippleEffect = ({
 
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
-    // Also update dimensions when DOM content changes (route changes, etc.)
-    const resizeObserver = new ResizeObserver(updateDimensions);
-    if (document.body) {
-      resizeObserver.observe(document.body);
-    }
-    return () => {
-      window.removeEventListener('resize', updateDimensions);
-      resizeObserver.disconnect();
-    };
+    return () => window.removeEventListener('resize', updateDimensions);
   }, [cellSize]);
 
   return (
     <div
       ref={ref}
       className={cn(
-        "absolute inset-0 w-full overflow-hidden",
+        "fixed inset-0 h-full w-full overflow-hidden",
         "[--cell-border-color:var(--color-neutral-300)] [--cell-fill-color:var(--color-neutral-100)] [--cell-shadow-color:var(--color-neutral-500)]",
         "dark:[--cell-border-color:var(--color-neutral-700)] dark:[--cell-fill-color:var(--color-neutral-900)] dark:[--cell-shadow-color:var(--color-neutral-800)]",
       )}
-      style={{
-        minHeight: `${dimensions.rows * cellSize}px`,
-      }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background pointer-events-none z-10" />
       <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background pointer-events-none z-10" />

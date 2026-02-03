@@ -10,7 +10,7 @@ export function App() {
   const location = useLocation();
 
   return (
-    <div className="relative min-h-screen">
+    <>
       <BackgroundRippleEffect cellSize={48} />
       <CommandBar />
       <AnimatePresence mode="wait">
@@ -19,7 +19,7 @@ export function App() {
           <Route path="/a/:id" element={<AddonDetailPage />} />
         </Routes>
       </AnimatePresence>
-    </div>
+    </>
   );
 }
 
