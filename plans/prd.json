@@ -386,6 +386,6 @@
       "Verify accessibility: ARIA labels maintained for carousel and screen reader announcements",
       "Verify prefers-reduced-motion respected (no auto-cycling if user prefers reduced motion)"
     ],
-    "passes": true
+    "passes": false
   }
 ]

@@ -70,129 +70,122 @@ export function AddonDetailPage() {
     <div className="min-h-screen relative">
       <BackgroundRippleEffect cellSize={48} />
       
-      {/* Fixed Hero Header with Background Carousel */}
-      <div className="sticky top-0 z-30 h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] relative overflow-hidden">
-        {/* Background Images with edge mask */}
-        {hasImages && (
-          <div className="absolute inset-0" style={{
-            maskImage: 'radial-gradient(ellipse 85% 100% at 50% 50%, black 50%, transparent 100%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 85% 100% at 50% 50%, black 50%, transparent 100%)'
-          }}>
-            {images.map((image, index) => (
-              <div
-                key={image}
-                className={`
-                  absolute inset-0 transition-opacity duration-700 ease-in-out
-                  ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
-                `}
-              >
-                <img
-                  src={image}
-                  alt={`${addon.export.name} screenshot ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        )}
-        
-        {/* Gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/90" />
-        
-        {/* Back Button - Top Left */}
-        <Link 
-          to="/"
-          className="absolute top-4 left-4 sm:top-6 sm:left-6 inline-flex items-center gap-2 text-sm text-white hover:text-white/80 transition-colors group glass-strong px-4 py-2 rounded-lg z-20"
-        >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          <span className="hidden sm:inline">Back to home</span>
-        </Link>
+      <div className="relative z-20">
+        <div className="container mx-auto max-w-6xl px-4 sm:px-8 py-8 sm:py-12">
+          {/* Back Button */}
+          <Link 
+            to="/"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 group"
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            Back to home
+          </Link>
 
-        {/* Carousel Controls - Only show if multiple images */}
-        {hasMultipleImages && (
-          <>
-            {/* Previous Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handlePrevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 glass-strong hover:bg-white/30 text-white z-20"
-              aria-label="Previous image"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </Button>
-
-            {/* Next Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleNextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 glass-strong hover:bg-white/30 text-white z-20"
-              aria-label="Next image"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </Button>
-
-            {/* Indicator Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1 px-3 py-2 glass-strong rounded-full">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentImageIndex(index)}
-                  className="p-1.5 [@media(hover:none)]:p-2 [@media(hover:none)]:min-w-[44px] [@media(hover:none)]:min-h-[44px] flex items-center justify-center"
-                  aria-label={`View image ${index + 1} of ${images.length}`}
-                  aria-current={index === currentImageIndex ? 'true' : 'false'}
-                >
-                  <div
-                    className={`
-                      transition-all duration-300 ease-out rounded-full
-                      ${
-                        index === currentImageIndex
-                          ? 'w-2 h-2 bg-white shadow-lg shadow-white/50'
-                          : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/60'
-                      }
-                    `}
-                  />
-                </button>
-              ))}
+          {/* Main Content Card */}
+          <Card className="glass-strong p-6 sm:p-8">
+            {/* Header */}
+            <div className="mb-6">
+              <h1 className="text-3xl sm:text-4xl font-bold mb-3">{addon.export.name}</h1>
+              <p className="text-muted-foreground text-base sm:text-lg mb-2">
+                {addon.export.description}
+              </p>
+              <p className="text-sm text-muted-foreground mb-3">
+                Updated {formatRelativeTime(addon.export.lastUpdated)}
+              </p>
+              {/* Tags */}
+              {addon.export.tags && addon.export.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {addon.export.tags.map((tag) => (
+                    <Tag key={tag}>{tag}</Tag>
+                  ))}
+                </div>
+              )}
             </div>
-          </>
-        )}
-        
-        {/* Hero Content */}
-        <div className="absolute inset-0 flex flex-col justify-end z-10">
-          <div className="container mx-auto max-w-6xl px-4 sm:px-8 pb-8 sm:pb-12">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-white drop-shadow-lg">
-              {addon.export.name}
-            </h1>
-            <p className="text-white/90 text-base sm:text-lg mb-2 drop-shadow-md max-w-3xl">
-              {addon.export.description}
-            </p>
-            <p className="text-sm text-white/80 mb-3 drop-shadow-md">
-              Updated {formatRelativeTime(addon.export.lastUpdated)}
-            </p>
-            
-            {/* Tags */}
-            {addon.export.tags && addon.export.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-4">
-                {addon.export.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
-                ))}
+
+            {/* Image Carousel */}
+            {hasImages && (
+              <div className="relative mb-8 rounded-lg overflow-hidden bg-black/20">
+                {/* Images */}
+                <div className="relative aspect-video">
+                  {images.map((image, index) => (
+                    <img
+                      key={image}
+                      src={image}
+                      alt={`${addon.export.name} screenshot ${index + 1}`}
+                      className={`
+                        absolute inset-0 w-full h-full object-cover
+                        transition-opacity duration-500 ease-in-out
+                        ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
+                      `}
+                    />
+                  ))}
+                </div>
+
+                {/* Carousel Controls - Only show if multiple images */}
+                {hasMultipleImages && (
+                  <>
+                    {/* Previous Button */}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handlePrevImage}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 glass-strong hover:bg-white/30 text-white z-10"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="h-6 w-6" />
+                    </Button>
+
+                    {/* Next Button */}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleNextImage}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 glass-strong hover:bg-white/30 text-white z-10"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="h-6 w-6" />
+                    </Button>
+
+                    {/* Indicator Dots */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-3 py-2 glass-strong rounded-full">
+                      {images.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentImageIndex(index)}
+                          className="p-1.5 [@media(hover:none)]:p-2 [@media(hover:none)]:min-w-[44px] [@media(hover:none)]:min-h-[44px] flex items-center justify-center"
+                          aria-label={`View image ${index + 1} of ${images.length}`}
+                          aria-current={index === currentImageIndex ? 'true' : 'false'}
+                        >
+                          <div
+                            className={`
+                              transition-all duration-300 ease-out rounded-full
+                              ${
+                                index === currentImageIndex
+                                  ? 'w-2 h-2 bg-white shadow-lg shadow-white/50'
+                                  : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/60'
+                              }
+                            `}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             )}
-            
+
             {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 mb-8">
               {addon.export.exportString ? (
                 <CopyButton 
                   text={addon.export.exportString}
-                  className="glass-strong hover:bg-white/30 text-white"
+                  className="glass hover:bg-white/20"
                 />
               ) : addon.export.externalUrl ? (
                 <Button
                   variant="ghost"
                   asChild
-                  className="glass-strong hover:bg-white/30 text-white"
+                  className="glass hover:bg-white/20"
                 >
                   <a
                     href={addon.export.externalUrl}
@@ -209,7 +202,7 @@ export function AddonDetailPage() {
                 <Button
                   variant="ghost"
                   asChild
-                  className="glass-strong hover:bg-white/30 text-white"
+                  className="glass hover:bg-white/20"
                 >
                   <a
                     href={addon.export.downloadUrl}
@@ -222,34 +215,29 @@ export function AddonDetailPage() {
                 </Button>
               )}
             </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Content Section - Setup Instructions */}
-      <div className="relative z-20">
-        <div className="container mx-auto max-w-6xl px-4 sm:px-8 py-8 sm:py-12">
-          {/* Setup Instructions */}
-          {addon.export.setupInstructions && (
-            <Card className="glass-strong p-6 sm:p-8">
-              <h2 className="text-xl font-semibold mb-4">Setup Instructions</h2>
-              <div className="prose prose-invert max-w-none">
-                <pre className="whitespace-pre-wrap font-sans text-sm text-muted-foreground leading-relaxed">
-                  {addon.export.setupInstructions}
-                </pre>
-              </div>
-            </Card>
-          )}
 
-          {/* Message for external-link-only addons */}
-          {!addon.export.exportString && addon.export.externalUrl && !addon.export.setupInstructions && (
-            <Card className="glass-strong p-6 sm:p-8 text-center">
-              <p className="text-muted-foreground">
-                This addon requires importing from an external source.
-                Click the button above to view the guide.
-              </p>
-            </Card>
-          )}
+            {/* Setup Instructions */}
+            {addon.export.setupInstructions && (
+              <div className="glass p-6 rounded-lg">
+                <h2 className="text-xl font-semibold mb-4">Setup Instructions</h2>
+                <div className="prose prose-invert max-w-none">
+                  <pre className="whitespace-pre-wrap font-sans text-sm text-muted-foreground leading-relaxed">
+                    {addon.export.setupInstructions}
+                  </pre>
+                </div>
+              </div>
+            )}
+
+            {/* Message for external-link-only addons */}
+            {!addon.export.exportString && addon.export.externalUrl && !addon.export.setupInstructions && (
+              <div className="glass p-6 rounded-lg text-center">
+                <p className="text-muted-foreground">
+                  This addon requires importing from an external source.
+                  Click the button above to view the guide.
+                </p>
+              </div>
+            )}
+          </Card>
         </div>
       </div>
     </div>
