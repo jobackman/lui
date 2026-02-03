@@ -83,7 +83,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       </CardHeader>
 
       {/* Buttons positioned at center */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex gap-2">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex gap-2 opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
         {exportData.downloadUrl && (
           <Button
             variant="ghost"

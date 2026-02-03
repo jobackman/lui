@@ -730,7 +730,7 @@
       "Verify no layout shift when buttons appear/disappear",
       "Verify hover behavior works correctly on all card sizes (small and large bento cards)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI Refactor",
