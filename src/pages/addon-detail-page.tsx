@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Navigate, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tag } from '@/components/ui/tag';
@@ -75,8 +74,6 @@ export function AddonDetailPage() {
 
   return (
     <div className="min-h-screen relative">
-      <BackgroundRippleEffect cellSize={48} />
-
       <motion.div
         className="relative z-20"
         initial={{ opacity: 0 }}

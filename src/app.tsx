@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { HomePage } from '@/pages/home-page';
 import { AddonDetailPage } from '@/pages/addon-detail-page';
 import { CommandBar } from '@/components/command-bar';
+import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
 import './index.css';
 
 export function App() {
@@ -10,6 +11,7 @@ export function App() {
 
   return (
     <>
+      <BackgroundRippleEffect cellSize={48} />
       <CommandBar />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>

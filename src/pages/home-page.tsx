@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
-import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
 import { loadAllExports } from '@/lib/loadExports';
 
 export function HomePage() {
@@ -44,8 +43,6 @@ export function HomePage() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <BackgroundRippleEffect cellSize={48} />
-
       <div className="relative z-20">
         <Hero />
 
