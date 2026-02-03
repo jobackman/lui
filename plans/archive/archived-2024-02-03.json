@@ -1,0 +1,735 @@
+[
+  {
+    "category": "Data",
+    "description": "Add JSON files for new addon examples with realistic placeholder data",
+    "steps": [
+      "Verify data/exports/sensei-resource-bar.json created with export or externalUrl",
+      "Verify data/exports/waypoint-ui.json created with export or externalUrl",
+      "Verify data/exports/baganator.json created with export or externalUrl",
+      "Verify data/exports/blizzhudtweaks.json created with export or externalUrl",
+      "Verify data/exports/cooldown-manager.json created with export or externalUrl",
+      "Verify each addon JSON includes: id, name, description, lastUpdated",
+      "Verify placeholder images added to each addon (using picsum.photos or similar)",
+      "Verify setup instructions provided for each addon",
+      "Verify mix of export-string addons and external-link addons for variety",
+      "Verify TypeScript compilation validates all new JSON files",
+      "Verify all new addons display correctly in UI",
+      "Verify data loading utilities auto-detect new addon files"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Automate addon imports in loadExports.ts using glob imports",
+    "steps": [
+      "Verify import.meta.glob used to automatically import all JSON files from data/exports directory",
+      "Verify glob pattern matches '../../data/exports/*.json'",
+      "Verify eager:true flag set for build-time loading (no runtime overhead)",
+      "Verify type parameter specifies { default: AddonCategory } for type safety",
+      "Verify loadAllExports() function maps over Object.values(modules) to extract default exports",
+      "Verify manual imports removed (details.json, platynator.json, weakauras-guide.json)",
+      "Verify all existing addons still load correctly after automation",
+      "Verify new addon JSON files are automatically detected without code changes",
+      "Verify TypeScript compilation succeeds with glob import syntax",
+      "Verify build process (bun run build.ts) completes successfully",
+      "Verify no runtime errors when loading addons",
+      "Verify getAddonManifest() returns all addons including newly added ones",
+      "Verify getAddonById() works correctly for all addon IDs",
+      "Verify UI displays all addons from automated import system"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Display last updated timestamp on collapsed (unexpanded) card view",
+    "steps": [
+      "Verify formatRelativeTime utility imported into ExportCard component",
+      "Verify timestamp displayed in collapsed card view alongside addon name",
+      "Verify timestamp positioned below addon name with appropriate spacing",
+      "Verify timestamp uses white/80 opacity for subtle appearance",
+      "Verify timestamp has text shadow or drop shadow for readability over images",
+      "Verify timestamp styling consistent with design system (glass effects)",
+      "Verify timestamp maintains WCAG contrast ratios against gradient overlay",
+      "Verify timestamp responsive on mobile/tablet/desktop",
+      "Verify timestamp does not interfere with buttons or card interactivity"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Add smooth height transition animation for card expansion/collapse",
+    "steps": [
+      "Verify card height transitions smoothly when expanding (e.g., from min-h-[300px] to min-h-[600px])",
+      "Verify card height transitions smoothly when collapsing back to original size",
+      "Verify transition duration appropriate for smooth animation (500ms or similar)",
+      "Verify transition easing function provides natural motion (ease-in-out or custom cubic-bezier)",
+      "Verify transition-all or specific height/max-height transition applied to Card component",
+      "Verify expanded card content fades in smoothly (opacity transition) after height animation starts",
+      "Verify collapsed content fades out before height animation (prevents content jump)",
+      "Verify animation respects prefers-reduced-motion accessibility setting",
+      "Verify animation performs smoothly without lag on various devices",
+      "Verify bento grid layout reflows gracefully during animation",
+      "Verify no content overflow or clipping during transition",
+      "Verify animation works correctly when rapidly expanding/collapsing multiple cards"
+    ],
+    "passes": false,
+    "cancelled": true
+  },
+  {
+    "category": "UI",
+    "description": "Remove thumbnail navigation UI from expanded card, rely only on carousel indicator dots",
+    "steps": [
+      "Verify thumbnail image navigation section removed from expanded card view (lines ~252-277 in export-card.tsx)",
+      "Verify prev/next arrow buttons removed from expanded view carousel navigation (ChevronLeft/ChevronRight buttons)",
+      "Verify 'Image X of Y' text counter removed from expanded view",
+      "Verify glass-strong panel wrapper for carousel controls removed from expanded view",
+      "Verify carousel indicator dots remain visible in expanded card view (not just collapsed)",
+      "Verify indicator dots repositioned for expanded view (e.g., bottom-center with proper z-index)",
+      "Verify indicator dots remain clickable in both collapsed and expanded states",
+      "Verify indicator dots have sufficient visibility against expanded card background",
+      "Verify keyboard navigation still works (ArrowLeft/ArrowRight to navigate images)",
+      "Verify ARIA labels maintained for accessibility ('Image X of Y' announced for screen readers)",
+      "Verify expanded card layout uses reclaimed space more efficiently",
+      "Verify setup instructions and description have more breathing room",
+      "Verify responsive behavior maintained on mobile/tablet/desktop"
+    ],
+    "passes": false,
+    "cancelled": true
+  },
+  {
+    "category": "UI",
+    "description": "Make expanded card take full width of bento grid using URL state management",
+    "steps": [
+      "Verify nuqs package installed as dependency (npm install nuqs or bun add nuqs)",
+      "Verify useQueryState hook imported from nuqs in app.tsx",
+      "Verify expandedCardId state migrated from useState to useQueryState('expanded')",
+      "Verify query parameter syncs with URL when card expands/collapses",
+      "Verify browser back/forward buttons work correctly (collapse expanded card when navigating back)",
+      "Verify URL updates without page reload (shallow routing)",
+      "Verify sharing URL with ?expanded=addon-id parameter opens page with that card expanded",
+      "Verify conditional col-span class on wrapper div in app.tsx: apply bento pattern (md:col-span-2 or md:col-span-1) only when card is NOT expanded",
+      "Verify wrapper div has no col-span constraint when addon.id === expandedCardId",
+      "Verify expanded card uses col-span-full class (already present in export-card.tsx line 95)",
+      "Verify expanded card spans full width across all breakpoints (mobile, tablet, desktop)",
+      "Verify expanded card internal content (setup instructions, carousel, description) has more horizontal space",
+      "Verify bento grid reflows correctly when card expands (other cards wrap appropriately)",
+      "Verify bento grid reflows correctly when card collapses (original asymmetric pattern restored)",
+      "Verify transition animation remains smooth during width change",
+      "Verify no layout shift or jumping when expanding/collapsing",
+      "Verify expanded card maintains proper spacing and padding at full width",
+      "Verify responsive behavior on narrow viewports (full width works gracefully on mobile)",
+      "Verify invalid/non-existent addon IDs in URL parameter are handled gracefully (no errors, card stays collapsed)",
+      "Verify query parameter is cleared/removed when card is collapsed (clean URL state)"
+    ],
+    "passes": false,
+    "cancelled": true
+  },
+  {
+    "category": "Architecture",
+    "description": "Add Routing Infrastructure",
+    "steps": [
+      "Verify react-router-dom package installed as dependency (bun add react-router-dom @types/react-router-dom)",
+      "Verify BrowserRouter wrapper added in frontend.tsx around App component",
+      "Verify Routes and Route components imported from react-router-dom",
+      "Verify route structure created in app.tsx with two routes: '/' for home page (bento grid) and '/a/:id' for individual addon detail page",
+      "Verify routing preserves ThemeProvider and BackgroundProvider context wrappers",
+      "Verify browser back/forward navigation works correctly",
+      "Verify direct URL navigation works (e.g., visiting /a/platynator directly)",
+      "Verify 404/not found handling for invalid addon IDs",
+      "Verify no console errors or warnings related to routing",
+      "Verify hot module reloading continues to work with routing setup"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Convert Home Page to Navigable Bento Grid",
+    "steps": [
+      "Verify expandedCardId state and onToggleExpand logic removed from app.tsx",
+      "Verify isExpanded prop removed from ExportCard component interface",
+      "Verify ExportCard component converted to collapsed-only view (no expansion state)",
+      "Verify cards wrap in Link component (from react-router-dom) with href='/a/{addonId}'",
+      "Verify card onClick handler replaced with navigation behavior",
+      "Verify hoverable buttons (Copy, Download, External Link) still visible on hover",
+      "Verify buttons maintain glass effect styling on collapsed cards",
+      "Verify bento grid asymmetric layout pattern maintained (2-col, 1-col, 1-col repeating)",
+      "Verify card transition animation adjusted for link navigation (no expansion animation)",
+      "Verify image carousel auto-cycling continues to work on collapsed cards",
+      "Verify accessibility: keyboard navigation (Enter/Space) triggers link navigation",
+      "Verify search functionality continues to filter cards on home page",
+      "Verify Hero and SearchBar components remain on home page",
+      "Verify clicking card navigates to /a/:id route without full page reload"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Create Dedicated Addon Detail Route/Page",
+    "steps": [
+      "Verify new AddonDetailPage component created (src/pages/addon-detail.tsx or similar)",
+      "Verify component uses useParams() hook to extract :id from URL",
+      "Verify getAddonById() utility used to fetch addon data by ID",
+      "Verify full-width layout for detail page (no bento grid constraints)",
+      "Verify addon name displayed prominently as page title",
+      "Verify addon description displayed below title",
+      "Verify last updated timestamp displayed using formatRelativeTime utility",
+      "Verify image carousel with navigation controls (prev/next arrows, indicator dots)",
+      "Verify setup instructions section displayed in glass-panel styling",
+      "Verify action buttons displayed (Copy Export String, Download, External Link) based on addon data",
+      "Verify 'Import from External Source' message shown for external-link-only addons",
+      "Verify back navigation to home page (browser back button or dedicated back link)",
+      "Verify smooth scroll behavior when navigating to detail page",
+      "Verify keyboard navigation for image carousel (ArrowLeft/ArrowRight)",
+      "Verify Escape key navigates back to home page",
+      "Verify responsive layout on mobile/tablet/desktop",
+      "Verify 404 or redirect to home for invalid addon IDs",
+      "Verify SEO-friendly: page title updates to include addon name",
+      "Verify BackgroundRippleEffect component displayed on detail page",
+      "Verify consistent glass/glassmorphism styling with rest of application"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Architecture",
+    "description": "Add tags field to addon data model",
+    "steps": [
+      "Verify AddonExport interface in src/types/exports.ts includes optional tags field (tags?: string[])",
+      "Verify TypeScript compilation succeeds with updated type definition",
+      "Verify existing addon JSON files still validate without tags field (backward compatibility)",
+      "Verify sample addon JSON includes tags array for testing (e.g., ['ui', 'nameplates', 'pvp'])"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Add tags to existing addon definitions",
+    "steps": [
+      "Verify platynator.json includes relevant tags (e.g., ['nameplates', 'ui', 'pvp'])",
+      "Verify details.json includes relevant tags (e.g., ['damage-meter', 'ui', 'pve'])",
+      "Verify weakauras-guide.json includes relevant tags (e.g., ['weakauras', 'guide', 'customization'])",
+      "Verify sensei-resource-bar.json includes relevant tags",
+      "Verify waypoint-ui.json includes relevant tags",
+      "Verify baganator.json includes relevant tags (e.g., ['inventory', 'bags', 'ui'])",
+      "Verify blizzhudtweaks.json includes relevant tags",
+      "Verify cooldown-manager.json includes relevant tags (e.g., ['cooldowns', 'ui', 'tracking'])",
+      "Verify tags are lowercase and hyphen-separated for consistency",
+      "Verify all addon JSON files load correctly with new tags field"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Display tags on addon cards and detail pages",
+    "steps": [
+      "Verify tags displayed on collapsed bento cards (ExportCard component)",
+      "Verify tags styled as small badges/pills with glass effect",
+      "Verify tags positioned appropriately without interfering with other card elements",
+      "Verify tags displayed on addon detail page near title or description",
+      "Verify tags are visually consistent across both views",
+      "Verify tags responsive on mobile/tablet/desktop viewports",
+      "Verify tags maintain readability with proper contrast and spacing",
+      "Verify empty/missing tags handled gracefully (no tags displayed if array empty)"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Enhanced search to include tag-based filtering on frontpage",
+    "steps": [
+      "Verify search query filters addons by both name AND tags (union search)",
+      "Verify search in HomePage component updated to check addon.export.tags array",
+      "Verify tag search is case-insensitive",
+      "Verify partial tag matching works (e.g., 'name' matches 'nameplates')",
+      "Verify search results show addons matching either name or any tag",
+      "Verify search performance remains acceptable with tag filtering",
+      "Verify empty tag arrays don't cause errors in search logic",
+      "Verify SearchBar component continues to work correctly with enhanced filtering"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Dependencies",
+    "description": "Install shadcn Command component dependencies",
+    "steps": [
+      "Verify cmdk package installed (bun add cmdk)",
+      "Verify @radix-ui/react-dialog installed (bun add @radix-ui/react-dialog) for command modal wrapper",
+      "Verify package.json updated with new dependencies",
+      "Verify TypeScript types available for cmdk and radix-ui dialog",
+      "Verify bun.lockb updated with new dependency tree"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Create shadcn Command component",
+    "steps": [
+      "Verify src/components/ui/command.tsx created following shadcn patterns",
+      "Verify Command component includes: Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandSeparator sub-components",
+      "Verify Command component styled with glass/glassmorphism effects matching app design",
+      "Verify Command component uses Radix UI Dialog as wrapper for modal behavior",
+      "Verify keyboard navigation works (arrow keys, enter, escape)",
+      "Verify Command component accessible (proper ARIA labels, focus management)",
+      "Verify TypeScript types properly exported for all sub-components"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Implement global command bar with keyboard shortcut",
+    "steps": [
+      "Verify CommandBar component created in src/components/command-bar.tsx",
+      "Verify CommandBar displays all addons as command items",
+      "Verify CommandBar includes 'Home' navigation item to return to frontpage",
+      "Verify CommandBar searches through addon names and tags in real-time",
+      "Verify CommandBar triggered via keyboard shortcut (Cmd+K on Mac, Ctrl+K on Windows/Linux)",
+      "Verify keyboard shortcut registered globally using useEffect with keydown event listener",
+      "Verify keyboard shortcut prevented from triggering when typing in input fields",
+      "Verify CommandBar state managed with useState (open/closed)",
+      "Verify CommandBar integrates with react-router-dom for navigation (useNavigate hook)",
+      "Verify selecting addon in CommandBar navigates to /a/:id route and closes modal",
+      "Verify selecting 'Home' in CommandBar navigates to / route and closes modal",
+      "Verify Escape key closes CommandBar",
+      "Verify clicking outside CommandBar closes modal (Dialog overlay behavior)",
+      "Verify CommandBar mounted in App component so it's available on all routes",
+      "Verify CommandBar search is case-insensitive and supports partial matches",
+      "Verify CommandBar displays 'No results found' message when search yields no matches",
+      "Verify CommandBar accessible via screen readers and keyboard-only navigation"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Implement View Transition API for route navigation",
+    "steps": [
+      "Verify browser View Transition API support detection implemented (document.startViewTransition check)",
+      "Verify custom hook or utility created for view transitions (e.g., useViewTransition or startViewTransition wrapper)",
+      "Verify view transition triggered when navigating from home to addon detail page",
+      "Verify view transition triggered when navigating from addon detail back to home",
+      "Verify shared elements identified with view-transition-name CSS property (e.g., addon title, images)",
+      "Verify bento card image persists/morphs into detail page carousel during transition",
+      "Verify addon title persists/morphs from card to detail page heading",
+      "Verify transition animation smooth and natural (default browser behavior or custom timing)",
+      "Verify fallback behavior for browsers without View Transition API support (instant navigation, no errors)",
+      "Verify Link component navigation integration with view transitions (intercept navigation with onClick)",
+      "Verify browser back button triggers view transition in reverse",
+      "Verify view transitions respect prefers-reduced-motion accessibility setting",
+      "Verify no layout shift or jank during transitions",
+      "Verify transitions perform well on lower-end devices",
+      "Verify view-transition-name values are unique per addon (dynamic based on addon.id)",
+      "Verify transitions work correctly when navigating between different addon pages",
+      "Verify no console errors or warnings related to view transitions"
+    ],
+    "passes": false,
+    "cancelled": true
+  },
+  {
+    "category": "Polish",
+    "description": "Add visual indicator for command bar keyboard shortcut",
+    "steps": [
+      "Verify keyboard shortcut hint displayed in UI (e.g., in SearchBar or header)",
+      "Verify hint shows platform-appropriate key (⌘K on Mac, Ctrl+K on Windows/Linux)",
+      "Verify hint styled subtly to not distract from main content",
+      "Verify hint uses KBD HTML element or styled component for semantic keyboard display",
+      "Verify hint responsive and hidden on very narrow mobile viewports if needed"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Architecture",
+    "description": "Split route page components from app.tsx into separate files",
+    "steps": [
+      "Verify src/pages/ directory created",
+      "Verify src/pages/home-page.tsx created with HomePage component extracted from app.tsx",
+      "Verify HomePage imports all required dependencies (useState, useMemo, Hero, SearchBar, ExportCard, BackgroundRippleEffect, Link, loadAllExports)",
+      "Verify HomePage exported as named export from home-page.tsx",
+      "Verify src/pages/addon-detail-page.tsx created with AddonDetailPage component extracted from app.tsx",
+      "Verify AddonDetailPage imports all required dependencies (useState, useEffect, useParams, useNavigate, Navigate, Link, Card, Button, Tag, CopyButton, BackgroundRippleEffect, getAddonById, formatRelativeTime, icons)",
+      "Verify AddonDetailPage exported as named export from addon-detail-page.tsx",
+      "Verify app.tsx imports HomePage from '@/pages/home-page'",
+      "Verify app.tsx imports AddonDetailPage from '@/pages/addon-detail-page'",
+      "Verify app.tsx only contains App component with Routes configuration and necessary route imports",
+      "Verify TypeScript compilation succeeds with new file structure",
+      "Verify application runs correctly with split components",
+      "Verify navigation between routes still works (home to detail, detail to home, back button, Escape key)",
+      "Verify all functionality preserved (search, filtering, image carousel, copy buttons, external links)"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Implement fixed hero header with background image carousel on addon detail page",
+    "steps": [
+      "Verify hero section created at top of addon detail page with fixed positioning (position: sticky or fixed)",
+      "Verify hero section height set to ~400-500px on desktop, ~300px on mobile/tablet",
+      "Verify image carousel moved from content card to hero background layer",
+      "Verify images displayed as full-width background (object-cover) in hero section",
+      "Verify image transition animation consistent with card carousel (duration-700 ease-in-out)",
+      "Verify image carousel cycling uses same opacity transition pattern as ExportCard component",
+      "Verify carousel controls (prev/next arrows, indicator dots) overlaid on hero background",
+      "Verify dark gradient overlay applied to hero (from-transparent to-black/90) for text readability",
+      "Verify addon name displayed as large heading (text-4xl sm:text-5xl) over hero background",
+      "Verify addon description displayed over hero with proper text shadow/contrast",
+      "Verify last updated timestamp displayed on hero section",
+      "Verify tags displayed on hero section with glass effect styling",
+      "Verify action buttons (Copy, Download, External Link) positioned on hero with glass-strong styling",
+      "Verify back button positioned on hero (top-left) with glass effect, remains visible when scrolling",
+      "Verify hero section remains fixed/sticky at top of viewport during scroll",
+      "Verify content card below hero contains only setup instructions (images removed from card)",
+      "Verify smooth scroll behavior when page loads",
+      "Verify keyboard navigation (ArrowLeft/ArrowRight) continues to work for image carousel",
+      "Verify Escape key navigation to home continues to work",
+      "Verify responsive layout: hero scales appropriately on mobile/tablet/desktop",
+      "Verify text readability maintained across all image backgrounds (sufficient contrast)",
+      "Verify carousel indicator dots visible and clickable on hero background",
+      "Verify no layout shift or content jump when scrolling",
+      "Verify hero z-index layering correct (hero above background effects, below modals)",
+      "Verify accessibility: ARIA labels maintained for carousel and screen reader announcements",
+      "Verify prefers-reduced-motion respected (no auto-cycling if user prefers reduced motion)"
+    ],
+    "passes": false,
+    "cancelled": true
+  },
+  {
+    "category": "UI Refactor",
+    "description": "Refactor button Tailwind classes using cn utility to reduce class clutter",
+    "steps": [
+      "Verify common button class patterns identified across components (glass-strong, hover states, transitions, responsive visibility)",
+      "Verify shared button variant helper functions created in lib/utils.ts for glass effects (e.g., glassButton(), glassIcon())",
+      "Verify ExportCard button classes refactored to use new helper utilities",
+      "Verify AddonDetailPage button classes refactored to use new helper utilities",
+      "Verify CopyButton component simplified using new utilities",
+      "Verify all button styling remains visually identical after refactor",
+      "Verify hover states, transitions, and responsive behavior preserved",
+      "Verify no TypeScript errors after refactoring",
+      "Verify accessibility (focus states, ARIA labels) maintained"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Add visible text to copy button on addon detail page",
+    "steps": [
+      "Verify CopyButton in AddonDetailPage displays 'Copy Export String' text with icon",
+      "Verify button uses size='default' instead of size='icon' to accommodate text",
+      "Verify button styling updated to match visual hierarchy on detail page",
+      "Verify text truncates appropriately on mobile viewports if needed",
+      "Verify button remains accessible with proper ARIA labels",
+      "Verify copied state shows 'Copied!' feedback text",
+      "Verify button maintains glass styling consistent with rest of page"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Remove tags display from front page cards",
+    "steps": [
+      "Verify tags section removed from ExportCard component (lines ~131-137 in export-card.tsx)",
+      "Verify tags continue to display on AddonDetailPage",
+      "Verify search/filter functionality by tags still works on HomePage",
+      "Verify CommandBar tag search remains functional",
+      "Verify no visual layout shift or spacing issues on cards after tag removal",
+      "Verify cards remain visually balanced without tags"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Enable tag-based search in command bar",
+    "steps": [
+      "Verify CommandItem value prop in CommandBar includes tags (line 63 in command-bar.tsx already includes tags)",
+      "Verify command bar filtering searches through both addon names and tags",
+      "Verify partial tag matches work in command bar search",
+      "Verify tag search is case-insensitive in command bar",
+      "Verify search performance remains acceptable with tag inclusion",
+      "Verify command bar displays relevant results when searching by tag keywords",
+      "Verify 'No results found' message displays when no name or tag matches query"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Redesign front page search bar styling with rounded appearance and transparency",
+    "steps": [
+      "Verify SearchBar Input component styling updated with increased border-radius (e.g., rounded-2xl or rounded-full)",
+      "Verify background transparency increased (e.g., bg-white/5 or bg-white/10 instead of current opacity)",
+      "Verify glass effect applied to search input (backdrop-blur, border styling)",
+      "Verify placeholder text remains readable with increased transparency",
+      "Verify text input contrast meets WCAG accessibility standards",
+      "Verify focus states remain clearly visible with new styling",
+      "Verify search bar responsive on mobile/tablet/desktop viewports",
+      "Verify input functionality unchanged (typing, clearing, value updates)",
+      "Verify search bar visually harmonizes with Hero component and card design"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Bug Fix",
+    "description": "Fix button click propagation to prevent unwanted navigation when clicking interactive elements on cards",
+    "steps": [
+      "Verify Download button (anchor tag with asChild) prevents Link navigation when clicked",
+      "Verify External Link button (anchor tag with asChild) prevents Link navigation when clicked",
+      "Verify CopyButton prevents Link navigation when clicked",
+      "Verify carousel indicator dot buttons prevent Link navigation when clicked",
+      "Verify onClick handlers on anchor elements call stopPropagation() instead of on Button wrapper",
+      "Verify all button elements have type='button' attribute to prevent form submission behavior",
+      "Verify all onClick handlers call both preventDefault() and stopPropagation()",
+      "Verify clicking card background/title/timestamp area still navigates to detail page correctly",
+      "Verify keyboard navigation (Enter/Tab+Enter) on buttons doesn't trigger card navigation",
+      "Verify buttons remain accessible with proper focus states and ARIA labels",
+      "Verify all interactive elements maintain proper event handling without side effects",
+      "Verify TypeScript compilation succeeds after event handler changes",
+      "Verify build process completes successfully",
+      "Verify no console errors when clicking buttons on cards"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Add entry and exit animations on front page cards and detail page",
+    "steps": [
+      "Verify animation library dependency added (framer-motion recommended: bun add framer-motion)",
+      "Verify ExportCard component wrapped with motion component for entry/exit animations",
+      "Verify cards animate on mount with staggered delay for bento grid (each card delays by ~100-150ms)",
+      "Verify card entry animation includes fade-in and slide-up effect (opacity 0→1, translateY 20px→0)",
+      "Verify card entry animation duration appropriate (300-500ms)",
+      "Verify card exit animation includes fade-out when filtering/searching",
+      "Verify AddonDetailPage content wrapped with motion component for page transitions",
+      "Verify detail page animates on mount with fade-in and slight scale effect",
+      "Verify detail page hero section animates separately from content (layered animation)",
+      "Verify setup instructions card animates with slide-up effect after hero animation",
+      "Verify animation easing functions provide natural motion (ease-out for entry, ease-in for exit)",
+      "Verify animations respect prefers-reduced-motion accessibility setting (disable animations when user prefers reduced motion)",
+      "Verify animations don't interfere with user interactions (buttons clickable during animation)",
+      "Verify animation performance acceptable on various devices (no jank or lag)",
+      "Verify AnimatePresence component used for exit animations when navigating away",
+      "Verify stagger animation on bento grid uses proper container/children pattern"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Add smooth transition animations when navigating between routes",
+    "steps": [
+      "Verify AnimatePresence component wraps Routes in app.tsx for route transitions",
+      "Verify route location key prop configured for AnimatePresence to detect route changes",
+      "Verify HomePage wrapped with motion component for route exit/entry",
+      "Verify AddonDetailPage wrapped with motion component for route exit/entry",
+      "Verify transition animation when navigating from home to detail page (fade + slide)",
+      "Verify transition animation when navigating from detail to home (fade + slide reverse)",
+      "Verify exit animation completes before entry animation begins (mode='wait' on AnimatePresence)",
+      "Verify transition duration appropriate (300-400ms for route changes)",
+      "Verify transition doesn't conflict with page-specific entry animations",
+      "Verify browser back/forward navigation triggers transitions correctly",
+      "Verify transitions work with CommandBar navigation (Cmd+K selections)",
+      "Verify transition animation respects prefers-reduced-motion setting",
+      "Verify scroll position resets to top on route transitions",
+      "Verify no layout shift or content flash during transitions",
+      "Verify loading states handled gracefully during transitions",
+      "Verify transitions perform smoothly without blocking UI interactions",
+      "Verify TypeScript types for motion components properly configured",
+      "Verify build process succeeds with animation library"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Add automatic idle ripple animations to background when user is inactive",
+    "steps": [
+      "Verify idle timer implemented in BackgroundRippleEffect component to detect user inactivity",
+      "Verify idle threshold configured (e.g., 3-5 seconds without interaction)",
+      "Verify automatic ripple generation triggers at intervals when idle (e.g., every 2-4 seconds)",
+      "Verify idle ripples spawn at random positions across the viewport",
+      "Verify idle ripples use varied sizes and intensities for natural appearance",
+      "Verify idle ripple animation respects existing ripple physics and fade-out behavior",
+      "Verify user interaction (mouse move, click, touch) resets idle timer",
+      "Verify idle ripples stop when user becomes active again",
+      "Verify idle ripple interval randomized to avoid predictable patterns",
+      "Verify idle animations respect prefers-reduced-motion accessibility setting",
+      "Verify idle ripples don't interfere with user-triggered ripples",
+      "Verify performance remains acceptable with automatic ripple generation",
+      "Verify idle ripple density doesn't overwhelm the visual design (max 1-2 ripples visible at once)",
+      "Verify idle state detection works across all routes (HomePage and AddonDetailPage)",
+      "Verify configurable idle behavior (can be disabled or adjusted via props)"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Bug Fix",
+    "description": "Fix invisible search bar icon on front page by improving contrast and visibility",
+    "steps": [
+      "Verify Search icon visibility issue on front page (white/light icon on light glass background)",
+      "Verify current icon color uses text-muted-foreground class (oklch(0.556 0 0) in light mode)",
+      "Verify icon color updated to use higher contrast color (e.g., text-foreground/70 or text-foreground/80)",
+      "Verify icon includes text-shadow or drop-shadow for better visibility against gradient background",
+      "Verify icon maintains proper opacity and remains visible on all background styles (default, mesh, waves)",
+      "Verify icon contrast meets WCAG accessibility standards (minimum 4.5:1 ratio)",
+      "Verify icon visibility in both light and dark themes",
+      "Verify icon styling consistent with keyboard shortcut badges on right side of search bar",
+      "Verify icon remains positioned correctly (absolute left-4 top-1/2 -translate-y-1/2)",
+      "Verify icon size appropriate and matches design (h-5 w-5)",
+      "Verify icon maintains pointer-events-none to allow clicking through to input",
+      "Verify no visual regression on mobile/tablet/desktop viewports"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Change background ripple positioning from fixed to static to enable scrolling",
+    "steps": [
+      "Verify BackgroundRippleEffect wrapper div className changed from 'fixed inset-0' to 'absolute inset-0' or remove positioning entirely",
+      "Verify parent containers (HomePage and AddonDetailPage) have 'relative' positioning to contain the absolute positioned background",
+      "Verify background ripple grid dimensions calculate based on document/content height instead of viewport height",
+      "Verify background ripples scroll naturally with page content",
+      "Verify gradient overlays (top/bottom fade) still work correctly with new positioning",
+      "Verify ripple click interactions continue to work when scrolling",
+      "Verify cell dimensions and grid layout remain correct at different scroll positions",
+      "Verify no visual glitches or layout shifts when scrolling",
+      "Verify background remains visible on long content pages (extends to full content height)",
+      "Verify performance acceptable with larger grid for full page height",
+      "Verify responsive behavior maintained on mobile/tablet/desktop viewports",
+      "Verify z-index layering correct (background behind content, gradients appropriately positioned)"
+    ],
+    "passes": false,
+    "cancelled": true
+  },
+  {
+    "category": "Bug Fix",
+    "description": "Fix overlap between last-updated timestamp and carousel indicators on small bento cards",
+    "steps": [
+      "Verify timestamp position on collapsed ExportCard component (currently positioned bottom-4 left-4)",
+      "Verify carousel indicator dots position on collapsed card (currently positioned bottom-4 center)",
+      "Verify overlap occurs on small card size (md:col-span-1 cards ~400px wide)",
+      "Verify solution implemented: reposition timestamp to top of card OR adjust carousel dots position",
+      "Verify timestamp moved to top-4 left-4 position with appropriate glass background for readability",
+      "Verify carousel indicators remain at bottom-center with sufficient spacing from edges",
+      "Verify both elements remain clearly visible without overlap on all card sizes",
+      "Verify text shadow/backdrop on timestamp ensures readability over carousel",
+      "Verify responsive behavior on mobile/tablet/desktop viewports",
+      "Verify no overlap occurs when multiple images present (carousel active)",
+      "Verify visual hierarchy maintained (both elements clearly visible and accessible)"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI Cleanup",
+    "description": "Remove redundant 'Press Ctrl+K for quick search' text from search bar",
+    "steps": [
+      "Verify SearchBar component currently displays hint text alongside keyboard glyphs",
+      "Verify keyboard shortcut badges (⌘K or Ctrl+K) already visible on right side of search bar",
+      "Verify hint text removed from SearchBar placeholder or adjacent text",
+      "Verify keyboard shortcut badges remain visible and functional",
+      "Verify search bar placeholder text simplified (e.g., 'Search addons...' without keyboard hint)",
+      "Verify visual appearance cleaner without redundant instruction text",
+      "Verify keyboard shortcut (Cmd+K / Ctrl+K) continues to work correctly",
+      "Verify no regression in search functionality after text removal"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI Simplification",
+    "description": "Simplify addon styling by removing light mode and theme toggle",
+    "steps": [
+      "Verify current ThemeProvider implementation in app.tsx or theme context",
+      "Verify theme toggle component/button location in UI (header, settings, etc.)",
+      "Verify theme toggle UI element removed from all pages",
+      "Verify ThemeProvider simplified or removed entirely (enforce dark mode only)",
+      "Verify all components styled for single consistent theme (dark mode recommended)",
+      "Verify CSS variables and Tailwind config updated to remove light mode theme tokens",
+      "Verify glass effects and background styling optimized for dark mode only",
+      "Verify color contrast remains accessible (WCAG standards) in dark theme",
+      "Verify localStorage theme preference logic removed (no toggle to save)",
+      "Verify no visual regressions across all components (cards, buttons, inputs, modals)",
+      "Verify responsive behavior maintained on mobile/tablet/desktop",
+      "Verify build process succeeds with simplified theme system"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Data",
+    "description": "Convert export data format from JSON to TypeScript with template literals for easier content editing",
+    "steps": [
+      "Verify data/exports/ directory structure supports .ts files",
+      "Verify platynator.json converted to platynator.ts with AddonCategory export",
+      "Verify details.json converted to details.ts with AddonCategory export",
+      "Verify weakauras-guide.json converted to weakauras-guide.ts with AddonCategory export",
+      "Verify sensei-resource-bar.json converted to sensei-resource-bar.ts with AddonCategory export",
+      "Verify waypoint-ui.json converted to waypoint-ui.ts with AddonCategory export",
+      "Verify baganator.json converted to baganator.ts with AddonCategory export",
+      "Verify blizzhudtweaks.json converted to blizzhudtweaks.ts with AddonCategory export",
+      "Verify cooldown-manager.json converted to cooldown-manager.ts with AddonCategory export",
+      "Verify exportString fields use template literals (backticks) for multi-line support",
+      "Verify setupInstructions fields use template literals for better formatting",
+      "Verify all TypeScript files export const with descriptive name matching file",
+      "Verify all exports properly typed as AddonCategory with type import",
+      "Verify loadExports.ts updated to import TypeScript files instead of JSON",
+      "Verify loadExports.ts updated to use direct imports or glob pattern for .ts files",
+      "Verify TypeScript compilation succeeds with new format",
+      "Verify all addons load correctly in UI with new TypeScript format",
+      "Verify getAddonById() and getAddonManifest() work correctly with TS exports",
+      "Verify build process completes successfully with TypeScript data files",
+      "Verify no runtime errors when loading addon data",
+      "Verify template literals support pasting unescaped content (quotes, newlines, JSON, special characters)",
+      "Verify old JSON files removed after successful migration",
+      "Verify documentation created explaining TypeScript format for adding new addons",
+      "Verify example provided showing how to paste complex export strings without escaping"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI Cleanup",
+    "description": "Remove unnecessary bottom gradient from front page addon cards",
+    "steps": [
+      "Verify current gradient overlay on ExportCard uses bg-gradient-to-b from-black/90 via-transparent to-black/90 (line 73)",
+      "Verify bottom gradient (to-black/90) is no longer needed since timestamp moved to top of card",
+      "Verify gradient updated to bg-gradient-to-b from-black/90 via-transparent to-transparent",
+      "Verify top gradient remains to ensure title and timestamp readability over images",
+      "Verify bottom area of card no longer has dark gradient overlay",
+      "Verify carousel indicator dots remain visible without bottom gradient",
+      "Verify buttons positioned at center remain visible and accessible",
+      "Verify no visual regression on cards with single or multiple images",
+      "Verify responsive behavior maintained on mobile/tablet/desktop viewports"
+    ],
+    "passes": true
+  },
+  {
+    "category": "Bug Fix",
+    "description": "Restore frosted glass effect to ExportCard action buttons",
+    "steps": [
+      "Verify current button styling uses glassButtonVariants({ glass: 'carousel' }) helper",
+      "Verify glassButtonVariants function in lib/utils.ts returns proper glass effect classes",
+      "Verify buttons have backdrop-blur-md or backdrop-blur-lg for frosted glass appearance",
+      "Verify buttons have semi-transparent background (e.g., bg-white/10 or bg-black/20)",
+      "Verify buttons have subtle border (e.g., border border-white/20)",
+      "Verify buttons have hover state with increased opacity (e.g., hover:bg-white/20)",
+      "Verify glass effect visible over card background images",
+      "Verify download button (Download icon) has proper glass styling",
+      "Verify copy button (Copy icon) has proper glass styling",
+      "Verify external link button (ExternalLink icon) has proper glass styling",
+      "Verify buttons maintain accessibility with sufficient contrast for icons",
+      "Verify no visual regression compared to previous glass effect implementation"
+    ],
+    "passes": true
+  },
+  {
+    "category": "UI Enhancement",
+    "description": "Make ExportCard action buttons appear only on hover",
+    "steps": [
+      "Verify button container div (line 86) wraps all action buttons (Download, Copy, External Link)",
+      "Verify Card component has group class applied (already present on line 46)",
+      "Verify button container has opacity-0 class by default (hidden state)",
+      "Verify button container has group-hover:opacity-100 class for hover reveal",
+      "Verify button container has transition-opacity duration-200 for smooth fade animation",
+      "Verify buttons fade in smoothly when mouse enters card area",
+      "Verify buttons fade out smoothly when mouse leaves card area",
+      "Verify carousel indicator dots remain always visible (not affected by hover state)",
+      "Verify buttons remain keyboard accessible even when visually hidden (focus makes them appear)",
+      "Verify button focus states trigger visibility (opacity-100 when any button receives focus)",
+      "Verify touch devices show buttons on touch/tap (consider [@media(hover:none)]:opacity-100 for touch screens)",
+      "Verify animation respects prefers-reduced-motion accessibility setting",
+      "Verify buttons clickable immediately when visible (no delay between fade-in and interactivity)",
+      "Verify no layout shift when buttons appear/disappear",
+      "Verify hover behavior works correctly on all card sizes (small and large bento cards)"
+    ],
+    "passes": true
+  }
+]
