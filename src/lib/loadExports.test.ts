@@ -26,7 +26,7 @@ test("loadAllExports includes Platynator addon", () => {
 test("getAddonManifest returns list of addon ids and names", () => {
   const manifest = getAddonManifest();
   expect(Array.isArray(manifest)).toBe(true);
-  expect(manifest.length).toBe(9);
+  expect(manifest.length).toBe(14);
   
   const ids = manifest.map(item => item.id);
   expect(ids).toContain("details");
@@ -76,10 +76,10 @@ test("export data has correct structure", () => {
   }
 });
 
-test("blizzhudtweaks addon has externalUrl instead of exportString", () => {
-  const blizzhudtweaks = getAddonById("blizzhudtweaks");
-  expect(blizzhudtweaks).toBeDefined();
-  expect(blizzhudtweaks?.export.externalUrl).toBeDefined();
-  expect(typeof blizzhudtweaks?.export.externalUrl).toBe("string");
-  expect(blizzhudtweaks?.export.exportString).toBeUndefined();
+test("sensei-resource-bar addon has externalUrl instead of exportString", () => {
+  const senseiResourceBar = getAddonById("sensei-resource-bar");
+  expect(senseiResourceBar).toBeDefined();
+  expect(senseiResourceBar?.export.externalUrl).toBeDefined();
+  expect(typeof senseiResourceBar?.export.externalUrl).toBe("string");
+  expect(senseiResourceBar?.export.exportString).toBeUndefined();
 });

@@ -124,14 +124,14 @@ export function AddonDetailPage() {
               {hasImages && (
                 <div className="relative mb-8 rounded-lg overflow-hidden bg-black/20">
                   {/* Images */}
-                  <div className="relative aspect-video">
+                  <div className="relative w-full" style={{ minHeight: '300px', maxHeight: '600px', aspectRatio: '16/9' }}>
                     {images.map((image, index) => (
                       <img
                         key={image}
                         src={image}
                         alt={`${addon.export.name} screenshot ${index + 1}`}
                         className={`
-                          absolute inset-0 w-full h-full object-cover
+                          absolute inset-0 w-full h-full object-contain
                           transition-opacity duration-500 ease-in-out
                           ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
                         `}
