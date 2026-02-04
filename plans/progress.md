@@ -48,4 +48,5 @@ Work continues on the remaining features in prd.json.
 - Removed modal content bg. Changed glass-strong backdrop-blur-xl→bg-transparent on DialogContent. Dialog's native backdrop blur sufficient. Cleaner, simpler modal. Build+tests pass (32).
 - Removed backdrop-blur-[2px] from modal trigger hover overlay. Kept bg-black/20 for hover indication. Maximize2 icon overlay now cleaner w/ glass-strong button. Build+tests pass (32). PRD complete.
 - Removed image counter from modal gallery. Deleted counter component (was lines 392-395). Cleaner modal w/ only controls, dots, image. DialogContent already bg-transparent, Dialog overlay has bg-black/80 backdrop-blur-sm. Build+tests pass (32).
+- Implemented dynamic modal gallery sizing. Changed max-w-5xl→max-w-[95vw], max-h-[85vh]→max-h-[95vh]. Reduced padding p-16→p-4 sm:p-8 to maximize image display area. Modal now uses 95% of viewport, allowing larger images (landscape/portrait/square) to display properly. Navigation controls+dots remain positioned. Build+tests pass (32).
 

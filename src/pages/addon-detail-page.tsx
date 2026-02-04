@@ -8,11 +8,7 @@ import { CopyButton } from '@/components/copy-button';
 import { getAddonById } from '@/lib/loadExports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { ArrowLeft, Download, ExternalLink, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogClose,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 
 export function AddonDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -162,8 +158,8 @@ export function AddonDetailPage() {
               {hasImages && (
                 <div className="relative mb-8 rounded-lg overflow-hidden bg-black/20">
                   {/* Images */}
-                  <div 
-                    className="relative w-full cursor-pointer group" 
+                  <div
+                    className="relative w-full cursor-pointer group"
                     style={{ minHeight: '300px', maxHeight: '600px', aspectRatio: '16/9' }}
                     onClick={handleImageClick}
                   >
@@ -179,7 +175,7 @@ export function AddonDetailPage() {
                         `}
                       />
                     ))}
-                    
+
                     {/* Expand Icon Overlay */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/20">
                       <div className="glass-strong p-3 rounded-full">
@@ -220,7 +216,7 @@ export function AddonDetailPage() {
                       </Button>
 
                       {/* Indicator Dots */}
-                      <div 
+                      <div
                         className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-3 py-2 glass-strong rounded-full"
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -315,15 +311,13 @@ export function AddonDetailPage() {
 
       {/* Image Gallery Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-5xl w-full max-h-[85vh] p-0 border-0 bg-transparent">
+        <DialogContent className="max-w-[95vw] w-full max-h-[95vh] p-0 border-0">
           <div className="relative w-full h-full flex items-center justify-center">
             {/* Full Resolution Image */}
-            <div className="relative w-full h-full flex items-center justify-center p-16">
+            <div className="relative w-full h-full flex items-center justify-center p-4 sm:p-8">
               {isImageLoading && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="glass-strong px-4 py-2 rounded-lg text-sm">
-                    Loading...
-                  </div>
+                  <div className="glass-strong px-4 py-2 rounded-lg text-sm">Loading...</div>
                 </div>
               )}
               <img

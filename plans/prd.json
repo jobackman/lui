@@ -166,7 +166,7 @@
       "Verify images still use `object-contain` to prevent cropping",
       "Verify close button remains accessible"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI Enhancement",
