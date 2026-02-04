@@ -68,7 +68,7 @@
       "Verify images load at full resolution in modal",
       "Test keyboard navigation doesn't conflict with carousel shortcuts"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Refactoring",

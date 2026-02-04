@@ -7,12 +7,20 @@ import { Tag } from '@/components/ui/tag';
 import { CopyButton } from '@/components/copy-button';
 import { getAddonById } from '@/lib/loadExports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
-import { ArrowLeft, Download, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Download, ExternalLink, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogClose,
+} from '@/components/ui/dialog';
 
 export function AddonDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImageIndex, setModalImageIndex] = useState(0);
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   // Handle invalid addon IDs
   if (!id) {
@@ -38,22 +46,37 @@ export function AddonDetailPage() {
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        navigate('/');
-      } else if (hasMultipleImages) {
+      // If modal is open, handle modal navigation
+      if (isModalOpen && hasMultipleImages) {
         if (e.key === 'ArrowLeft') {
           e.preventDefault();
-          setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+          setModalImageIndex((prev) => (prev - 1 + images.length) % images.length);
         } else if (e.key === 'ArrowRight') {
           e.preventDefault();
-          setCurrentImageIndex((prev) => (prev + 1) % images.length);
+          setModalImageIndex((prev) => (prev + 1) % images.length);
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          setIsModalOpen(false);
+        }
+      } else if (!isModalOpen) {
+        // Only handle page-level navigation when modal is closed
+        if (e.key === 'Escape') {
+          navigate('/');
+        } else if (hasMultipleImages) {
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+          } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            setCurrentImageIndex((prev) => (prev + 1) % images.length);
+          }
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [navigate, hasMultipleImages, images.length]);
+  }, [navigate, hasMultipleImages, images.length, isModalOpen]);
 
   // Update document title
   useEffect(() => {
@@ -69,6 +92,21 @@ export function AddonDetailPage() {
 
   const handleNextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const handleImageClick = () => {
+    setModalImageIndex(currentImageIndex);
+    setIsModalOpen(true);
+  };
+
+  const handleModalPrevImage = () => {
+    setModalImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    setIsImageLoading(true);
+  };
+
+  const handleModalNextImage = () => {
+    setModalImageIndex((prev) => (prev + 1) % images.length);
+    setIsImageLoading(true);
   };
 
   return (
@@ -124,7 +162,11 @@ export function AddonDetailPage() {
               {hasImages && (
                 <div className="relative mb-8 rounded-lg overflow-hidden bg-black/20">
                   {/* Images */}
-                  <div className="relative w-full" style={{ minHeight: '300px', maxHeight: '600px', aspectRatio: '16/9' }}>
+                  <div 
+                    className="relative w-full cursor-pointer group" 
+                    style={{ minHeight: '300px', maxHeight: '600px', aspectRatio: '16/9' }}
+                    onClick={handleImageClick}
+                  >
                     {images.map((image, index) => (
                       <img
                         key={image}
@@ -137,6 +179,13 @@ export function AddonDetailPage() {
                         `}
                       />
                     ))}
+                    
+                    {/* Expand Icon Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/20 backdrop-blur-[2px]">
+                      <div className="glass-strong p-3 rounded-full">
+                        <Maximize2 className="h-6 w-6 text-white" />
+                      </div>
+                    </div>
                   </div>
 
                   {/* Carousel Controls - Only show if multiple images */}
@@ -146,7 +195,10 @@ export function AddonDetailPage() {
                       <Button
                         variant="default"
                         size="icon"
-                        onClick={handlePrevImage}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePrevImage();
+                        }}
                         className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
                         aria-label="Previous image"
                       >
@@ -157,7 +209,10 @@ export function AddonDetailPage() {
                       <Button
                         variant="default"
                         size="icon"
-                        onClick={handleNextImage}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleNextImage();
+                        }}
                         className="absolute right-4 top-1/2 -translate-y-1/2 z-10"
                         aria-label="Next image"
                       >
@@ -165,11 +220,17 @@ export function AddonDetailPage() {
                       </Button>
 
                       {/* Indicator Dots */}
-                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-3 py-2 glass-strong rounded-full">
+                      <div 
+                        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-3 py-2 glass-strong rounded-full"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         {images.map((_, index) => (
                           <button
                             key={index}
-                            onClick={() => setCurrentImageIndex(index)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentImageIndex(index);
+                            }}
                             className="p-1.5 [@media(hover:none)]:p-2 [@media(hover:none)]:min-w-[44px] [@media(hover:none)]:min-h-[44px] flex items-center justify-center"
                             aria-label={`View image ${index + 1} of ${images.length}`}
                             aria-current={index === currentImageIndex ? 'true' : 'false'}
@@ -251,6 +312,90 @@ export function AddonDetailPage() {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* Image Gallery Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-[95vw] w-full h-[95vh] p-0 border-0">
+          <div className="relative w-full h-full flex items-center justify-center bg-black/95">
+            {/* Full Resolution Image */}
+            <div className="relative w-full h-full flex items-center justify-center p-16">
+              {isImageLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="glass-strong px-4 py-2 rounded-lg text-sm">
+                    Loading...
+                  </div>
+                </div>
+              )}
+              <img
+                src={images[modalImageIndex]}
+                alt={`${addon.export.name} screenshot ${modalImageIndex + 1}`}
+                className="max-w-full max-h-full object-contain"
+                onLoad={() => setIsImageLoading(false)}
+                style={{ display: isImageLoading ? 'none' : 'block' }}
+              />
+            </div>
+
+            {/* Modal Navigation Controls */}
+            {hasMultipleImages && (
+              <>
+                {/* Previous Button */}
+                <Button
+                  variant="default"
+                  size="icon"
+                  onClick={handleModalPrevImage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
+
+                {/* Next Button */}
+                <Button
+                  variant="default"
+                  size="icon"
+                  onClick={handleModalNextImage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </Button>
+
+                {/* Indicator Dots */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-3 py-2 glass-strong rounded-full">
+                  {images.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setModalImageIndex(index);
+                        setIsImageLoading(true);
+                      }}
+                      className="p-1.5 [@media(hover:none)]:p-2 [@media(hover:none)]:min-w-[44px] [@media(hover:none)]:min-h-[44px] flex items-center justify-center"
+                      aria-label={`View image ${index + 1} of ${images.length}`}
+                      aria-current={index === modalImageIndex ? 'true' : 'false'}
+                    >
+                      <div
+                        className={`
+                          transition-all duration-300 ease-out rounded-full
+                          ${
+                            index === modalImageIndex
+                              ? 'w-2 h-2 bg-white shadow-lg shadow-white/50'
+                              : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/60'
+                          }
+                        `}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Image Counter */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 glass-strong px-4 py-2 rounded-full text-sm">
+              {modalImageIndex + 1} / {images.length}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
