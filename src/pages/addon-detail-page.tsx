@@ -315,7 +315,7 @@ export function AddonDetailPage() {
 
       {/* Image Gallery Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-5xl w-full max-h-[85vh] p-0 border-0 glass-strong backdrop-blur-xl">
+        <DialogContent className="max-w-5xl w-full max-h-[85vh] p-0 border-0 bg-transparent">
           <div className="relative w-full h-full flex items-center justify-center">
             {/* Full Resolution Image */}
             <div className="relative w-full h-full flex items-center justify-center p-16">
