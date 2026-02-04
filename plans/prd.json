@@ -188,6 +188,6 @@
       "Verify clicking outside image/controls still closes modal",
       "Test on different backgrounds to ensure no visible container artifacts"
     ],
-    "passes": false
+    "passes": true
   }
 ]

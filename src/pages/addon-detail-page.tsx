@@ -388,11 +388,6 @@ export function AddonDetailPage() {
                 </div>
               </>
             )}
-
-            {/* Image Counter */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 glass-strong px-4 py-2 rounded-full text-sm">
-              {modalImageIndex + 1} / {images.length}
-            </div>
           </div>
         </DialogContent>
       </Dialog>
