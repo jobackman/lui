@@ -145,5 +145,49 @@
       "Test hover interaction on desktop and touch devices"
     ],
     "passes": true
+  },
+  {
+    "category": "UI Enhancement",
+    "description": "Dynamic sizing for dialog image gallery based on image dimensions",
+    "steps": [
+      "Verify current modal uses fixed `max-w-5xl` constraint (line 318)",
+      "Verify current modal height constraint is `max-h-[85vh]` (line 318)",
+      "Remove or increase `max-w-5xl` to allow wider images to display larger (change to `max-w-[95vw]`)",
+      "Update height constraint to `max-h-[95vh]` for consistency",
+      "Ensure image container (line 321) properly sizes to contain image",
+      "Reduce p-16 padding (line 321) to smaller value (e.g., p-4 or p-8) to maximize image display area",
+      "Test with landscape images (wide aspect ratios)",
+      "Test with portrait images (tall aspect ratios)",
+      "Test with square images",
+      "Verify navigation controls remain properly positioned at all sizes",
+      "Verify indicator dots remain visible and well-positioned",
+      "Test on different screen sizes (mobile, tablet, desktop, ultrawide)",
+      "Ensure modal remains centered on screen",
+      "Verify images still use `object-contain` to prevent cropping",
+      "Verify close button remains accessible"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI Enhancement",
+    "description": "Remove dialog container background and image counter from image gallery",
+    "steps": [
+      "Verify current DialogContent uses `bg-transparent` (line 318) - already correct",
+      "Verify Dialog overlay/backdrop - ensure it's either transparent or very subtle",
+      "Check shadcn Dialog component default styles for any default backgrounds",
+      "Remove any remaining background colors from dialog container",
+      "Ensure dialog border is removed (currently `border-0` at line 318) - already correct",
+      "Remove image counter component (lines 392-395)",
+      "Keep navigation buttons (prev/next)",
+      "Keep indicator dots with glass-strong styling",
+      "Keep close button",
+      "Keep loading indicator",
+      "Test dialog appearance - should only see controls, dots, and image (no container box or counter)",
+      "Verify controls remain visible against various image backgrounds (light/dark)",
+      "Test close button visibility and accessibility",
+      "Verify clicking outside image/controls still closes modal",
+      "Test on different backgrounds to ensure no visible container artifacts"
+    ],
+    "passes": false
   }
 ]
