@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import { Card, CardHeader, CardTitle, CardAction, CardDescription } from "@/components/ui/card";
-import { CopyButton } from "@/components/copy-button";
-import { Button } from "@/components/ui/button";
-import { Download, ExternalLink } from "lucide-react";
-import { formatRelativeTime } from "@/lib/formatRelativeTime";
-import type { AddonExport } from "@/types/exports";
+import { useState, useEffect, useRef } from 'react';
+import { Card, CardHeader, CardTitle, CardAction, CardDescription } from '@/components/ui/card';
+import { CopyButton } from '@/components/copy-button';
+import { Button } from '@/components/ui/button';
+import { Download, ExternalLink } from 'lucide-react';
+import { formatRelativeTime } from '@/lib/formatRelativeTime';
+import type { AddonExport } from '@/types/exports';
 
 interface ExportCardProps {
   export: AddonExport;
@@ -73,23 +73,16 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
 
       {/* Title and timestamp positioned at top */}
       <CardHeader className="absolute top-0 left-0 right-0 z-10 pt-4">
-        <CardTitle className="text-white drop-shadow-lg shadow-black">
-          {exportData.name}
-        </CardTitle>
+        <CardTitle className="text-white drop-shadow-lg shadow-black">{exportData.name}</CardTitle>
         <p className="text-white/80 text-sm drop-shadow-md mt-2">
           Updated {formatRelativeTime(exportData.lastUpdated)}
         </p>
       </CardHeader>
 
       {/* Buttons positioned at center */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex gap-2 opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
+      <div className="absolute top-4 right-4 z-10 flex gap-2 opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
         {exportData.downloadUrl && (
-          <Button
-            variant="default"
-            size="icon"
-            asChild
-            title="Download addon"
-          >
+          <Button variant="default" size="icon" asChild title="Download addon">
             <a
               href={exportData.downloadUrl}
               target="_blank"
@@ -102,16 +95,9 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
           </Button>
         )}
         {exportData.exportString ? (
-          <CopyButton 
-            text={exportData.exportString}
-          />
+          <CopyButton text={exportData.exportString} />
         ) : exportData.externalUrl ? (
-          <Button
-            variant="default"
-            size="icon"
-            asChild
-            title="View on external site"
-          >
+          <Button variant="default" size="icon" asChild title="View on external site">
             <a
               href={exportData.externalUrl}
               target="_blank"

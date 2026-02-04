@@ -55,10 +55,7 @@ export function AddonDetailPage() {
           setIsModalOpen(false);
         }
       } else if (!isModalOpen) {
-        // Only handle page-level navigation when modal is closed
-        if (e.key === 'Escape') {
-          navigate('/');
-        } else if (hasMultipleImages) {
+        if (hasMultipleImages) {
           if (e.key === 'ArrowLeft') {
             e.preventDefault();
             setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
@@ -175,13 +172,6 @@ export function AddonDetailPage() {
                         `}
                       />
                     ))}
-
-                    {/* Expand Icon Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/20">
-                      <div className="glass-strong p-3 rounded-full">
-                        <Maximize2 className="h-6 w-6 text-white" />
-                      </div>
-                    </div>
                   </div>
 
                   {/* Carousel Controls - Only show if multiple images */}
@@ -195,7 +185,7 @@ export function AddonDetailPage() {
                           e.stopPropagation();
                           handlePrevImage();
                         }}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10"
                         aria-label="Previous image"
                       >
                         <ChevronLeft className="h-6 w-6" />
@@ -209,7 +199,7 @@ export function AddonDetailPage() {
                           e.stopPropagation();
                           handleNextImage();
                         }}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 z-10"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10"
                         aria-label="Next image"
                       >
                         <ChevronRight className="h-6 w-6" />
@@ -217,7 +207,7 @@ export function AddonDetailPage() {
 
                       {/* Indicator Dots */}
                       <div
-                        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-3 py-2 glass-strong rounded-full"
+                        className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex gap-1 min-h-2 px-1 glass-subtle rounded-full"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {images.map((_, index) => (
@@ -227,7 +217,7 @@ export function AddonDetailPage() {
                               e.stopPropagation();
                               setCurrentImageIndex(index);
                             }}
-                            className="p-1.5 [@media(hover:none)]:p-2 [@media(hover:none)]:min-w-[44px] [@media(hover:none)]:min-h-[44px] flex items-center justify-center"
+                            className="px-1 py-2 flex items-center justify-center"
                             aria-label={`View image ${index + 1} of ${images.length}`}
                             aria-current={index === currentImageIndex ? 'true' : 'false'}
                           >
@@ -259,7 +249,7 @@ export function AddonDetailPage() {
                   <Button variant="ghost" asChild>
                     <a href={addon.export.externalUrl} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="h-4 w-4 mr-2" />
-                      View External Guide
+                      Import
                     </a>
                   </Button>
                 ) : null}
@@ -299,9 +289,7 @@ export function AddonDetailPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 }}
                 >
-                  <p className="text-muted-foreground">
-                    This addon requires importing from an external source. Click the button above to view the guide.
-                  </p>
+                  <p className="text-muted-foreground">Import instructions are on the external guide linked above.</p>
                 </motion.div>
               )}
             </Card>
@@ -337,7 +325,7 @@ export function AddonDetailPage() {
                   variant="default"
                   size="icon"
                   onClick={handleModalPrevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 z-10"
                   aria-label="Previous image"
                 >
                   <ChevronLeft className="h-6 w-6" />
@@ -348,14 +336,14 @@ export function AddonDetailPage() {
                   variant="default"
                   size="icon"
                   onClick={handleModalNextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 z-10"
                   aria-label="Next image"
                 >
                   <ChevronRight className="h-6 w-6" />
                 </Button>
 
                 {/* Indicator Dots */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-1 px-3 py-2 glass-strong rounded-full">
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex gap-1 glass-subtle rounded-full">
                   {images.map((_, index) => (
                     <button
                       key={index}
@@ -363,7 +351,7 @@ export function AddonDetailPage() {
                         setModalImageIndex(index);
                         setIsImageLoading(true);
                       }}
-                      className="p-1.5 [@media(hover:none)]:p-2 [@media(hover:none)]:min-w-[44px] [@media(hover:none)]:min-h-[44px] flex items-center justify-center"
+                      className="px-1.5 py-2 [@media(hover:none)]:min-w-8 [@media(hover:none)]:min-h-8 flex items-center justify-center"
                       aria-label={`View image ${index + 1} of ${images.length}`}
                       aria-current={index === modalImageIndex ? 'true' : 'false'}
                     >
