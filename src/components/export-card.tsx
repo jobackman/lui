@@ -4,6 +4,7 @@ import { CopyButton } from '@/components/copy-button';
 import { Button } from '@/components/ui/button';
 import { Download, ExternalLink } from 'lucide-react';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
+import { CarouselIndicators } from '@/components/carousel-indicators';
 import type { AddonExport } from '@/types/exports';
 
 interface ExportCardProps {
@@ -113,33 +114,14 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
 
       {/* Image indicator dots */}
       {hasMultipleImages && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-0.5 px-1.5 py-1 glass-subtle rounded-full">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setCurrentImageIndex(index);
-              }}
-              className="p-1.5 [@media(hover:none)]:p-2 [@media(hover:none)]:min-w-[44px] [@media(hover:none)]:min-h-[44px] flex items-center justify-center"
-              aria-label={`View image ${index + 1} of ${images.length}`}
-              title={`Image ${index + 1} of ${images.length}`}
-            >
-              <div
-                className={`
-                  transition-all duration-300 ease-out rounded-full
-                  motion-reduce:transition-none
-                  ${
-                    index === currentImageIndex
-                      ? 'w-1.5 h-1.5 bg-white shadow-lg shadow-white/50'
-                      : 'w-1 h-1 bg-white/40 hover:bg-white/60'
-                  }
-                `}
-              />
-            </button>
-          ))}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
+          <CarouselIndicators
+            totalImages={images.length}
+            currentIndex={currentImageIndex}
+            onIndexChange={setCurrentImageIndex}
+            size="sm"
+            stopPropagation
+          />
         </div>
       )}
     </Card>

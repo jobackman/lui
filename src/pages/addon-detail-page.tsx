@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tag } from '@/components/ui/tag';
 import { CopyButton } from '@/components/copy-button';
+import { CarouselIndicators } from '@/components/carousel-indicators';
 import { getAddonById } from '@/lib/loadExports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { ArrowLeft, Download, ExternalLink, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
@@ -207,32 +208,16 @@ export function AddonDetailPage() {
 
                       {/* Indicator Dots */}
                       <div
-                        className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex gap-1 min-h-2 px-1 glass-subtle rounded-full"
+                        className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        {images.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setCurrentImageIndex(index);
-                            }}
-                            className="px-1 py-2 flex items-center justify-center"
-                            aria-label={`View image ${index + 1} of ${images.length}`}
-                            aria-current={index === currentImageIndex ? 'true' : 'false'}
-                          >
-                            <div
-                              className={`
-                                transition-all duration-300 ease-out rounded-full
-                                ${
-                                  index === currentImageIndex
-                                    ? 'w-2 h-2 bg-white shadow-lg shadow-white/50'
-                                    : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/60'
-                                }
-                              `}
-                            />
-                          </button>
-                        ))}
+                        <CarouselIndicators
+                          totalImages={images.length}
+                          currentIndex={currentImageIndex}
+                          onIndexChange={setCurrentImageIndex}
+                          size="md"
+                          stopPropagation
+                        />
                       </div>
                     </>
                   )}
@@ -343,30 +328,16 @@ export function AddonDetailPage() {
                 </Button>
 
                 {/* Indicator Dots */}
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex gap-1 glass-subtle rounded-full">
-                  {images.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        setModalImageIndex(index);
-                        setIsImageLoading(true);
-                      }}
-                      className="px-1.5 py-2 [@media(hover:none)]:min-w-8 [@media(hover:none)]:min-h-8 flex items-center justify-center"
-                      aria-label={`View image ${index + 1} of ${images.length}`}
-                      aria-current={index === modalImageIndex ? 'true' : 'false'}
-                    >
-                      <div
-                        className={`
-                          transition-all duration-300 ease-out rounded-full
-                          ${
-                            index === modalImageIndex
-                              ? 'w-2 h-2 bg-white shadow-lg shadow-white/50'
-                              : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/60'
-                          }
-                        `}
-                      />
-                    </button>
-                  ))}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10">
+                  <CarouselIndicators
+                    totalImages={images.length}
+                    currentIndex={modalImageIndex}
+                    onIndexChange={(index) => {
+                      setModalImageIndex(index);
+                      setIsImageLoading(true);
+                    }}
+                    size="md"
+                  />
                 </div>
               </>
             )}
