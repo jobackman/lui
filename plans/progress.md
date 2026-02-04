@@ -53,3 +53,27 @@ Work continues on the remaining features in prd.json.
 - Simplified CarouselIndicators. Removed size prop (always use larger md variant). Replaced conditional string concatenation w/ cn utility for cleaner conditional classes. Build+tests pass (32).
 - Migrated glass effects to atomic Tailwind utilities. Replaced .glass/.glass-strong/.glass-subtle classes w/ atomic utilities: bg-glass, backdrop-blur-glass, border-glass, transition-glass (+ -strong/-subtle variants). Updated all components: Button, Card, Input, Dialog, Tag, CarouselIndicators, AddonDetailPage, ThemeToggle, AddonTabs. CSS now uses @layer utilities in globals.css. Better composability w/ cn(), proper override behavior. Fallback for browsers w/o backdrop-filter. Build+tests pass (32). PRD complete.
 
+---
+
+## 2026-02-04 - Archive Completed Tasks
+
+**Archived:** 11 completed tasks to `/plans/archive/archived-2026-02-04.json`
+
+**Status:**
+- Completed: 11 tasks
+- Cancelled: 0 tasks
+
+**Archived Items:**
+1. Bug Fix: Responsive layout fix (bento grid below 768px)
+2. Feature: Automate timestamp updates for export strings
+3. Feature: Modal gallery for full-resolution images
+4. Refactoring: Replace import.meta.glob with direct imports (Bun compatibility)
+5. Feature: Support different aspect ratios in carousel
+6. UI Enhancement: Glassy modal background
+7. UI Enhancement: Remove hover blur from modal trigger
+8. UI Enhancement: Dynamic modal sizing
+9. UI Enhancement: Remove modal container background and counter
+10. Refactoring: Create reusable CarouselIndicators component
+11. Refactoring: Migrate glass effects to atomic Tailwind utilities
+
+PRD now empty - all tasks completed and archived.
