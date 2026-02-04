@@ -17,5 +17,3 @@ export const details: AddonCategory = {
     tags: ['dmg', 'details', 'pve', 'tracking', 'raid', 'meter', 'healing', 'damage'],
   },
 };
-
-export default details;

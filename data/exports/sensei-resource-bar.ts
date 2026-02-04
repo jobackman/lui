@@ -16,5 +16,3 @@ export const senseiResourceBar: AddonCategory = {
     images: ['https://i.imgur.com/aEQC6IZ.png'],
   },
 };
-
-export default senseiResourceBar;

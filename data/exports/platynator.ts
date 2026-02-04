@@ -13,6 +13,7 @@ export const platynator: AddonCategory = {
       // Need to build support for video
       // "https://i.imgur.com/HsRtH0D.mp4",
       "https://i.imgur.com/BCTAU5v.png",
+      "https://i.imgur.com/N3eXNil.png",
       "https://i.imgur.com/o3BGLIw.png",
       "https://i.imgur.com/a1JoxIw.png",
       "https://i.imgur.com/5zuu6nQ.png",
@@ -22,8 +23,6 @@ export const platynator: AddonCategory = {
     setupInstructions: `1. Run \`/platy\` to open settings
 2. Import the string
 3. Done!`,
-    tags: ["nameplates", "threat", "ui",]
+    tags: ["nameplates", "threat", "frame", "m+", "mythic", "ui",]
   }
 };
-
-export default platynator;

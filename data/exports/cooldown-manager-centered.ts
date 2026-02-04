@@ -4,7 +4,7 @@ export const cooldownManagerCentered: AddonCategory = {
   id: "cooldown-manager-centered",
   name: "Cooldown Manager Centered",
   export: {
-    name: "CDM Class Packs",
+    name: "Cooldown Manager Centered",
     description: "90% Luxthos setup, with some extra settings on the utility icons to fade out entirely when on CD",
     lastUpdated: "2026-02-03T16:50:25.575Z",
     externalUrl: "https://www.luxthos.com/interface-addon-profiles/",
@@ -21,5 +21,3 @@ export const cooldownManagerCentered: AddonCategory = {
     ]
   }
 };
-
-export default cooldownManagerCentered;

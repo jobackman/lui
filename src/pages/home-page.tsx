@@ -36,7 +36,7 @@ export function HomePage() {
   const totalExports = filteredAddons.length;
 
   return (
-    <motion.div 
+    <motion.div
       className="min-h-screen relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

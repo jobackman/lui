@@ -4,7 +4,7 @@ export const cooldownManager: AddonCategory = {
   id: "cooldown-manager",
   name: "Cooldown Manager",
   export: {
-    name: "Cooldown Manager Class Packs",
+    name: "Class & Spec Profiles for Cooldown Manager",
     description: "Just use Luxthos class profiles for Cooldown Manager",
     lastUpdated: "2026-01-28T08:20:00Z",
     externalUrl: "https://www.luxthos.com/cooldown-manager-profiles-world-of-warcraft-midnight/",
@@ -20,5 +20,3 @@ export const cooldownManager: AddonCategory = {
     tags: ["cooldown manager", "cdm", "cd", "cds", "wa", "weakaura", "luxthos"]
   }
 };
-
-export default cooldownManager;

@@ -17,8 +17,6 @@ export const waypointUi: AddonCategory = {
       "https://media.forgecdn.net/attachments/1418/835/tomtomwaypoint-jpg.jpg"
     ],
     setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
-    tags: ["ui", "waypoint", "markers", "map", "pin"]
+    tags: ["waypoint", "markers", "map", "pin", "misc"]
   }
 };
-
-export default waypointUi;
