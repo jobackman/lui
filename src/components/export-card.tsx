@@ -119,7 +119,6 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
             totalImages={images.length}
             currentIndex={currentImageIndex}
             onIndexChange={setCurrentImageIndex}
-            size="sm"
             stopPropagation
           />
         </div>

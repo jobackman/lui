@@ -215,7 +215,6 @@ export function AddonDetailPage() {
                           totalImages={images.length}
                           currentIndex={currentImageIndex}
                           onIndexChange={setCurrentImageIndex}
-                          size="md"
                           stopPropagation
                         />
                       </div>
@@ -336,7 +335,6 @@ export function AddonDetailPage() {
                       setModalImageIndex(index);
                       setIsImageLoading(true);
                     }}
-                    size="md"
                   />
                 </div>
               </>
