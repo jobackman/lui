@@ -112,5 +112,38 @@
       "Verify carousel works with single-image and multi-image scenarios"
     ],
     "passes": true
+  },
+  {
+    "category": "UI Enhancement",
+    "description": "Make modal gallery dialog background glassy instead of black full-screen overlay",
+    "steps": [
+      "Verify current modal uses `bg-black/95` full-screen background (line 315)",
+      "Replace black background with glassy backdrop effect",
+      "Update DialogContent className to use glass styling",
+      "Reduce dialog size from `max-w-[95vw] w-full h-[90vh]` to reasonable dimensions that don't cover entire screen",
+      "Add backdrop-blur to DialogContent or parent container for glassy effect",
+      "Add rounded corners to modal images (currently lacking border-radius at line 323-329)",
+      "Ensure rounded corners match the app's design system (check carousel and card images for reference)",
+      "Test modal appearance with new glassy background",
+      "Verify modal content is still clearly visible and readable",
+      "Verify modal images display properly with rounded corners",
+      "Verify close button and navigation controls are still accessible",
+      "Test on different screen sizes to ensure proper display",
+      "Verify clicking outside modal still closes it properly"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI Enhancement",
+    "description": "Remove unnecessary blur effect from modal gallery trigger hover state",
+    "steps": [
+      "Verify current hover overlay uses `backdrop-blur-[2px]` (line 180)",
+      "Remove `backdrop-blur-[2px]` from the hover overlay className",
+      "Keep the `bg-black/20` background for hover indication",
+      "Test that Maximize2 icon is still visible on hover",
+      "Verify hover effect still provides clear visual feedback",
+      "Test hover interaction on desktop and touch devices"
+    ],
+    "passes": false
   }
 ]
