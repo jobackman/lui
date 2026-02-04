@@ -215,5 +215,34 @@
       "Verify transitions and animations match original behavior"
     ],
     "passes": true
+  },
+  {
+    "category": "Refactoring",
+    "description": "Migrate glass effect utilities from custom CSS classes to Tailwind plugin with atomic utilities for better composability with cn() function",
+    "steps": [
+      "Review current `.glass`, `.glass-strong`, and `.glass-subtle` implementations in `styles/globals.css:208-231`",
+      "Identify all components currently using glass classes (grep for \"glass\", \"glass-strong\", \"glass-subtle\")",
+      "Create `tailwind.config.ts` if it doesn't exist (currently referenced as empty string in components.json:7)",
+      "Implement Tailwind plugin with atomic glass utilities:",
+      "- `bg-glass` / `bg-glass-strong` / `bg-glass-subtle` for background colors with opacity",
+      "- `backdrop-blur-glass` / `backdrop-blur-glass-strong` / `backdrop-blur-glass-subtle` for blur effects",
+      "- `border-glass` for glass border color",
+      "- Include transitions on relevant utilities",
+      "Add fallback variants for browsers without backdrop-filter support",
+      "Test new utilities in isolation to verify they match current glass effects",
+      "Update components one-by-one (create separate sub-tasks for each component):",
+      "- Replace className=\"glass\" with className=\"bg-glass backdrop-blur-glass border-glass\"",
+      "- Replace className=\"glass-strong\" with atomic equivalent",
+      "- Replace className=\"glass-subtle\" with atomic equivalent",
+      "- Verify component renders identically after migration",
+      "Once all components migrated, remove `.glass`, `.glass-strong`, `.glass-subtle` from `styles/globals.css:208-231`",
+      "Keep CSS variables in `:root` and `.dark` (lines 78-88, 123-132) as they're still needed",
+      "Test that Tailwind utilities properly override glass properties via cn() (e.g., `cn(\"bg-glass\", \"bg-red-500\")` should result in red background)",
+      "Verify dark mode glass effects work correctly across all migrated components",
+      "Test fallback behavior for browsers without backdrop-filter support",
+      "Verify no visual regressions in any component",
+      "Update AGENTS.md or project docs if they reference glass classes"
+    ],
+    "passes": false
   }
 ]
