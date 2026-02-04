@@ -134,7 +134,7 @@ export function AddonDetailPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Card className="glass-strong p-6 sm:p-8">
+            <Card className="bg-glass-strong backdrop-blur-glass-strong border-glass transition-glass p-6 sm:p-8">
               {/* Header */}
               <div className="mb-6">
                 <h1 className="text-3xl sm:text-4xl font-bold mb-3">{addon.export.name}</h1>
@@ -253,7 +253,7 @@ export function AddonDetailPage() {
               {/* Setup Instructions */}
               {addon.export.setupInstructions && (
                 <motion.div
-                  className="glass p-6 rounded-lg"
+                  className="bg-glass backdrop-blur-glass border-glass transition-glass p-6 rounded-lg"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 }}
@@ -270,7 +270,7 @@ export function AddonDetailPage() {
               {/* Message for external-link-only addons */}
               {!addon.export.exportString && addon.export.externalUrl && !addon.export.setupInstructions && (
                 <motion.div
-                  className="glass p-6 rounded-lg text-center"
+                  className="bg-glass backdrop-blur-glass border-glass transition-glass p-6 rounded-lg text-center"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 }}
@@ -291,7 +291,7 @@ export function AddonDetailPage() {
             <div className="relative w-full h-full flex items-center justify-center p-4 sm:p-8">
               {isImageLoading && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="glass-strong px-4 py-2 rounded-lg text-sm">Loading...</div>
+                  <div className="bg-glass-strong backdrop-blur-glass-strong border-glass transition-glass px-4 py-2 rounded-lg text-sm">Loading...</div>
                 </div>
               )}
               <img

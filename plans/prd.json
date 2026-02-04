@@ -243,6 +243,6 @@
       "Verify no visual regressions in any component",
       "Update AGENTS.md or project docs if they reference glass classes"
     ],
-    "passes": false
+    "passes": true
   }
 ]

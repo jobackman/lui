@@ -206,36 +206,55 @@
 }
 
 @layer utilities {
-  .glass {
+  /* Glass background utilities */
+  .bg-glass {
     background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+  }
+  
+  .bg-glass-strong {
+    background: var(--glass-bg-strong);
+  }
+  
+  .bg-glass-subtle {
+    background: var(--glass-bg-subtle);
+  }
+  
+  /* Glass backdrop blur utilities */
+  .backdrop-blur-glass {
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
-    transition: background 0.2s ease-in-out, border 0.2s ease-in-out, backdrop-filter 0.2s ease-in-out;
   }
   
-  .glass-strong {
-    background: var(--glass-bg-strong);
-    border: 1px solid var(--glass-border);
+  .backdrop-blur-glass-strong {
     backdrop-filter: blur(var(--glass-blur-strong));
     -webkit-backdrop-filter: blur(var(--glass-blur-strong));
-    transition: background 0.2s ease-in-out, border 0.2s ease-in-out, backdrop-filter 0.2s ease-in-out;
   }
   
-  .glass-subtle {
-    background: var(--glass-bg-subtle);
-    border: 1px solid var(--glass-border);
+  .backdrop-blur-glass-subtle {
     backdrop-filter: blur(var(--glass-blur-subtle));
     -webkit-backdrop-filter: blur(var(--glass-blur-subtle));
+  }
+  
+  /* Glass border utility */
+  .border-glass {
+    border: 1px solid var(--glass-border);
+  }
+  
+  /* Glass transition utility */
+  .transition-glass {
     transition: background 0.2s ease-in-out, border 0.2s ease-in-out, backdrop-filter 0.2s ease-in-out;
   }
+}
 
-  @supports not (backdrop-filter: blur(1px)) {
-    .glass,
-    .glass-strong,
-    .glass-subtle {
-      background: var(--card);
-      border: 1px solid var(--border);
-    }
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(1px)) {
+  .bg-glass,
+  .bg-glass-strong,
+  .bg-glass-subtle {
+    background: var(--card);
+  }
+  
+  .border-glass {
+    border: 1px solid var(--border);
   }
 }

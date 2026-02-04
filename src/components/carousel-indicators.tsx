@@ -15,7 +15,7 @@ export function CarouselIndicators({
 }: CarouselIndicatorsProps) {
   return (
     <div
-      className="flex gap-1 min-h-2 px-1 glass-subtle rounded-full"
+      className="flex gap-1 min-h-2 px-1 bg-glass-subtle backdrop-blur-glass-subtle border-glass transition-glass rounded-full"
       onClick={stopPropagation ? (e) => e.stopPropagation() : undefined}
     >
       {Array.from({ length: totalImages }, (_, index) => {

@@ -13,7 +13,7 @@ interface AddonTabsProps {
 
 export function AddonTabs({ tabs, activeTab, onTabChange }: AddonTabsProps) {
   return (
-    <div className="w-full glass-subtle border-b-0" role="tablist" aria-label="Addon categories">
+    <div className="w-full bg-glass-subtle backdrop-blur-glass-subtle border-glass transition-glass border-b-0" role="tablist" aria-label="Addon categories">
       <div className="flex gap-1 px-4 overflow-x-auto">
         {tabs.map((tab) => (
           <button
