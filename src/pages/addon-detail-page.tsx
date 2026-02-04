@@ -181,7 +181,7 @@ export function AddonDetailPage() {
                     ))}
                     
                     {/* Expand Icon Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/20 backdrop-blur-[2px]">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/20">
                       <div className="glass-strong p-3 rounded-full">
                         <Maximize2 className="h-6 w-6 text-white" />
                       </div>
