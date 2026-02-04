@@ -89,5 +89,28 @@
       "Verify no import errors in production bundle"
     ],
     "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Support different aspect ratios in addon detail page image carousel without excessive cropping",
+    "steps": [
+      "Verify current carousel uses `aspect-video` container (line 127) forcing 16:9 ratio",
+      "Verify current images use `object-cover` (line 134) causing cropping",
+      "Design solution approach: use `object-contain` to preserve full image visibility",
+      "Update carousel container to remove fixed `aspect-video` constraint",
+      "Implement dynamic aspect ratio based on current image dimensions",
+      "Change `object-cover` to `object-contain` in image className (line 134)",
+      "Add max-height constraint to prevent extremely tall images from dominating layout",
+      "Ensure container maintains reasonable proportions (e.g., min aspect-ratio)",
+      "Add background styling to fill letterbox/pillarbox areas when needed",
+      "Test with portrait, landscape, and square images",
+      "Verify carousel controls (prev/next buttons) remain properly positioned",
+      "Verify indicator dots remain visible and properly positioned",
+      "Test carousel navigation still works smoothly with opacity transitions",
+      "Ensure images load without layout shift",
+      "Test responsive behavior on mobile devices",
+      "Verify carousel works with single-image and multi-image scenarios"
+    ],
+    "passes": false
   }
 ]
