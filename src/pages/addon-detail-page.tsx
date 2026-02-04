@@ -315,8 +315,8 @@ export function AddonDetailPage() {
 
       {/* Image Gallery Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-[95vw] w-full h-[95vh] p-0 border-0">
-          <div className="relative w-full h-full flex items-center justify-center bg-black/95">
+        <DialogContent className="max-w-5xl w-full max-h-[85vh] p-0 border-0 glass-strong backdrop-blur-xl">
+          <div className="relative w-full h-full flex items-center justify-center">
             {/* Full Resolution Image */}
             <div className="relative w-full h-full flex items-center justify-center p-16">
               {isImageLoading && (
@@ -329,7 +329,7 @@ export function AddonDetailPage() {
               <img
                 src={images[modalImageIndex]}
                 alt={`${addon.export.name} screenshot ${modalImageIndex + 1}`}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-full max-h-full object-contain rounded-lg"
                 onLoad={() => setIsImageLoading(false)}
                 style={{ display: isImageLoading ? 'none' : 'block' }}
               />

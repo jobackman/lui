@@ -131,7 +131,7 @@
       "Test on different screen sizes to ensure proper display",
       "Verify clicking outside modal still closes it properly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI Enhancement",
