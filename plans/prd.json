@@ -189,5 +189,31 @@
       "Test on different backgrounds to ensure no visible container artifacts"
     ],
     "passes": true
+  },
+  {
+    "category": "Refactoring",
+    "description": "Create a reusable CarouselIndicators component to eliminate duplicate indicator dot implementations across ExportCard and AddonDetailPage",
+    "steps": [
+      "Verify current indicator dot implementations in 3 locations (export-card.tsx lines 129-157, addon-detail-page.tsx lines 208-235 and 347-372)",
+      "Identify common patterns: rounded-full transitions, size changes, white/opacity styling, active/inactive states, accessibility features",
+      "Create new component file `src/components/carousel-indicators.tsx` following kebab-case naming convention",
+      "Define component props: `totalImages` (number), `currentIndex` (number), `onIndexChange` (callback), `variant` ('subtle' | 'strong' for glass styling), `size` ('sm' | 'md' for different dot sizes)",
+      "Implement component with button wrapper for each dot including proper ARIA labels (`aria-label`, `aria-current`)",
+      "Include touch-friendly tap targets for mobile (`[@media(hover:none)]` modifiers)",
+      "Support both size variants: small (w-1/w-1.5) for ExportCard and medium (w-1.5/w-2) for AddonDetailPage",
+      "Include `motion-reduce:transition-none` for accessibility",
+      "Add `stopPropagation` support via optional prop for modal/overlay contexts",
+      "Replace indicator dots in export-card.tsx (lines 129-157) with new component",
+      "Replace indicator dots in addon-detail-page.tsx carousel (lines 208-235) with new component",
+      "Replace indicator dots in addon-detail-page.tsx modal (lines 347-372) with new component",
+      "Verify ExportCard displays indicators correctly with 'subtle' variant and 'sm' size",
+      "Verify AddonDetailPage carousel displays indicators correctly with 'subtle' variant and 'md' size",
+      "Verify AddonDetailPage modal displays indicators correctly with 'strong' variant and 'md' size",
+      "Test click/tap functionality works in all three locations",
+      "Test keyboard accessibility (focus states, ARIA labels)",
+      "Test touch targets on mobile devices (44x44px minimum)",
+      "Verify transitions and animations match original behavior"
+    ],
+    "passes": false
   }
 ]
