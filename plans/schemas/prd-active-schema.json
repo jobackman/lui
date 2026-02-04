@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lui.local/schemas/prd-active-schema.json",
+  "title": "Product Requirements Document (Active)",
+  "description": "Schema for active product requirements in prd.json",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["category", "description", "steps", "passes"],
+    "properties": {
+      "category": {
+        "type": "string",
+        "description": "Requirement category (e.g., Feature, Bug Fix, Refactoring, UI Enhancement, Data, Infrastructure, Setup, Documentation)",
+        "minLength": 1
+      },
+      "description": {
+        "type": "string",
+        "description": "Brief description of the requirement",
+        "minLength": 1
+      },
+      "steps": {
+        "type": "array",
+        "description": "Verification steps to confirm completion",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minItems": 1
+      },
+      "passes": {
+        "type": "boolean",
+        "description": "Completion status (true = completed, false = active)"
+      }
+    },
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["prd.json"],
+      "url": "./schemas/prd-active-schema.json"
+    },
+    {
+      "fileMatch": ["archive/archived-*.json"],
+      "url": "./schemas/prd-archive-schema.json"
+    }
+  ]
+}
