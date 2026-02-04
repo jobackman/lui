@@ -12,9 +12,9 @@ const buttonVariants = cva(
         default: 'glass-subtle text-white hover:bg-white/10 rounded-full',
         destructive:
           'glass-subtle text-white hover:bg-red-500/40 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 bg-red-500/60',
-        outline: 'glass bg-white/10 hover:bg-white/20 text-white border-white/20',
-        secondary: 'glass bg-white/15 text-white hover:bg-white/25',
-        ghost: 'glass hover:bg-white/20 text-white',
+        outline: 'glass-subtle bg-white/10 hover:bg-white/20 text-white border-white/20',
+        secondary: 'glass-subtle bg-white/15 text-white hover:bg-white/25',
+        ghost: 'glass-subtle hover:bg-white/20 text-white',
         link: 'text-primary underline-offset-4 hover:underline backdrop-blur-none',
       },
       size: {
@@ -48,4 +48,7 @@ function Button({
   return <Comp data-slot="button" className={cn(buttonVariants({ variant, size }), className)} {...props} />;
 }
 
+type ButtonProps = React.ComponentProps<typeof Button>;
+
+export type { ButtonProps };
 export { Button, buttonVariants };
