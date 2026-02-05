@@ -25,7 +25,7 @@
       "Layout works responsively on mobile (flex-wrap maintains order)",
       "Button hierarchy is clear at a glance"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Infrastructure",

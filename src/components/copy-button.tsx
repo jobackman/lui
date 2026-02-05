@@ -9,7 +9,7 @@ export type CopyButtonProps = ButtonProps & {
   showIcon?: boolean;
 };
 
-export function CopyButton({ text, onCopy, className, children, showIcon = false }: CopyButtonProps) {
+export function CopyButton({ text, onCopy, className, children, showIcon = false, size, variant, ...props }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (e: React.MouseEvent) => {
@@ -48,9 +48,10 @@ export function CopyButton({ text, onCopy, className, children, showIcon = false
     <Button
       type="button"
       onClick={handleCopy}
-      variant={'default'}
-      size="sm"
+      variant={variant || 'default'}
+      size={size || 'sm'}
       className={cn('transition-all', className)}
+      {...props}
     >
       {showIcon && (copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />)}
       {displayContent}

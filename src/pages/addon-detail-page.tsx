@@ -225,8 +225,14 @@ export function AddonDetailPage() {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-3 mb-8">
+                {addon.export.exportString && (
+                  <CopyButton text={addon.export.exportString} showIcon size="lg">
+                    Copy to clipboard
+                  </CopyButton>
+                )}
+
                 {addon.export.downloadUrl && (
-                  <Button variant="ghost" asChild>
+                  <Button variant="ghost" size="lg" asChild>
                     <a href={addon.export.downloadUrl} target="_blank" rel="noopener noreferrer">
                       <Download className="h-4 w-4 mr-2" />
                       Download
@@ -235,18 +241,12 @@ export function AddonDetailPage() {
                 )}
 
                 {addon.export.externalUrl && (
-                  <Button asChild>
+                  <Button variant="outline" size="lg" asChild>
                     <a href={addon.export.externalUrl} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="h-4 w-4 mr-2" />
                       Get from source
                     </a>
                   </Button>
-                )}
-
-                {addon.export.exportString && (
-                  <CopyButton text={addon.export.exportString} showIcon>
-                    Copy to clipboard
-                  </CopyButton>
                 )}
               </div>
 
