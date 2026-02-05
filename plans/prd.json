@@ -116,5 +116,20 @@
       "Test UI components that display/filter tags work correctly"
     ],
     "passes": true
+  },
+  {
+    "category": "UI",
+    "description": "Fix gallery loading indicator incorrectly showing 'Loading...' for video media items",
+    "details": "The addon detail page modal shows a persistent 'Loading...' indicator when displaying videos because isImageLoading state is only cleared by the onLoad callback, which only fires for <img> elements. Videos need their own loading detection via loadeddata or canplay events. Solution: 1) Add onVideoReady callback prop to MediaCarouselItem component to fire when video is ready to play, 2) Update MediaCarouselItem to call onVideoReady when video fires 'loadeddata' event, 3) Update addon-detail-page.tsx to use onVideoReady callback alongside onLoad, clearing loading state for both image and video types, 4) Ensure loading state resets correctly when navigating between mixed image/video content in carousel.",
+    "steps": [
+      "Add optional onVideoReady?: () => void prop to MediaCarouselItem component",
+      "Attach event listener to video element for 'loadeddata' or 'canplay' event that calls onVideoReady",
+      "Update addon-detail-page.tsx modal MediaCarouselItem to pass onVideoReady={() => setIsImageLoading(false)}",
+      "Test that 'Loading...' indicator disappears for video items in modal",
+      "Test that 'Loading...' indicator still works correctly for image items",
+      "Test navigation between mixed image/video content shows/hides loading correctly",
+      "Verify no console errors or duplicate callback issues"
+    ],
+    "passes": false
   }
 ]
