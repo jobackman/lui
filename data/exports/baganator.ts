@@ -7,7 +7,7 @@ export const baganator: AddonCategory = {
   export: {
     name: "Baganator",
     description: "The better Adibags-like bag addon",
-    lastUpdated: "2026-02-04T11:25:17.854Z",
+    lastUpdated: "2026-02-05T21:01:15.036Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/baganator",
     images: [
       "https://media.forgecdn.net/attachments/974/124/categories-2024-09-23-default.webp",

@@ -7,7 +7,7 @@ export const dialogueUI: AddonCategory = {
   export: {
     name: "Dialogue UI",
     description: "Much better UI around NPC dialogues and quest givers",
-    lastUpdated: "2026-02-04T11:25:17.865Z",
+    lastUpdated: "2026-02-05T21:01:15.036Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/dialogueui",
     images: [
       "https://media.forgecdn.net/attachments/829/473/wowscrnshot_032124_205644.jpg",

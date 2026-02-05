@@ -7,7 +7,7 @@ export const waypointUi: AddonCategory = {
   export: {
     name: "Waypoint UI",
     description: "Restyles the in-world waypoint markers in a nice looking way",
-    lastUpdated: "2026-01-28T12:45:00Z",
+    lastUpdated: "2026-02-05T21:01:15.036Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/waypointui",
     images: [
       "https://media.forgecdn.net/attachments/1365/397/slide1.png",

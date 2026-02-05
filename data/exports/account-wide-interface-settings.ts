@@ -7,7 +7,7 @@ export const accountWideInterfaceSettings: AddonCategory = {
   export: {
     name: "Account Wide Interface Settings",
     description: "Makes your interface settings account wide instead of character specific. So you only have to set it up once!",
-    lastUpdated: "2026-02-04T11:25:17.852Z",
+    lastUpdated: "2026-02-05T21:01:15.036Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/account-wide-ui",
     images: [
       "https://media.forgecdn.net/attachments/1432/435/accwideui1a.jpg",
