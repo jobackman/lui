@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const accountWideInterfaceSettings: AddonCategory = {
   id: "account-wide-interface-settings",
@@ -12,6 +13,7 @@ export const accountWideInterfaceSettings: AddonCategory = {
       "https://media.forgecdn.net/attachments/1432/435/accwideui1a.jpg",
     ],
     // setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
-    tags: ["misc", "ui", "interface"]
-  }
+    tags: [tag.misc, tag.ui, tag.interface]
+  },
+  category: category.misc,
 };

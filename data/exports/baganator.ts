@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const baganator: AddonCategory = {
   id: "baganator",
@@ -14,6 +15,7 @@ export const baganator: AddonCategory = {
       // "https://media.forgecdn.net/attachments/1082/780/transfer.webp",
     ],
     // setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
-    tags: ["misc", "ui", "improvements"]
-  }
+    tags: [tag.misc, tag.ui, tag.improvements]
+  },
+  category: category.misc,
 };

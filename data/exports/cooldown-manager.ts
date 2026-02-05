@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const cooldownManager: AddonCategory = {
   id: "cooldown-manager",
@@ -17,6 +18,7 @@ export const cooldownManager: AddonCategory = {
       "https://i.imgur.com/zAPxKEV.jpeg",
       "https://i.imgur.com/NRuA5LZ.png",
     ],
-    tags: ["cooldown manager", "cdm", "cd", "cds", "wa", "weakaura", "luxthos"]
-  }
+    tags: [tag.cooldownmanager, tag.cdm, tag.cd, tag.cds, tag.wa, tag.weakaura, tag.luxthos]
+  },
+  category: category.core,
 };

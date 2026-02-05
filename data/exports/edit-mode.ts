@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const editMode: AddonCategory = {
   id: "edit-mode",
@@ -11,6 +12,7 @@ export const editMode: AddonCategory = {
     images: [
       "https://i.imgur.com/Ry3lQrH.png",
     ],
-    tags: ["native", "edit", "mode", "blizz"]
-  }
+    tags: [tag.native, tag.edit, tag.mode, tag.blizz]
+  },
+  category: category.misc,
 };

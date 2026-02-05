@@ -1,4 +1,5 @@
 import type { AddonCategory } from '../../src/types/exports';
+import { tag, category } from '../../src/types/exports';
 
 export const blizzHudTweaks: AddonCategory = {
   id: 'blizz-hud-tweaks',
@@ -15,6 +16,7 @@ export const blizzHudTweaks: AddonCategory = {
     setupInstructions: `1. Run /bht
 2. Go to BlizzHudTweaks -> Unfold the Profile Section -> Import
 3. Pick a profile name, paste the profile string, and click import`,
-    tags: ['ui', 'hud', 'fade', 'fading', 'combat'],
+    tags: [tag.ui, tag.hud, tag.fade, tag.fading, tag.combat],
   },
+  category: category.misc,
 };

@@ -201,10 +201,12 @@ plans/
 - Follow type schema from `src/types/exports.ts`
 - Include `id`, `name`, and `export` object
 - `lastUpdated` in ISO 8601 format
-- Optional fields: `exportString`, `externalUrl`, `downloadUrl`, `images`, `setupInstructions`, `tags`
+- Optional fields: `exportString`, `externalUrl`, `downloadUrl`, `images`, `setupInstructions`, `tags`, `category`
+- **Use tag and category constants** for type safety (not string literals)
 
 ```ts
 import type { AddonCategory } from '../../src/types/exports';
+import { tag, category } from '../../src/types/exports';
 
 export const baganator: AddonCategory = {
   id: 'baganator',
@@ -214,10 +216,27 @@ export const baganator: AddonCategory = {
     description: 'The better Adibags-like bag addon',
     lastUpdated: '2026-02-04T11:25:17.854Z',
     downloadUrl: 'https://www.curseforge.com/wow/addons/baganator',
-    tags: ['misc', 'ui', 'improvements'],
+    tags: [tag.misc, tag.ui, tag.improvements],
   },
+  category: category.misc,
 };
 ```
+
+**Available tag constants:**
+- UI: `tag.ui`, `tag.hud`, `tag.interface`, `tag.improvements`, `tag.native`, `tag.blizz`
+- Combat: `tag.combat`, `tag.damage`, `tag.dmg`, `tag.healing`, `tag.meter`, `tag.details`, `tag.tracking`
+- Resources: `tag.resource`, `tag.bar`, `tag.energy`, `tag.mana`, `tag.rage`, `tag.fury`, `tag.combo`, `tag.points`, `tag.shards`
+- Frames: `tag.nameplates`, `tag.frame`, `tag.frames`, `tag.healthbar`, `tag.target`, `tag.focus`, `tag.player`
+- PvE: `tag.pve`, `tag.raid`, `tag.dungeon`, `tag.mythic`, `tag['mythic+']`, `tag['m+']`
+- Cooldowns: `tag.cd`, `tag.cds`, `tag.cdm`, `tag.cooldownmanager`
+- World: `tag.map`, `tag.waypoint`, `tag.pin`, `tag.markers`, `tag.quest`, `tag.npc`, `tag.dialog`
+- WeakAuras: `tag.wa`, `tag.weakaura`, `tag.luxthos`
+- Visual: `tag.fade`, `tag.fading`, `tag.visibility`, `tag.color`, `tag.cursor`, `tag.trail`
+- Other: `tag.threat`, `tag.edit`, `tag.mode`, `tag.misc`
+
+**Category constants:**
+- `category.core` - Essential addons
+- `category.misc` - Optional addons
 
 ## Product Requirements Workflow
 

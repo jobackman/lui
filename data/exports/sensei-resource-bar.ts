@@ -1,4 +1,5 @@
 import type { AddonCategory } from '../../src/types/exports';
+import { tag, category } from '../../src/types/exports';
 
 export const senseiResourceBar: AddonCategory = {
   id: 'sensei-resource-bar',
@@ -12,7 +13,8 @@ export const senseiResourceBar: AddonCategory = {
     setupInstructions: `1. Escape -> Interface -> Addons -> Sensei Resource Bar
 2. Import the string from Luxthos
 3. Expand 'Import/Export' section`,
-    tags: ['resource', 'bar', 'mana', 'combo', 'shards', 'points', 'energy', 'rage', 'fury', 'tracking'],
+    tags: [tag.resource, tag.bar, tag.mana, tag.combo, tag.shards, tag.points, tag.energy, tag.rage, tag.fury, tag.tracking],
     images: ['https://i.imgur.com/aEQC6IZ.png'],
   },
+  category: category.core,
 };

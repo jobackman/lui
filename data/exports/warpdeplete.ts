@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const warpdeplete: AddonCategory = {
   id: "warpdeplete",
@@ -15,6 +16,7 @@ export const warpdeplete: AddonCategory = {
 
     ],
     setupInstructions: `Just download and use`,
-    tags: ["m+", "mythic+", "dungeon", "misc"]
-  }
+    tags: [tag['m+'], tag['mythic+'], tag.dungeon, tag.misc]
+  },
+  category: category.misc,
 };

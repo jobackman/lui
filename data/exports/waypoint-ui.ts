@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const waypointUi: AddonCategory = {
   id: "waypoint-ui",
@@ -17,6 +18,7 @@ export const waypointUi: AddonCategory = {
       "https://media.forgecdn.net/attachments/1418/835/tomtomwaypoint-jpg.jpg"
     ],
     setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
-    tags: ["waypoint", "markers", "map", "pin", "misc"]
-  }
+    tags: [tag.waypoint, tag.markers, tag.map, tag.pin, tag.misc]
+  },
+  category: category.misc,
 };

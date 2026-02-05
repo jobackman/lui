@@ -1,4 +1,5 @@
 import type { AddonCategory } from '../../src/types/exports';
+import { tag, category } from '../../src/types/exports';
 
 export const details: AddonCategory = {
   id: 'details',
@@ -14,6 +15,7 @@ export const details: AddonCategory = {
 2. Go to profiles
 3. Paste the imported string and click import. Name it something memorable.
 4. At the bottom of the profile page you can "Use on all characters" to apply it to all your chars. Pick the new profile for this.`,
-    tags: ['dmg', 'details', 'pve', 'tracking', 'raid', 'meter', 'healing', 'damage'],
+    tags: [tag.dmg, tag.details, tag.pve, tag.tracking, tag.raid, tag.meter, tag.healing, tag.damage],
   },
+  category: category.core,
 };

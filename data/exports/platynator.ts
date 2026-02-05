@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const platynator: AddonCategory = {
   id: "platynator",
@@ -23,6 +24,7 @@ export const platynator: AddonCategory = {
     setupInstructions: `1. Run \`/platy\` to open settings
 2. Import the string
 3. Done!`,
-    tags: ["nameplates", "threat", "frame", "m+", "mythic", "ui",]
-  }
+    tags: [tag.nameplates, tag.threat, tag.frame, tag['m+'], tag.mythic, tag.ui],
+  },
+  category: category.core,
 };

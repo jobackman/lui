@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const dialogueUI: AddonCategory = {
   id: "dialogue-ui",
@@ -21,6 +22,7 @@ You may want to disable the camera movements in settings.
 
 Take a look at the last 3 images on how to configure.
 `,
-    tags: ["dialog", "quest", "npc", "ui", "misc"]
-  }
+    tags: [tag.dialog, tag.quest, tag.npc, tag.ui, tag.misc]
+  },
+  category: category.misc,
 };

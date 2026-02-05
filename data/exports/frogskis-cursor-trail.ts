@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const frogskisCursorTrail: AddonCategory = {
   id: "frogskis-cursor-trail",
@@ -16,6 +17,7 @@ export const frogskisCursorTrail: AddonCategory = {
     setupInstructions: `1. Escape -> Interface -> Addons -> Frogskis Cursor Trail
 2. Paste the export string into the import box
 3. Success!`,
-    tags: ["misc", "cursor", "trail", "visibility"]
-  }
+    tags: [tag.misc, tag.cursor, tag.trail, tag.visibility]
+  },
+  category: category.misc,
 };

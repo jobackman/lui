@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const cooldownManagerCentered: AddonCategory = {
   id: "cooldown-manager-centered",
@@ -14,10 +15,11 @@ export const cooldownManagerCentered: AddonCategory = {
 2. Profiles -> Import
 3. Paste the export string above
 4. Done!`,
-    tags: ["cooldown manager", "cdm", "cd", "cds", "weakaura", "luxthos"],
+    tags: [tag.cooldownmanager, tag.cdm, tag.cd, tag.cds, tag.weakaura, tag.luxthos],
     images: [
       "https://i.imgur.com/zAPxKEV.jpeg",
       "https://i.imgur.com/aEQC6IZ.png",
     ]
-  }
+  },
+  category: category.core,
 };

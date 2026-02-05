@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const plumber: AddonCategory = {
   id: "plumber",
@@ -15,6 +16,7 @@ export const plumber: AddonCategory = {
       "https://media.forgecdn.net/attachments/1300/474/plumberlandingpage_9.jpg",
     ],
     setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
-    tags: ["misc", "ui", "improvements"]
-  }
+    tags: [tag.misc, tag.ui, tag.improvements]
+  },
+  category: category.misc,
 };

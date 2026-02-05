@@ -1,4 +1,5 @@
 import type { AddonCategory } from "../../src/types/exports";
+import { tag, category } from "../../src/types/exports";
 
 export const healthbarColor: AddonCategory = {
   id: "healthbar-color",
@@ -12,10 +13,11 @@ export const healthbarColor: AddonCategory = {
       "https://i.imgur.com/qJohkZg.png",
       "https://i.imgur.com/HwzokhN.png"
     ],
-    tags: ["healthbar", "color", "player", "target", "focus", "frames"],
+    tags: [tag.healthbar, tag.color, tag.player, tag.target, tag.focus, tag.frames],
     setupInstructions: `1. Run /hbc
 2. Go to Profiles -> Import/Export Profiles
 3. Paste
 4. Success!`
-  }
+  },
+  category: category.misc,
 };
