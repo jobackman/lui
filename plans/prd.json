@@ -63,7 +63,7 @@
       "Verify smooth transitions between mixed image/video content",
       "Confirm carousel auto-pause still works correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Infrastructure",

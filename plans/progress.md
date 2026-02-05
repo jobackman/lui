@@ -58,6 +58,7 @@ Work continues on the remaining features in prd.json.
 - Emphasized Copy button as primary action. Reordered buttons: Copy first (lg+default variant), Download (ghost+lg), Get from source (outline+lg). Updated CopyButton to accept size+variant props, properly pass through to Button. Clear visual hierarchy w/ Copy most prominent. Build+tests pass (32).
 - Extended AddonExport type for media items. Added MediaItem interface (type:'image'|'video', url:string), new media?: MediaItem[] field. Deprecated images field w/ JSDoc. Created normalizeMedia() helper for backward compatibility (converts old images array→MediaItem[]). Updated ExportCard+AddonDetailPage to use normalizeMedia(). All references to images array replaced w/ mediaItems. Build+tests pass (32).
 - Created MediaCarouselItem component for video playback. Renders video tags w/ autoplay, loop, muted, playsInline, no controls (controlsList, disablePictureInPicture). Respects prefers-reduced-motion (pauses video, resets to start). Lazy loading via preload attribute (auto when active, metadata otherwise). Falls back to img for image items. Integrated into ExportCard+AddonDetailPage carousels. Modal gallery supports videos. Build+tests pass (32).
+- Verified video integration complete. ExportCard+AddonDetailPage already use MediaCarouselItem w/ isActive prop for proper video pause behavior. Videos auto-play when active, pause when inactive/offscreen. Modal supports videos. Smooth transitions. Auto-pause on hover works. Build+tests pass (32). PRD complete.
 
 ---
 
