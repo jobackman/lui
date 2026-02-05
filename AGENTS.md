@@ -1,153 +1,242 @@
-# Project Workflow
+# Lui - WoW Addon Export Manager
 
-# Plan Mode
+Agent instructions for working on this Bun + React + TypeScript project.
 
-- Make the plan extremely concise. Sacrifice grammar for the sake of concision.
-- At the end of each plan, give me a list of unresolved questions to answer, if any.
+## Commands
 
-## Product Requirements Management
+### Development
 
-This project uses a structured PRD (Product Requirements Document) workflow:
+- **Dev server**: `bun run dev` or `bun --hot src/index.ts`
+- **Production**: `NODE_ENV=production bun src/index.ts` or `bun run start`
+- **Build**: `bun run build` (outputs to `dist/`)
 
-- **Location**: `plans/prd.json` - JSON array of product requirements
-- **Schema**: Each requirement has:
-  - `category`: Grouping (e.g., Data, Infrastructure, UI, Feature, Documentation)
-  - `description`: What the requirement is
-  - `steps`: Array of verification steps to confirm completion
-  - `passes`: Boolean tracking completion status
+### Testing
 
-- **Progress Tracking**: `plans/progress.md` - Append progress updates here when working on PRD items
-  - Include date, requirement name, status, and summary of work completed
-  - Keep entries concise but informative
+- **Run all tests**: `bun test`
+- **Run single test file**: `bun test src/lib/loadExports.test.ts`
+- **Run tests matching pattern**: `bun test <pattern>` (e.g., `bun test copy-button`)
+- **Filter by test name**: `bun test -t "specific test name"`
+- **Watch mode**: Use `bun --hot` for dev (no separate test watch mode needed)
+- **Update snapshots**: `bun test -u` or `bun test --update-snapshots`
+- **agent-browser** Use the agent-browser skill to test the frontend
 
-## Working on Features
+### Utilities
 
-1. Check `plans/prd.json` for requirements with `"passes": false`
-2. Implement the feature according to the description and steps
-3. Mark `"passes": true` when all verification steps complete
-4. Append progress to `plans/progress.md` with details of what was done
+- **Update timestamps**: `bun run update-timestamps` (for modified exports only)
+- **Update all timestamps**: `bun run update-timestamps:all`
 
-## Adding New Requirements
+## TypeScript Configuration
 
-- Add new objects to the `plans/prd.json` array
-- Follow the established schema
-- Start with `"passes": false`
-- Include clear, testable verification steps
+**Strict mode enabled** with these key settings:
 
-# Bun
+- `strict: true` - All strict type checking enabled
+- `noUncheckedIndexedAccess: true` - Array/object access returns `T | undefined`
+- `noFallthroughCasesInSwitch: true` - Switch cases must break/return
+- `noImplicitOverride: true` - Must use `override` keyword
+- `target: "ESNext"` - Latest JavaScript features
+- `module: "Preserve"` - Modern module syntax
+- `moduleResolution: "bundler"` - Bun's bundler resolution
+- `jsx: "react-jsx"` - New JSX transform (no React import needed)
 
-Default to using Bun instead of Node.js.
+**Path aliases**: `@/*` maps to `./src/*`
 
-- Use `bun <file>` instead of `node <file>` or `ts-node <file>`
-- Use `bun test` instead of `jest` or `vitest`
-- Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
-- Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
-- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
-- Use `bunx <package> <command>` instead of `npx <package> <command>`
-- Bun automatically loads .env, so don't use dotenv.
+## Code Style
 
-## APIs
+### File Naming
 
-- `Bun.serve()` supports WebSockets, HTTPS, and routes. Don't use `express`.
-- `bun:sqlite` for SQLite. Don't use `better-sqlite3`.
-- `Bun.redis` for Redis. Don't use `ioredis`.
-- `Bun.sql` for Postgres. Don't use `pg` or `postgres.js`.
-- `WebSocket` is built-in. Don't use `ws`.
-- Prefer `Bun.file` over `node:fs`'s readFile/writeFile
-- Bun.$`ls` instead of execa.
+- **Components**: kebab-case files, PascalCase exports
+  - File: `copy-button.tsx` → Export: `export function CopyButton()`
+- **Utilities/libs**: kebab-case (e.g., `load-exports.ts`, `format-relative-time.ts`)
+- **Types**: PascalCase interfaces (e.g., `AddonCategory`, `AddonExport`)
+- **Tests**: `*.test.ts` or `*.test.tsx`
 
-## Testing
+### Imports
 
-Use `bun test` to run tests.
+- Use `@/` alias for src imports: `import { cn } from '@/lib/utils'`
+- Group imports: external libs first, then `@/` imports
+- Use `type` imports for types: `import type { AddonCategory } from '@/types/exports'`
+- Named exports preferred over default exports (except React components can use either)
 
-```ts#index.test.ts
-import { test, expect } from "bun:test";
-
-test("hello world", () => {
-  expect(1).toBe(1);
-});
+```tsx
+import { useState } from 'react';
+import { Button, type ButtonProps } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import type { AddonCategory } from '@/types/exports';
 ```
 
-## Comments
+### TypeScript Patterns
 
-Do not leave comments on simple fields. Add them only when the intention of something would otherwise be unclear.
+- Always type function parameters and return values
+- Use `interface` for object shapes, `type` for unions/intersections
+- Leverage type narrowing with guards (e.g., `if (addon)` for undefined checks)
+- Optional chaining for nullable access: `addon?.export?.tags`
+- Array access returns `T | undefined` due to `noUncheckedIndexedAccess`
 
-## File Naming Conventions
-
-- **Component files**: Use kebab-case for all component files (e.g., `copy-button.tsx`, `export-card.tsx`, `addon-tabs.tsx`)
-- **Component names**: Export components using PascalCase (e.g., `export function CopyButton()`)
-- This applies to all files in `src/components/` except for the `ui/` folder which follows shadcn/ui conventions
-
-## Frontend
-
-Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.
-
-Server:
-
-```ts#index.ts
-import index from "./index.html"
-
-Bun.serve({
-  routes: {
-    "/": index,
-    "/api/users/:id": {
-      GET: (req) => {
-        return new Response(JSON.stringify({ id: req.params.id }));
-      },
-    },
-  },
-  // optional websocket support
-  websocket: {
-    open: (ws) => {
-      ws.send("Hello, world!");
-    },
-    message: (ws, message) => {
-      ws.send(message);
-    },
-    close: (ws) => {
-      // handle close
-    }
-  },
-  development: {
-    hmr: true,
-    console: true,
-  }
-})
-```
-
-HTML files can import .tsx, .jsx or .js files directly and Bun's bundler will transpile & bundle automatically. `<link>` tags can point to stylesheets and Bun's CSS bundler will bundle.
-
-```html#index.html
-<html>
-  <body>
-    <h1>Hello, world!</h1>
-    <script type="module" src="./frontend.tsx"></script>
-  </body>
-</html>
-```
-
-With the following `frontend.tsx`:
-
-```tsx#frontend.tsx
-import React from "react";
-import { createRoot } from "react-dom/client";
-
-// import .css files directly and it works
-import './index.css';
-
-const root = createRoot(document.body);
-
-export default function Frontend() {
-  return <h1>Hello, world!</h1>;
+```ts
+// Good: explicit types
+export function getAddonById(id: string): AddonCategory | undefined {
+  const allExports = loadAllExports();
+  return allExports.find((addon) => addon.id === id);
 }
 
-root.render(<Frontend />);
+// Good: type imports
+import type { AddonExport } from '@/types/exports';
+
+// Good: handling array access
+const firstAddon = addons[0]; // type is AddonCategory | undefined
+if (firstAddon) {
+  console.log(firstAddon.name);
+}
 ```
 
-Then, run index.ts
+### React Patterns
 
-```sh
-bun --hot ./index.ts
+- Function components with named exports
+- Type props with `type` or `interface`
+- Use React 19's new JSX transform (no `import React` needed for JSX)
+- Destructure props in function signature
+- Use `cn()` utility for conditional classes (from `@/lib/utils`)
+
+```tsx
+export type CopyButtonProps = ButtonProps & {
+  text?: string;
+  onCopy?: () => void;
+  showIcon?: boolean;
+};
+
+export function CopyButton({ text, onCopy, className, showIcon = false }: CopyButtonProps) {
+  const [copied, setCopied] = useState(false);
+  return <Button className={cn('transition-all', className)}>...</Button>;
+}
 ```
 
-For more information, read the Bun API docs in `node_modules/bun-types/docs/**.mdx`.
+### Comments
+
+- **Minimal comments**: Only when intention is unclear
+- **JSDoc**: Use for public APIs and exported functions
+- **Inline**: Avoid obvious comments like "set state" or "return value"
+- **Context**: Explain "why" not "what" when needed
+
+```ts
+// Good: explains non-obvious behavior
+try {
+  await navigator.clipboard.writeText(text);
+} catch (err) {
+  // Fallback for older browsers or permission denied
+  const textArea = document.createElement('textarea');
+  // ...
+}
+
+// Bad: obvious comment
+setCopied(true); // Set copied to true
+```
+
+### Error Handling
+
+- Use try-catch for async operations
+- Provide user-friendly error messages
+- Console.error for debugging, not user-facing errors
+- Handle edge cases (permissions, browser support, null/undefined)
+
+```ts
+try {
+  await navigator.clipboard.writeText(text);
+  setCopied(true);
+} catch (err) {
+  // Fallback for older browsers
+  console.error('Failed to copy text:', err);
+}
+```
+
+## Bun-Specific Patterns
+
+### Runtime
+
+- Use `bun <file>` not `node <file>` or `ts-node <file>`
+- Use `bunx` not `npx`
+- No dotenv needed - `.env` auto-loaded
+
+### APIs (Bun built-ins)
+
+- **Server**: `Bun.serve()` with routes, WebSockets, HMR
+- **SQLite**: `bun:sqlite` not `better-sqlite3`
+- **File I/O**: `Bun.file()` preferred over `node:fs`
+- **Shell**: `Bun.$\`command\``instead of`execa`
+- **Testing**: `bun:test` with `test()` and `expect()`
+
+### Frontend with Bun.serve()
+
+- Import HTML files directly: `import index from "./index.html"`
+- HTML can import `.tsx`, `.jsx`, `.ts` - auto-bundled
+- CSS imports work in both HTML and TS/TSX
+- HMR enabled in dev mode
+- No Vite/Webpack needed
+
+## Project Structure
+
+```
+src/
+├── index.ts              # Bun.serve() server entry
+├── index.html            # Main HTML entry (imported by index.ts)
+├── components/           # React components (kebab-case files)
+│   ├── ui/              # shadcn/ui components
+│   └── *.tsx            # Custom components
+├── lib/                 # Utilities and helpers
+├── types/               # TypeScript type definitions
+└── contexts/            # React contexts
+
+data/
+└── exports/             # Addon data files (*.ts exports)
+
+plans/
+├── prd.json            # Product requirements
+└── progress.md         # Progress tracking
+```
+
+## Data Management
+
+### Addon Exports (`data/exports/`)
+
+- Each file exports an `AddonCategory` object
+- Follow type schema from `src/types/exports.ts`
+- Include `id`, `name`, and `export` object
+- `lastUpdated` in ISO 8601 format
+- Optional fields: `exportString`, `externalUrl`, `downloadUrl`, `images`, `setupInstructions`, `tags`
+
+```ts
+import type { AddonCategory } from '../../src/types/exports';
+
+export const baganator: AddonCategory = {
+  id: 'baganator',
+  name: 'Baganator',
+  export: {
+    name: 'Baganator',
+    description: 'The better Adibags-like bag addon',
+    lastUpdated: '2026-02-04T11:25:17.854Z',
+    downloadUrl: 'https://www.curseforge.com/wow/addons/baganator',
+    tags: ['misc', 'ui', 'improvements'],
+  },
+};
+```
+
+## Product Requirements Workflow
+
+1. Check `plans/prd.json` for `"passes": false` requirements
+2. Implement features according to description and verification steps
+3. Mark `"passes": true` when all steps complete
+4. Append progress to `plans/progress.md` with date, requirement, status, summary
+
+### PRD Schema
+
+- `category`: Grouping (Data, Infrastructure, UI, Feature, Documentation)
+- `description`: What the requirement is
+- `steps`: Array of verification steps
+- `passes`: Boolean completion status
+
+## Planning Mode
+
+When asked to plan:
+
+- Make plans extremely concise (sacrifice grammar for brevity)
+- End with list of unresolved questions, if any
+- Break down into actionable, testable steps
