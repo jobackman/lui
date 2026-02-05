@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Tag } from '@/components/ui/tag';
 import { CopyButton } from '@/components/copy-button';
 import { CarouselIndicators } from '@/components/carousel-indicators';
+import { MediaCarouselItem } from '@/components/media-carousel-item';
 import { getAddonById } from '@/lib/loadExports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { normalizeMedia } from '@/lib/normalizeMedia';
@@ -153,20 +154,21 @@ export function AddonDetailPage() {
                 )}
               </div>
 
-              {/* Image Carousel */}
+              {/* Media Carousel */}
               {hasImages && (
                 <div className="relative mb-8 rounded-lg overflow-hidden bg-black/20">
-                  {/* Images */}
+                  {/* Media Items */}
                   <div
                     className="relative w-full cursor-pointer group"
                     style={{ minHeight: '300px', maxHeight: '600px', aspectRatio: '16/9' }}
                     onClick={handleImageClick}
                   >
                     {mediaItems.map((mediaItem, index) => (
-                      <img
+                      <MediaCarouselItem
                         key={mediaItem.url}
-                        src={mediaItem.url}
+                        mediaItem={mediaItem}
                         alt={`${addon.export.name} screenshot ${index + 1}`}
+                        isActive={index === currentImageIndex}
                         className={`
                           absolute inset-0 w-full h-full object-contain
                           transition-opacity duration-500 ease-in-out
@@ -284,24 +286,26 @@ export function AddonDetailPage() {
         </div>
       </motion.div>
 
-      {/* Image Gallery Modal */}
+      {/* Media Gallery Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="max-w-[95vw] w-full max-h-[95vh] p-0 border-0">
           <div className="relative w-full h-full flex items-center justify-center">
-            {/* Full Resolution Image */}
+            {/* Full Resolution Media */}
             <div className="relative w-full h-full flex items-center justify-center p-4 sm:p-8">
               {isImageLoading && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="bg-glass-strong backdrop-blur-glass-strong border-glass transition-glass px-4 py-2 rounded-lg text-sm">Loading...</div>
                 </div>
               )}
-              <img
-                src={mediaItems[modalImageIndex]?.url}
-                alt={`${addon.export.name} screenshot ${modalImageIndex + 1}`}
-                className="max-w-full max-h-full object-contain rounded-lg"
-                onLoad={() => setIsImageLoading(false)}
-                style={{ display: isImageLoading ? 'none' : 'block' }}
-              />
+              {mediaItems[modalImageIndex] && (
+                <MediaCarouselItem
+                  mediaItem={mediaItems[modalImageIndex]}
+                  alt={`${addon.export.name} screenshot ${modalImageIndex + 1}`}
+                  isActive={true}
+                  onLoad={() => setIsImageLoading(false)}
+                  className="max-w-full max-h-full object-contain rounded-lg"
+                />
+              )}
             </div>
 
             {/* Modal Navigation Controls */}

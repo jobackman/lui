@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Download, ExternalLink } from 'lucide-react';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { CarouselIndicators } from '@/components/carousel-indicators';
+import { MediaCarouselItem } from '@/components/media-carousel-item';
 import { normalizeMedia } from '@/lib/normalizeMedia';
 import type { AddonExport } from '@/types/exports';
 
@@ -48,15 +49,16 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Background Image Layer */}
+      {/* Background Media Layer */}
       {hasImages ? (
         <div className="absolute inset-0">
           {mediaItems.map((mediaItem, index) => (
-            <img
+            <MediaCarouselItem
               key={mediaItem.url}
-              src={mediaItem.url}
+              mediaItem={mediaItem}
               alt={`${exportData.name} preview ${index + 1}`}
-              loading="lazy"
+              isActive={index === currentImageIndex}
+              objectCover={true}
               className={`
                 absolute inset-0 w-full h-full object-cover
                 transition-opacity duration-700 ease-in-out
@@ -66,7 +68,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
           ))}
         </div>
       ) : (
-        // Fallback gradient background when no images
+        // Fallback gradient background when no media
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 via-blue-500/30 to-pink-500/30" />
       )}
 
