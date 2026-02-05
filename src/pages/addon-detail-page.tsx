@@ -154,10 +154,10 @@ export function AddonDetailPage() {
 
               {/* Image Carousel */}
               {hasImages && (
-                <div className="relative mb-8 rounded-lg overflow-hidden bg-black/20 group">
+                <div className="relative mb-8 rounded-lg overflow-hidden bg-black/20">
                   {/* Images */}
                   <div
-                    className="relative w-full cursor-pointer"
+                    className="relative w-full cursor-pointer group"
                     style={{ minHeight: '300px', maxHeight: '600px', aspectRatio: '16/9' }}
                     onClick={handleImageClick}
                   >
@@ -168,24 +168,11 @@ export function AddonDetailPage() {
                         alt={`${addon.export.name} screenshot ${index + 1}`}
                         className={`
                           absolute inset-0 w-full h-full object-contain
-                          transition-all duration-500 ease-out motion-reduce:transition-none
-                          group-hover:scale-105
+                          transition-opacity duration-500 ease-in-out
                           ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
                         `}
                       />
                     ))}
-                    
-                    {/* Hover overlay with maximize icon */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 motion-reduce:transition-none bg-black/20 pointer-events-none">
-                      <Button
-                        variant="default"
-                        size="icon"
-                        className="pointer-events-none"
-                        aria-hidden="true"
-                      >
-                        <Maximize2 className="h-5 w-5" />
-                      </Button>
-                    </div>
                   </div>
 
                   {/* Carousel Controls - Only show if multiple images */}

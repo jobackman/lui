@@ -49,7 +49,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
     >
       {/* Background Image Layer */}
       {hasImages ? (
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0">
           {images.map((image, index) => (
             <img
               key={image}
@@ -58,8 +58,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
               loading="lazy"
               className={`
                 absolute inset-0 w-full h-full object-cover
-                transition-all duration-500 ease-out motion-reduce:transition-none
-                group-hover:scale-105
+                transition-opacity duration-700 ease-in-out
                 ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
               `}
             />

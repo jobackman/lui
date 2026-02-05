@@ -11,6 +11,6 @@
       "No layout shift or overflow issues when images zoom",
       "Zoom animation completes smoothly when quickly moving mouse on/off images"
     ],
-    "passes": true
+    "passes": false
   }
 ]
