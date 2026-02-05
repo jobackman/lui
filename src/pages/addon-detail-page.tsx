@@ -302,6 +302,7 @@ export function AddonDetailPage() {
                   alt={`${addon.export.name} screenshot ${modalImageIndex + 1}`}
                   isActive={true}
                   onLoad={() => setIsImageLoading(false)}
+                  onVideoReady={() => setIsImageLoading(false)}
                   className="max-w-full max-h-full object-contain rounded-lg"
                 />
               )}

@@ -12,6 +12,8 @@ interface MediaCarouselItemProps {
   className?: string;
   /** Callback when image loads (for image items) */
   onLoad?: () => void;
+  /** Callback when video is ready to play (for video items) */
+  onVideoReady?: () => void;
   /** Whether to use object-cover (true) or object-contain (false) */
   objectCover?: boolean;
 }
@@ -27,6 +29,7 @@ export function MediaCarouselItem({
   isActive,
   className = '',
   onLoad,
+  onVideoReady,
   objectCover = false,
 }: MediaCarouselItemProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -63,6 +66,19 @@ export function MediaCarouselItem({
       }
     }
   }, [isActive, prefersReducedMotion, mediaItem.type]);
+
+  // Handle video ready event
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || mediaItem.type !== 'video' || !onVideoReady) return;
+
+    const handleVideoReady = () => {
+      onVideoReady();
+    };
+
+    video.addEventListener('loadeddata', handleVideoReady);
+    return () => video.removeEventListener('loadeddata', handleVideoReady);
+  }, [mediaItem.type, onVideoReady]);
 
   if (mediaItem.type === 'video') {
     return (

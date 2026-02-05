@@ -130,7 +130,7 @@
       "Test navigation between mixed image/video content shows/hides loading correctly",
       "Verify no console errors or duplicate callback issues"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Infrastructure",
