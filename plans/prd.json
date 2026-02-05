@@ -149,5 +149,24 @@
       "Update AGENTS.md to document that core/misc are now regular tags in the tags array"
     ],
     "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Pause carousel auto-switching while video is playing in export cards",
+    "details": "Currently export-card.tsx auto-cycles through media items every 5 seconds when not hovered. When a carousel item is a video, the auto-switching should pause until the video completes at least one full playback loop. Implementation approach: 1) Add onVideoPlaying and onVideoEnded callbacks to MediaCarouselItem component that fire when video starts playing and completes a loop, 2) Track video playing state in export-card.tsx using useState, 3) Add videoPlaying state check to auto-cycle useEffect condition (line 26: if (!hasMultipleImages || isHovered || videoPlaying) return;), 4) Set videoPlaying=true when video starts, videoPlaying=false when video loop completes (ended event), 5) Ensure auto-cycle resumes after video completes one loop, 6) Handle edge cases: video paused by user preference (prefers-reduced-motion), multiple videos in sequence, rapid carousel navigation.",
+    "steps": [
+      "Add onVideoPlaying?: () => void and onVideoEnded?: () => void callback props to MediaCarouselItem component",
+      "Add event listeners in MediaCarouselItem for 'playing' and 'ended' events that trigger callbacks",
+      "Add videoPlaying state to export-card.tsx (const [videoPlaying, setVideoPlaying] = useState(false))",
+      "Pass onVideoPlaying={() => setVideoPlaying(true)} and onVideoEnded={() => setVideoPlaying(false)} to MediaCarouselItem",
+      "Update auto-cycle useEffect condition to include videoPlaying: if (!hasMultipleImages || isHovered || videoPlaying) return;",
+      "Test that auto-cycling pauses when video starts playing",
+      "Test that auto-cycling resumes after video completes one loop",
+      "Test edge case: prefers-reduced-motion still prevents autoplay",
+      "Test edge case: manual navigation (next/prev) during video playback works correctly",
+      "Test with mixed image/video carousel content",
+      "Verify video in active slide pauses carousel, inactive slides don't affect timing"
+    ],
+    "passes": false
   }
 ]
