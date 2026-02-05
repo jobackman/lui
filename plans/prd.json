@@ -99,5 +99,22 @@
       "Update AGENTS.md documentation to reflect new constant usage pattern"
     ],
     "passes": true
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Simplify tag system from 91 tags to ~18 core tags and make category field required for all addons",
+    "details": "Current tag system has 91 tags with many redundancies (dmg/damage, cd/cds/cdm, mythic/mythic+/m+, 8 resource types, weakaura - deprecated, etc). Simplify to ~18 functional tags: Combat (combat, damage, healing, meter), UI/Visual (ui, hud, frames, nameplates, healthbar), Resources (resource, cooldowns), Content (pve, raid, dungeon, mythic+), Utility (map, quest, misc). Keep raid and dungeon/mythic+ as separate tags for better filtering. Make category field required (not optional) in AddonCategory interface - all addons must be core or misc. Update all export files to use simplified tags.",
+    "steps": [
+      "Define simplified tag constants in src/types/exports.ts (~18 tags vs current 91)",
+      "Create tag migration mapping (old tags → new tags) for reference",
+      "Change category field from optional to required in AddonCategory interface",
+      "Update all data/exports/*.ts files to use new simplified tags",
+      "Ensure every addon has category field set (core or misc)",
+      "Remove old unused tag constants from exports.ts",
+      "Update AGENTS.md documentation with new simplified tag list",
+      "Verify TypeScript compilation passes",
+      "Test UI components that display/filter tags work correctly"
+    ],
+    "passes": false
   }
 ]
