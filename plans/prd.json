@@ -64,5 +64,21 @@
       "Confirm carousel auto-pause still works correctly"
     ],
     "passes": false
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Fix timestamp update scripts to properly update lastUpdated when ANY export data changes, not just exportString",
+    "details": "Current script only updates timestamps when exportString field changes, but many exports don't have exportString (only name, description, downloadUrl, images, tags, etc.). Script needs to: 1) Detect ANY content change - Compare entire export object (excluding lastUpdated itself) between current file and git HEAD. 2) Support manual force update - --all flag should force update all timestamps to NOW regardless of changes. 3) Support selective update - --force file1.ts file2.ts to manually update specific files. 4) Better change detection - Parse TS/JS exports properly instead of regex, or compare git diff for any change outside lastUpdated field. 5) Handle new files - Files not in git HEAD should get current timestamp. 6) Preserve behavior - Still integrate with git pre-commit hook workflow.",
+    "steps": [
+      "Script detects changes to ANY field (description, images, tags, downloadUrl, setupInstructions, exportString, etc.)",
+      "bun run update-timestamps updates only modified staged files with actual content changes",
+      "bun run update-timestamps --all force updates ALL files to current timestamp regardless of changes",
+      "bun run update-timestamps --force file1.ts file2.ts updates specific files",
+      "New export files (not in git) get current timestamp",
+      "Changes to only lastUpdated field don't trigger infinite update loops",
+      "Script works correctly in git pre-commit hook context",
+      "Test with files that have no exportString field (e.g., baganator.ts)"
+    ],
+    "passes": false
   }
 ]
