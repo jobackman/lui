@@ -223,18 +223,11 @@ export const baganator: AddonCategory = {
 ```
 
 **Available tag constants:**
-- UI: `tag.ui`, `tag.hud`, `tag.interface`, `tag.improvements`, `tag.native`, `tag.blizz`
-- Combat: `tag.combat`, `tag.damage`, `tag.dmg`, `tag.healing`, `tag.meter`, `tag.details`, `tag.tracking`
-- Resources: `tag.resource`, `tag.bar`, `tag.energy`, `tag.mana`, `tag.rage`, `tag.fury`, `tag.combo`, `tag.points`, `tag.shards`
-- Frames: `tag.nameplates`, `tag.frame`, `tag.frames`, `tag.healthbar`, `tag.target`, `tag.focus`, `tag.player`
-- PvE: `tag.pve`, `tag.raid`, `tag.dungeon`, `tag.mythic`, `tag['mythic+']`, `tag['m+']`
-- Cooldowns: `tag.cd`, `tag.cds`, `tag.cdm`, `tag.cooldownmanager`
-- World: `tag.map`, `tag.waypoint`, `tag.pin`, `tag.markers`, `tag.quest`, `tag.npc`, `tag.dialog`
-- WeakAuras: `tag.wa`, `tag.weakaura`, `tag.luxthos`
-- Visual: `tag.fade`, `tag.fading`, `tag.visibility`, `tag.color`, `tag.cursor`, `tag.trail`
-- Other: `tag.threat`, `tag.edit`, `tag.mode`, `tag.misc`
+
+- Tag constants defined in: `./src/types/export.ts`
 
 **Category constants:**
+
 - `category.core` - Essential addons
 - `category.misc` - Optional addons
 
