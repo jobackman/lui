@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "category": "UI",
+    "description": "Add smooth zoom animations to images on hover in the gallery (export cards and detail page)",
+    "details": "Add transform: scale() CSS transitions to images in export-card.tsx and addon-detail-page.tsx. Use Tailwind's hover:scale-105 or hover:scale-110 for subtle zoom effect. Duration: ~300-500ms with ease-out timing to match existing transitions. Respect prefers-reduced-motion for accessibility. Ensure zoom doesn't interfere with existing carousel auto-pause functionality. Apply overflow-hidden to parent containers to prevent zoomed images from breaking layout.",
+    "steps": [
+      "Hovering over images in export cards shows smooth zoom animation",
+      "Hovering over images in detail page carousel shows smooth zoom animation",
+      "Zoom animation stops when prefers-reduced-motion is enabled",
+      "Carousel auto-pause functionality still works correctly",
+      "No layout shift or overflow issues when images zoom",
+      "Zoom animation completes smoothly when quickly moving mouse on/off images"
+    ],
+    "passes": false
+  }
+]
