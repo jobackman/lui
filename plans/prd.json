@@ -131,5 +131,23 @@
       "Verify no console errors or duplicate callback issues"
     ],
     "passes": false
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Merge category field into tags array - categories become regular tags instead of separate field",
+    "details": "Current design has separate category field (core/misc) on AddonCategory interface alongside tags array. Simplify by: 1) Move category.core and category.misc into tag object as tag.core and tag.misc, 2) Remove category field from AddonCategory interface, 3) Update all data/exports/*.ts files to include category tag in tags array (e.g., tags: [tag.core, tag.ui, tag.nameplates]), 4) Remove separate category const object and AddonCategoryType type, 5) Update any UI filtering/grouping logic that uses category field to filter on tags instead. Benefits: Single consistent filtering mechanism, simpler data model, no special-casing of categories vs other classification dimensions.",
+    "steps": [
+      "Move category.core and category.misc constants into tag object (tag.core, tag.misc)",
+      "Remove separate category const object from exports.ts",
+      "Remove AddonCategoryType type definition",
+      "Remove category field from AddonCategory interface",
+      "Update TagType to include core/misc values",
+      "Update all data/exports/*.ts files to include category tag in tags array",
+      "Update UI components that filter/group by category to use tags.includes(tag.core) instead of category field",
+      "Ensure core/misc filtering still works correctly in UI",
+      "Verify TypeScript compilation passes",
+      "Update AGENTS.md to document that core/misc are now regular tags in the tags array"
+    ],
+    "passes": false
   }
 ]
