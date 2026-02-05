@@ -7,13 +7,13 @@ export const plumber: AddonCategory = {
   export: {
     name: "Plumber",
     description: "Miscellaneous UI improvements. Good quality stuff!",
-    lastUpdated: "2026-02-05T21:11:29.944Z",
+    lastUpdated: "2026-02-05T22:32:58.467Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/plumber",
-    images: [
-      "https://media.forgecdn.net/attachments/986/816/lootuidemo.gif",
-      "https://media.forgecdn.net/attachments/785/282/newtalkinghead2.gif",
-      "https://media.forgecdn.net/attachments/1300/472/plumberlandingpage_8.jpg",
-      "https://media.forgecdn.net/attachments/1300/474/plumberlandingpage_9.jpg",
+    media: [
+      { type: 'image', url: 'https://media.forgecdn.net/attachments/986/816/lootuidemo.gif' },
+      { type: 'image', url: 'https://media.forgecdn.net/attachments/785/282/newtalkinghead2.gif' },
+      { type: 'image', url: 'https://media.forgecdn.net/attachments/1300/472/plumberlandingpage_8.jpg' },
+      { type: 'image', url: 'https://media.forgecdn.net/attachments/1300/474/plumberlandingpage_9.jpg' },
     ],
     setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
     tags: [tag.misc, tag.ui]

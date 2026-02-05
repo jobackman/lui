@@ -7,15 +7,15 @@ export const dialogueUI: AddonCategory = {
   export: {
     name: "Dialogue UI",
     description: "Much better UI around NPC dialogues and quest givers",
-    lastUpdated: "2026-02-05T21:11:29.933Z",
+    lastUpdated: "2026-02-05T22:32:58.456Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/dialogueui",
-    images: [
-      "https://media.forgecdn.net/attachments/829/473/wowscrnshot_032124_205644.jpg",
-      "https://media.forgecdn.net/attachments/996/976/wowscrnshot_102224_213034.jpg",
-      "https://media.forgecdn.net/attachments/1361/132/dialogueuisort.png",
-      "https://media.forgecdn.net/attachments/838/440/addoncompartment.jpg",
-      "https://i.imgur.com/F5SmpXx.png",
-      "https://i.imgur.com/dvxOFeL.png",
+    media: [
+      { type: 'image', url: 'https://media.forgecdn.net/attachments/829/473/wowscrnshot_032124_205644.jpg' },
+      { type: 'image', url: 'https://media.forgecdn.net/attachments/996/976/wowscrnshot_102224_213034.jpg' },
+      { type: 'image', url: 'https://media.forgecdn.net/attachments/1361/132/dialogueuisort.png' },
+      { type: 'image', url: 'https://media.forgecdn.net/attachments/838/440/addoncompartment.jpg' },
+      { type: 'image', url: 'https://i.imgur.com/F5SmpXx.png' },
+      { type: 'image', url: 'https://i.imgur.com/dvxOFeL.png' },
     ],
     setupInstructions: `There is no easy way to import settings, but it has quite good defaults.
 You may want to disable the camera movements in settings.
