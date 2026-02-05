@@ -6,7 +6,6 @@ import { Download, ExternalLink } from 'lucide-react';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
-import { normalizeMedia } from '@/lib/normalizeMedia';
 import type { AddonExport } from '@/types/exports';
 
 interface ExportCardProps {
@@ -18,7 +17,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
-  const mediaItems = normalizeMedia(exportData);
+  const mediaItems = exportData.media ?? [];
   const hasImages = mediaItems.length > 0;
   const hasMultipleImages = mediaItems.length > 1;
 

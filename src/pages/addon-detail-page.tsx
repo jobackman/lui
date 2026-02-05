@@ -9,7 +9,6 @@ import { CarouselIndicators } from '@/components/carousel-indicators';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
 import { getAddonById } from '@/lib/loadExports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
-import { normalizeMedia } from '@/lib/normalizeMedia';
 import { ArrowLeft, Download, ExternalLink, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 
@@ -33,7 +32,7 @@ export function AddonDetailPage() {
     return <Navigate to="/" replace />;
   }
 
-  const mediaItems = normalizeMedia(addon.export);
+  const mediaItems = addon.export.media ?? [];
   const hasImages = mediaItems.length > 0;
   const hasMultipleImages = mediaItems.length > 1;
 
