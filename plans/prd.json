@@ -12,5 +12,19 @@
       "Zoom animation completes smoothly when quickly moving mouse on/off images"
     ],
     "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Emphasize Copy button as primary action on addon detail page",
+    "details": "Reorder action buttons to place Copy button first (left-most). Update button styling hierarchy: Copy button uses prominent default variant (potentially size='lg'), Download stays ghost variant, 'Get from source' changes to outline/secondary variant. This establishes clear visual hierarchy with Copy as primary action. May need to check/update CopyButton component to accept variant and size props.",
+    "steps": [
+      "Copy button appears first (left-most) in button group",
+      "Copy button is visually most prominent (default variant styling)",
+      "Download button remains subtle (ghost variant)",
+      "Get from source button is less prominent than Copy (outline/secondary variant)",
+      "Layout works responsively on mobile (flex-wrap maintains order)",
+      "Button hierarchy is clear at a glance"
+    ],
+    "passes": false
   }
 ]
