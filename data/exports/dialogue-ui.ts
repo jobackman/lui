@@ -7,7 +7,7 @@ export const dialogueUI: AddonCategory = {
   export: {
     name: "Dialogue UI",
     description: "Much better UI around NPC dialogues and quest givers",
-    lastUpdated: "2026-02-05T21:01:15.036Z",
+    lastUpdated: "2026-02-05T21:11:29.933Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/dialogueui",
     images: [
       "https://media.forgecdn.net/attachments/829/473/wowscrnshot_032124_205644.jpg",
@@ -22,7 +22,7 @@ You may want to disable the camera movements in settings.
 
 Take a look at the last 3 images on how to configure.
 `,
-    tags: [tag.dialog, tag.quest, tag.npc, tag.ui, tag.misc]
+    tags: [tag.quest, tag.ui, tag.misc]
   },
   category: category.misc,
 };

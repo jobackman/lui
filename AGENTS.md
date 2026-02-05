@@ -201,7 +201,8 @@ plans/
 - Follow type schema from `src/types/exports.ts`
 - Include `id`, `name`, and `export` object
 - `lastUpdated` in ISO 8601 format
-- Optional fields: `exportString`, `externalUrl`, `downloadUrl`, `images`, `setupInstructions`, `tags`, `category`
+- Optional fields: `exportString`, `externalUrl`, `downloadUrl`, `images`, `setupInstructions`, `tags`
+- `category` field is **required** (core or misc)
 - **Use tag and category constants** for type safety (not string literals)
 
 ```ts
@@ -216,7 +217,7 @@ export const baganator: AddonCategory = {
     description: 'The better Adibags-like bag addon',
     lastUpdated: '2026-02-04T11:25:17.854Z',
     downloadUrl: 'https://www.curseforge.com/wow/addons/baganator',
-    tags: [tag.misc, tag.ui, tag.improvements],
+    tags: [tag.misc, tag.ui],
   },
   category: category.misc,
 };
@@ -224,7 +225,11 @@ export const baganator: AddonCategory = {
 
 **Available tag constants:**
 
-- Tag constants defined in: `./src/types/export.ts`
+- **Combat & Performance**: `tag.combat`, `tag.damage`, `tag.healing`, `tag.meter`
+- **UI & Visual**: `tag.ui`, `tag.hud`, `tag.frames`, `tag.nameplates`
+- **Resources & Abilities**: `tag.resource`, `tag.cooldowns`
+- **Content**: `tag.raid`, `tag.mythic` (for mythic+)
+- **Utility**: `tag.map`, `tag.quest`, `tag.misc`
 
 **Category constants:**
 

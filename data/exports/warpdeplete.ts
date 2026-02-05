@@ -7,7 +7,7 @@ export const warpdeplete: AddonCategory = {
   export: {
     name: "Warp Deplete",
     description: "Better Mythic+ info during a run. Adds keystone automatically etc.",
-    lastUpdated: "2026-02-05T21:01:15.036Z",
+    lastUpdated: "2026-02-05T21:11:29.948Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/warpdeplete",
     images: [
       "https://media.forgecdn.net/attachments/349/457/wow_2021-03-21_04-28-29.png",
@@ -16,7 +16,7 @@ export const warpdeplete: AddonCategory = {
 
     ],
     setupInstructions: `Just download and use`,
-    tags: [tag['m+'], tag['mythic+'], tag.dungeon, tag.misc]
+    tags: [tag.mythic, tag.misc]
   },
   category: category.misc,
 };

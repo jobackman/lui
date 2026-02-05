@@ -7,13 +7,13 @@ export const senseiResourceBar: AddonCategory = {
   export: {
     name: 'Sensei Resource Bar',
     description: "Adds the power, resource and mana bars that we're used to, just like the old WeakAura packs",
-    lastUpdated: "2026-02-05T21:01:15.036Z",
+    lastUpdated: "2026-02-05T21:11:29.945Z",
     downloadUrl: 'https://www.curseforge.com/wow/addons/senseiclassresourcebar',
     externalUrl: 'https://www.luxthos.com/interface-addon-profiles/',
     setupInstructions: `1. Escape -> Interface -> Addons -> Sensei Resource Bar
 2. Import the string from Luxthos
 3. Expand 'Import/Export' section`,
-    tags: [tag.resource, tag.bar, tag.mana, tag.combo, tag.shards, tag.points, tag.energy, tag.rage, tag.fury, tag.tracking],
+    tags: [tag.resource, tag.ui, tag.hud],
     images: ['https://i.imgur.com/aEQC6IZ.png'],
   },
   category: category.core,

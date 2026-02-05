@@ -1,92 +1,34 @@
 /**
- * Tag constants for addon categorization
+ * Simplified tag constants for addon categorization
  * Use these instead of string literals for type safety and autocomplete
  * @example
  * import { tag } from '@/types/exports';
  * tags: [tag.ui, tag.nameplates, tag.mythic]
  */
 export const tag = {
-  // UI & Interface
-  ui: 'ui',
-  hud: 'hud',
-  interface: 'interface',
-  improvements: 'improvements',
-  native: 'native',
-  blizz: 'blizz',
-  
-  // Combat & Damage
+  // Combat & Performance
   combat: 'combat',
   damage: 'damage',
-  dmg: 'dmg',
   healing: 'healing',
   meter: 'meter',
-  details: 'details',
-  tracking: 'tracking',
   
-  // Class Resources
-  resource: 'resource',
-  bar: 'bar',
-  energy: 'energy',
-  mana: 'mana',
-  rage: 'rage',
-  fury: 'fury',
-  combo: 'combo',
-  points: 'points',
-  shards: 'shards',
-  
-  // Frames & Plates
-  nameplates: 'nameplates',
-  frame: 'frame',
+  // UI & Visual
+  ui: 'ui',
+  hud: 'hud',
   frames: 'frames',
-  healthbar: 'healthbar',
-  target: 'target',
-  focus: 'focus',
-  player: 'player',
+  nameplates: 'nameplates',
   
-  // PvE Content
-  pve: 'pve',
+  // Resources & Abilities
+  resource: 'resource',
+  cooldowns: 'cooldowns',
+  
+  // Content
   raid: 'raid',
-  dungeon: 'dungeon',
-  mythic: 'mythic',
-  'mythic+': 'mythic+',
-  'm+': 'm+',
+  mythic: 'mythic+',
   
-  // Abilities & Cooldowns
-  cd: 'cd',
-  cds: 'cds',
-  cdm: 'cdm',
-  cooldownmanager: 'cooldownmanager',
-  
-  // World & Navigation
+  // Utility
   map: 'map',
-  waypoint: 'waypoint',
-  pin: 'pin',
-  markers: 'markers',
   quest: 'quest',
-  npc: 'npc',
-  dialog: 'dialog',
-  
-  // WeakAuras
-  wa: 'wa',
-  weakaura: 'weakaura',
-  luxthos: 'luxthos',
-  
-  // Visual Effects
-  fade: 'fade',
-  fading: 'fading',
-  visibility: 'visibility',
-  color: 'color',
-  cursor: 'cursor',
-  trail: 'trail',
-  
-  // Mechanics
-  threat: 'threat',
-  
-  // Modes
-  edit: 'edit',
-  mode: 'mode',
-  
-  // General
   misc: 'misc',
 } as const;
 
@@ -143,6 +85,6 @@ export interface AddonCategory {
   name: string;
   /** Single export configuration for this addon */
   export: AddonExport;
-  /** Optional category classification (core = essential, misc = optional) */
-  category?: AddonCategoryType;
+  /** Category classification (core = essential, misc = optional) */
+  category: AddonCategoryType;
 }

@@ -7,7 +7,7 @@ export const baganator: AddonCategory = {
   export: {
     name: "Baganator",
     description: "The better Adibags-like bag addon",
-    lastUpdated: "2026-02-05T21:01:15.036Z",
+    lastUpdated: "2026-02-05T21:11:29.921Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/baganator",
     images: [
       "https://media.forgecdn.net/attachments/974/124/categories-2024-09-23-default.webp",
@@ -15,7 +15,7 @@ export const baganator: AddonCategory = {
       // "https://media.forgecdn.net/attachments/1082/780/transfer.webp",
     ],
     // setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
-    tags: [tag.misc, tag.ui, tag.improvements]
+    tags: [tag.misc, tag.ui]
   },
   category: category.misc,
 };

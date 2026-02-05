@@ -47,10 +47,10 @@ test('specific addon tags are searchable (Platynator example)', () => {
   
   const searchValue = `${platynator!.name} ${platynator!.export.tags?.join(' ') || ''}`;
   
-  // Platynator should have nameplates, threat, ui tags
+  // Platynator should have nameplates, frames, mythic+ tags
   expect(searchValue.toLowerCase()).toContain('nameplates');
-  expect(searchValue.toLowerCase()).toContain('threat');
-  expect(searchValue.toLowerCase()).toContain('ui');
+  expect(searchValue.toLowerCase()).toContain('frames');
+  expect(searchValue.toLowerCase()).toContain('mythic');
 });
 
 test('specific addon tags are searchable (Details example)', () => {
@@ -62,8 +62,8 @@ test('specific addon tags are searchable (Details example)', () => {
   
   const searchValue = `${details!.name} ${details!.export.tags?.join(' ') || ''}`;
   
-  // Details should have dmg, raid, meter tags
-  expect(searchValue.toLowerCase()).toContain('dmg');
+  // Details should have damage, raid, meter tags
+  expect(searchValue.toLowerCase()).toContain('damage');
   expect(searchValue.toLowerCase()).toContain('raid');
   expect(searchValue.toLowerCase()).toContain('meter');
 });
