@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Download, ExternalLink } from 'lucide-react';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { CarouselIndicators } from '@/components/carousel-indicators';
+import { normalizeMedia } from '@/lib/normalizeMedia';
 import type { AddonExport } from '@/types/exports';
 
 interface ExportCardProps {
@@ -16,20 +17,20 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
-  const images = exportData.images || [];
-  const hasImages = images.length > 0;
-  const hasMultipleImages = images.length > 1;
+  const mediaItems = normalizeMedia(exportData);
+  const hasImages = mediaItems.length > 0;
+  const hasMultipleImages = mediaItems.length > 1;
 
   // Auto-cycle through images every 5 seconds when not hovered
   useEffect(() => {
     if (!hasMultipleImages || isHovered) return;
 
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+      setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [hasMultipleImages, isHovered, images.length]);
+  }, [hasMultipleImages, isHovered, mediaItems.length]);
 
   // Prefers-reduced-motion check
   useEffect(() => {
@@ -50,10 +51,10 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       {/* Background Image Layer */}
       {hasImages ? (
         <div className="absolute inset-0">
-          {images.map((image, index) => (
+          {mediaItems.map((mediaItem, index) => (
             <img
-              key={image}
-              src={image}
+              key={mediaItem.url}
+              src={mediaItem.url}
               alt={`${exportData.name} preview ${index + 1}`}
               loading="lazy"
               className={`
@@ -116,7 +117,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       {hasMultipleImages && (
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
           <CarouselIndicators
-            totalImages={images.length}
+            totalImages={mediaItems.length}
             currentIndex={currentImageIndex}
             onIndexChange={setCurrentImageIndex}
             stopPropagation

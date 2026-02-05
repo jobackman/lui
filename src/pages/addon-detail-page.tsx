@@ -8,6 +8,7 @@ import { CopyButton } from '@/components/copy-button';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { getAddonById } from '@/lib/loadExports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
+import { normalizeMedia } from '@/lib/normalizeMedia';
 import { ArrowLeft, Download, ExternalLink, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 
@@ -31,9 +32,9 @@ export function AddonDetailPage() {
     return <Navigate to="/" replace />;
   }
 
-  const images = addon.export.images || [];
-  const hasImages = images.length > 0;
-  const hasMultipleImages = images.length > 1;
+  const mediaItems = normalizeMedia(addon.export);
+  const hasImages = mediaItems.length > 0;
+  const hasMultipleImages = mediaItems.length > 1;
 
   // Reset scroll position on mount
   useEffect(() => {
@@ -47,10 +48,10 @@ export function AddonDetailPage() {
       if (isModalOpen && hasMultipleImages) {
         if (e.key === 'ArrowLeft') {
           e.preventDefault();
-          setModalImageIndex((prev) => (prev - 1 + images.length) % images.length);
+          setModalImageIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
         } else if (e.key === 'ArrowRight') {
           e.preventDefault();
-          setModalImageIndex((prev) => (prev + 1) % images.length);
+          setModalImageIndex((prev) => (prev + 1) % mediaItems.length);
         } else if (e.key === 'Escape') {
           e.preventDefault();
           setIsModalOpen(false);
@@ -59,10 +60,10 @@ export function AddonDetailPage() {
         if (hasMultipleImages) {
           if (e.key === 'ArrowLeft') {
             e.preventDefault();
-            setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+            setCurrentImageIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
           } else if (e.key === 'ArrowRight') {
             e.preventDefault();
-            setCurrentImageIndex((prev) => (prev + 1) % images.length);
+            setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
           }
         }
       }
@@ -70,7 +71,7 @@ export function AddonDetailPage() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [navigate, hasMultipleImages, images.length, isModalOpen]);
+  }, [navigate, hasMultipleImages, mediaItems.length, isModalOpen]);
 
   // Update document title
   useEffect(() => {
@@ -81,11 +82,11 @@ export function AddonDetailPage() {
   }, [addon.export.name]);
 
   const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentImageIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
   };
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
   };
 
   const handleImageClick = () => {
@@ -94,12 +95,12 @@ export function AddonDetailPage() {
   };
 
   const handleModalPrevImage = () => {
-    setModalImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    setModalImageIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
     setIsImageLoading(true);
   };
 
   const handleModalNextImage = () => {
-    setModalImageIndex((prev) => (prev + 1) % images.length);
+    setModalImageIndex((prev) => (prev + 1) % mediaItems.length);
     setIsImageLoading(true);
   };
 
@@ -161,10 +162,10 @@ export function AddonDetailPage() {
                     style={{ minHeight: '300px', maxHeight: '600px', aspectRatio: '16/9' }}
                     onClick={handleImageClick}
                   >
-                    {images.map((image, index) => (
+                    {mediaItems.map((mediaItem, index) => (
                       <img
-                        key={image}
-                        src={image}
+                        key={mediaItem.url}
+                        src={mediaItem.url}
                         alt={`${addon.export.name} screenshot ${index + 1}`}
                         className={`
                           absolute inset-0 w-full h-full object-contain
@@ -212,7 +213,7 @@ export function AddonDetailPage() {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <CarouselIndicators
-                          totalImages={images.length}
+                          totalImages={mediaItems.length}
                           currentIndex={currentImageIndex}
                           onIndexChange={setCurrentImageIndex}
                           stopPropagation
@@ -295,7 +296,7 @@ export function AddonDetailPage() {
                 </div>
               )}
               <img
-                src={images[modalImageIndex]}
+                src={mediaItems[modalImageIndex]?.url}
                 alt={`${addon.export.name} screenshot ${modalImageIndex + 1}`}
                 className="max-w-full max-h-full object-contain rounded-lg"
                 onLoad={() => setIsImageLoading(false)}
@@ -331,7 +332,7 @@ export function AddonDetailPage() {
                 {/* Indicator Dots */}
                 <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10">
                   <CarouselIndicators
-                    totalImages={images.length}
+                    totalImages={mediaItems.length}
                     currentIndex={modalImageIndex}
                     onIndexChange={(index) => {
                       setModalImageIndex(index);

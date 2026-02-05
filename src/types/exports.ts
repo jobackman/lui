@@ -52,6 +52,16 @@ export type AddonCategoryType = typeof category[keyof typeof category];
 export type TagType = typeof tag[keyof typeof tag];
 
 /**
+ * Represents a media item (image or video) with type metadata
+ */
+export interface MediaItem {
+  /** Type of media - 'image' or 'video' */
+  type: 'image' | 'video';
+  /** URL or path to the media file (relative to public folder) */
+  url: string;
+}
+
+/**
  * Represents a single WoW addon export configuration
  */
 export interface AddonExport {
@@ -67,7 +77,12 @@ export interface AddonExport {
   lastUpdated: string;
   /** Optional download URL for the addon */
   downloadUrl?: string;
-  /** Optional array of image paths for the addon (relative to public folder) */
+  /** Optional array of media items (images and videos) for the addon - replaces images field */
+  media?: MediaItem[];
+  /** 
+   * @deprecated Use media field instead for better type safety
+   * Optional array of image paths for the addon (relative to public folder) 
+   */
   images?: string[];
   /** Optional setup/import instructions for the addon (supports markdown) */
   setupInstructions?: string;
