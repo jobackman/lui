@@ -1,7 +1,12 @@
 #!/usr/bin/env bun
 /**
- * Script to update lastUpdated timestamps when exportString changes
+ * Script to update lastUpdated timestamps when export data changes
  * Can be run manually or as part of a git pre-commit hook
+ * 
+ * Usage:
+ *   bun run update-timestamps           # Update staged files with changes
+ *   bun run update-timestamps --all     # Force update all files to now
+ *   bun run update-timestamps --force file1.ts file2.ts  # Force specific files
  */
 
 import { execSync } from "child_process";
@@ -10,7 +15,6 @@ import { join } from "path";
 
 const EXPORTS_DIR = join(process.cwd(), "data/exports");
 const ISO_DATE_REGEX = /lastUpdated:\s*["']([^"']+)["']/;
-const EXPORT_STRING_REGEX = /exportString:\s*`([^`]+)`/s;
 
 interface FileChange {
   path: string;
@@ -49,32 +53,31 @@ function getAllExportFiles(): string[] {
 }
 
 /**
- * Extract exportString from file content
+ * Normalize content by removing lastUpdated field for comparison
+ * This prevents the timestamp itself from being considered a change
  */
-function extractExportString(content: string): string | null {
-  const match = content.match(EXPORT_STRING_REGEX);
-  return match ? match[1].trim() : null;
+function normalizeContent(content: string): string {
+  return content.replace(ISO_DATE_REGEX, "lastUpdated: \"NORMALIZED\"");
 }
 
 /**
- * Check if exportString has changed compared to git HEAD
+ * Check if export content has changed compared to git HEAD
+ * Detects changes to ANY field (description, images, tags, downloadUrl, etc.)
+ * Excludes the lastUpdated field itself from comparison
  */
-function hasExportStringChanged(filePath: string, currentContent: string): boolean {
+function hasContentChanged(filePath: string, currentContent: string): boolean {
   try {
     // Get the version of the file from git HEAD
     const headContent = execSync(`git show HEAD:${filePath}`, {
       encoding: "utf-8",
     });
     
-    const currentExportString = extractExportString(currentContent);
-    const headExportString = extractExportString(headContent);
+    // Normalize both versions (remove timestamp for comparison)
+    const normalizedCurrent = normalizeContent(currentContent);
+    const normalizedHead = normalizeContent(headContent);
     
-    // If we can't extract exportString from either version, assume no change
-    if (!currentExportString || !headExportString) {
-      return false;
-    }
-    
-    return currentExportString !== headExportString;
+    // If content differs (excluding timestamp), it needs an update
+    return normalizedCurrent !== normalizedHead;
   } catch (error) {
     // File might be new (not in HEAD), assume it needs timestamp update
     return true;
@@ -92,15 +95,15 @@ function updateTimestamp(content: string): string {
 /**
  * Process files and update timestamps where needed
  */
-function processFiles(files: string[]): FileChange[] {
+function processFiles(files: string[], forceUpdate: boolean): FileChange[] {
   const changes: FileChange[] = [];
   
   for (const filePath of files) {
     const fullPath = join(process.cwd(), filePath);
     const currentContent = readFileSync(fullPath, "utf-8");
     
-    // Check if this file has exportString changes
-    const needsUpdate = hasExportStringChanged(filePath, currentContent);
+    // Check if this file has content changes (or force update)
+    const needsUpdate = forceUpdate || hasContentChanged(filePath, currentContent);
     
     if (needsUpdate) {
       const newContent = updateTimestamp(currentContent);
@@ -142,19 +145,48 @@ function applyChanges(changes: FileChange[]): void {
 function main() {
   const args = process.argv.slice(2);
   const forceAll = args.includes("--all");
+  const forceIndex = args.indexOf("--force");
   
-  // Get files to process
-  const files = forceAll ? getAllExportFiles() : getModifiedExportFiles();
+  let files: string[];
+  let forceUpdate = false;
+  
+  if (forceAll) {
+    // --all flag: force update all files to current timestamp
+    files = getAllExportFiles();
+    forceUpdate = true;
+    console.log("Force updating all export files...");
+  } else if (forceIndex !== -1) {
+    // --force flag with specific files
+    const specifiedFiles = args.slice(forceIndex + 1);
+    if (specifiedFiles.length === 0) {
+      console.error("Error: --force requires file paths as arguments");
+      console.error("Usage: bun run update-timestamps --force file1.ts file2.ts");
+      process.exit(1);
+    }
+    // Normalize file paths (add data/exports/ prefix if not present)
+    files = specifiedFiles.map(f => {
+      if (f.startsWith("data/exports/")) return f;
+      if (f.endsWith(".ts")) return `data/exports/${f}`;
+      return `data/exports/${f}.ts`;
+    });
+    forceUpdate = true;
+    console.log(`Force updating ${files.length} specified file(s)...`);
+  } else {
+    // Default: update only staged files with actual content changes
+    files = getModifiedExportFiles();
+    forceUpdate = false;
+    if (files.length > 0) {
+      console.log(`Processing ${files.length} staged export file(s)...`);
+    }
+  }
   
   if (files.length === 0) {
     console.log("No export files to process.");
     return;
   }
   
-  console.log(`Processing ${files.length} export file(s)...`);
-  
   // Process and apply changes
-  const changes = processFiles(files);
+  const changes = processFiles(files, forceUpdate);
   const updatedCount = changes.filter(c => c.needsUpdate).length;
   
   if (updatedCount === 0) {

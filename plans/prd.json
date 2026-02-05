@@ -79,7 +79,7 @@
       "Script works correctly in git pre-commit hook context",
       "Test with files that have no exportString field (e.g., baganator.ts)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Infrastructure",
