@@ -80,5 +80,24 @@
       "Test with files that have no exportString field (e.g., baganator.ts)"
     ],
     "passes": false
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Convert export tags and addon categories to TypeScript constants for better type safety and consistency",
+    "details": "Replace string-based tags with typed constants exported from src/types/exports.ts. Create two 'as const' objects: (1) 'tag' object containing all tag constants (e.g., tag.ui, tag.nameplates, tag.pve, tag.mplus) and (2) 'category' object for addon categories (category.core, category.misc). Update AddonCategory interface to include optional category field. Benefits: autocomplete, typo prevention, refactoring safety, centralized tag vocabulary, clean import syntax (import { tag, category }), enables category-based filtering/grouping in UI.",
+    "steps": [
+      "Create 'tag' const object in src/types/exports.ts with all existing tags as properties (ui, nameplates, threat, pve, dmg, mplus, mythic, etc.) using 'as const' assertion",
+      "Create 'category' const object with core and misc properties using 'as const' assertion",
+      "Export AddonCategoryType = typeof category[keyof typeof category]",
+      "Export TagType = typeof tag[keyof typeof tag]",
+      "Add optional category?: AddonCategoryType field to AddonCategory interface",
+      "Update AddonExport.tags type from string[] to TagType[]",
+      "Migrate all data/exports/*.ts files to import { tag, category } and use tag.* constants instead of string literals",
+      "Assign category field to each addon (determine core vs misc based on essentialness)",
+      "Update any UI components that filter/display tags to use the new constants",
+      "Verify TypeScript compilation passes with strict type checking",
+      "Update AGENTS.md documentation to reflect new constant usage pattern"
+    ],
+    "passes": false
   }
 ]
