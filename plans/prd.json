@@ -26,5 +26,43 @@
       "Button hierarchy is clear at a glance"
     ],
     "passes": false
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Extend AddonExport type to support media items (images and videos) with metadata",
+    "details": "Replace images?: string[] with media?: MediaItem[] where MediaItem = { type: 'image' | 'video', url: string }. Keep images as deprecated for backward compatibility. Type system ensures videos are properly identified and rendered differently from images.",
+    "steps": [
+      "Update src/types/exports.ts with new MediaItem type and media field",
+      "Mark images as deprecated with JSDoc comment",
+      "Ensure backward compatibility by handling both images and media arrays"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Create video player component with autoplay, loop, mute, and no controls",
+    "details": "Build <MediaCarouselItem> or similar component that renders <video> tags with autoplay, loop, muted, playsInline attributes and no controls. Falls back to <img> for image items. Handles prefers-reduced-motion by pausing autoplay/loop. Lazy loads videos similar to images.",
+    "steps": [
+      "Create video rendering component with required attributes (autoplay, loop, muted, playsInline)",
+      "Remove video player UI controls (controlsList=\"nodownload nofullscreen noremoteplayback\")",
+      "Respect prefers-reduced-motion accessibility preference",
+      "Implement lazy loading for video elements",
+      "Test video playback in carousel"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Integrate videos in export card and detail page carousels",
+    "details": "Modify export-card.tsx and addon-detail-page.tsx to iterate over media array (with images fallback). Render videos with autoplay carousel behavior. Modal view supports video playback. Videos pause when not visible/active in carousel. Ensure smooth transitions between image and video slides.",
+    "steps": [
+      "Update export-card.tsx to handle media items (images + videos)",
+      "Update addon-detail-page.tsx carousel to support video playback",
+      "Ensure videos pause when carousel advances to different slide",
+      "Test modal functionality with video media items",
+      "Verify smooth transitions between mixed image/video content",
+      "Confirm carousel auto-pause still works correctly"
+    ],
+    "passes": false
   }
 ]
