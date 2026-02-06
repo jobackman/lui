@@ -215,5 +215,53 @@
       "Verify mobile responsive behavior (no overlap issues)"
     ],
     "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Sync search field with URL search parameter for shareable filtered views",
+    "details": "Update home-page.tsx to read/write search query from/to URL search params. When user types in search field, update URL to ?q=<query>. On page load, populate search field from URL param. Allows bookmarking/sharing filtered views (e.g., /?q=core). Implementation: Use useSearchParams from react-router-dom, read ?q param on mount to initialize searchQuery state, update URL when setSearchQuery called. Preserve browser back/forward navigation through search history.",
+    "steps": [
+      "Import useSearchParams hook from react-router-dom in home-page.tsx",
+      "Read ?q search param on component mount and initialize searchQuery state from it",
+      "Update setSearchQuery to also update URL search param using setSearchParams",
+      "Test that typing in search field updates URL (e.g., typing 'plater' → /?q=plater)",
+      "Test that loading page with ?q param populates search field and filters results",
+      "Test browser back/forward buttons navigate through search history correctly",
+      "Test that category filter chips (Core/Misc) update URL param correctly",
+      "Test that sharing URL with ?q param loads filtered view for recipient"
+    ],
+    "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Make tag chips on detail page clickable links that navigate to filtered home page",
+    "details": "Update Tag component in addon-detail-page.tsx (lines 147-152) from plain badges to Link components that navigate to /?q=<tag>. Clicking tag navigates home with that tag as search filter. Maintains existing visual styling but adds interactive hover state. Since requirement #1 syncs search with URL params, clicking tag will auto-filter home page grid. Update Tag component cursor to pointer and add hover:bg-accent transition.",
+    "steps": [
+      "Import Link from react-router-dom in addon-detail-page.tsx",
+      "Wrap Tag components (line 150) with Link to={`/?q=${tag}`}",
+      "Update Tag component to accept asChild prop for Link integration (if using shadcn pattern)",
+      "Add cursor-pointer and hover state styling to Tag component",
+      "Test clicking tag on detail page navigates to home with search param set",
+      "Test that home page correctly filters by tag when arriving from tag click",
+      "Test visual feedback on tag hover (clear it's clickable)",
+      "Verify tag styling remains consistent with existing design"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Restyle Core/Misc category filter chips to match tag chip appearance and behavior",
+    "details": "Update category filter chips on home-page.tsx (lines 75-92) from Button components to Tag components (same as used on detail page). Replace onClick with Link wrapper to /?q=core and /?q=misc for consistency with tag chip behavior from requirement #2. Maintains visual consistency across tag and category filtering. Tags are smaller, more subtle than current buttons. Update layout/spacing if needed to accommodate smaller chip size.",
+    "steps": [
+      "Import Tag component from @/components/ui/tag in home-page.tsx",
+      "Replace Button components (lines 76-91) with Tag components wrapped in Link",
+      "Set Link to={`/?q=${category.core}`} and to={`/?q=${category.misc}`}",
+      "Remove onClick handlers (navigation handled by Link)",
+      "Adjust container spacing/padding if needed for smaller tag size",
+      "Test clicking Core/Misc tags navigates with URL param (same behavior as before)",
+      "Verify visual consistency with tags shown on detail page",
+      "Test responsive layout on mobile with new tag-style chips"
+    ],
+    "passes": false
   }
 ]
