@@ -22,7 +22,7 @@ export const tag = {
   // Utility
   map: 'map',
   quest: 'quest',
-  misc: 'misc',
+  fade: 'fade',
 } as const;
 
 export const category = {
