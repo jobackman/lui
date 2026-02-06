@@ -9,6 +9,7 @@ export function Tag({ children, className = '' }: TagProps) {
       className={`
         inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
         bg-glass-subtle backdrop-blur-glass-subtle border-glass transition-glass text-white/90 shadow-sm
+        cursor-pointer hover:bg-glass hover:text-white
         ${className}
       `}
     >

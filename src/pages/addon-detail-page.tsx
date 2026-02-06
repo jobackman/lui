@@ -147,7 +147,9 @@ export function AddonDetailPage() {
                 {addon.export.tags && addon.export.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2">
                     {addon.export.tags.map((tag) => (
-                      <Tag key={tag}>{tag}</Tag>
+                      <Link key={tag} to={`/?q=${tag}`}>
+                        <Tag>{tag}</Tag>
+                      </Link>
                     ))}
                   </div>
                 )}

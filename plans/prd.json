@@ -246,7 +246,7 @@
       "Test visual feedback on tag hover (clear it's clickable)",
       "Verify tag styling remains consistent with existing design"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
