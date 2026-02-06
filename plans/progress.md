@@ -66,6 +66,7 @@ Work continues on the remaining features in prd.json.
 - Added category filter chips. Core+Misc buttons below SearchBar using Button w/ outline variant, sm size. Center-aligned w/ gap-3. onClick sets searchQuery to category.core/misc. Existing tag search filters grid. Clean UX for quick category filtering. Build+tests pass (32).
 - Synced search w/ URL params. useSearchParams from react-router-dom reads ?q param on mount to init searchQuery state. useEffect updates URL when searchQuery changes (/?q=value or clears if empty). Browser back/forward nav works. Shareable filtered views (e.g. /?q=core). Build+tests pass (32).
 - Made tag chips clickable links to filtered home. Wrapped Tag components in Link to={`/?q=${tag}`} in addon-detail-page. Added cursor-pointer + hover:bg-glass hover:text-white to Tag component for interactive feedback. Clicking tag navigates to home w/ URL param set. Build+tests pass (32).
+- Restyled Core/Misc filter chips to Tag components. Replaced Button w/ Tag wrapped in Link on home-page. Matches tag chip appearance from detail page. Fixed URL sync: split into 2 useEffects (URL→state, state→URL) preventing circular updates. Clicking Core/Misc now properly filters+persists. Build+tests pass (32).
 
 ---
 

@@ -262,6 +262,6 @@
       "Verify visual consistency with tags shown on detail page",
       "Test responsive layout on mobile with new tag-style chips"
     ],
-    "passes": false
+    "passes": true
   }
 ]

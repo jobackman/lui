@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
-import { Button } from '@/components/ui/button';
+import { Tag } from '@/components/ui/tag';
 import { loadAllExports } from '@/lib/loadExports';
 import { category } from '@/types/exports';
 
@@ -20,7 +20,15 @@ export function HomePage() {
     window.scrollTo(0, 0);
   }, []);
 
-  // Sync search query with URL search params
+  // Sync URL search params to search query state (when URL changes via Link)
+  useEffect(() => {
+    const currentParam = searchParams.get('q') || '';
+    if (searchQuery !== currentParam) {
+      setSearchQuery(currentParam);
+    }
+  }, [searchParams]);
+
+  // Sync search query state to URL (when typing in search bar)
   useEffect(() => {
     const currentParam = searchParams.get('q') || '';
     if (searchQuery !== currentParam) {
@@ -30,7 +38,7 @@ export function HomePage() {
         setSearchParams({});
       }
     }
-  }, [searchQuery, searchParams, setSearchParams]);
+  }, [searchQuery]);
 
   // Filter addons based on search query (searches export name and tags)
   const filteredAddons = useMemo(() => {
@@ -88,22 +96,12 @@ export function HomePage() {
           
           {/* Category filter chips */}
           <div className="flex items-center justify-center gap-3 mt-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSearchQuery(category.core)}
-              className="transition-all"
-            >
-              Core
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSearchQuery(category.misc)}
-              className="transition-all"
-            >
-              Misc
-            </Button>
+            <Link to={`/?q=${category.core}`}>
+              <Tag>Core</Tag>
+            </Link>
+            <Link to={`/?q=${category.misc}`}>
+              <Tag>Misc</Tag>
+            </Link>
           </div>
         </div>
 
