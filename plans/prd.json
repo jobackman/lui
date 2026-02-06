@@ -263,5 +263,24 @@
       "Test responsive layout on mobile with new tag-style chips"
     ],
     "passes": true
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Add Husky pre-commit hook to automatically update timestamps on modified export files and auto-stage changes",
+    "details": "Install and configure Husky to run 'bun run update-timestamps' before each commit, automatically staging any timestamp updates to include them in the current commit. This ensures export files that are staged with content changes automatically get their lastUpdated field updated without manual intervention. Hook should: 1) Run only on staged data/exports/*.ts files, 2) Auto-stage updated timestamp changes using 'git add' so they're included in current commit, 3) Not block commits if no exports changed, 4) Work with existing update-timestamps script (which already detects actual content changes vs timestamp-only changes to prevent infinite loops), 5) Follow Bun ecosystem best practices (use bunx husky instead of npx). Setup process: Install husky as dev dependency, initialize with bunx husky init, create pre-commit hook that runs update-timestamps script then auto-stages modified export files, test with dummy export modification.",
+    "steps": [
+      "Install husky as devDependency: bun add -D husky",
+      "Initialize husky: bunx husky init (creates .husky/ directory and installs git hooks)",
+      "Create .husky/pre-commit file with:\n#!/usr/bin/env sh\n. \"$(dirname -- \"$0\")/_/husky.sh\"\nbun run update-timestamps\ngit add data/exports/*.ts",
+      "Make pre-commit hook executable: chmod +x .husky/pre-commit",
+      "Add prepare script to package.json: \"prepare\": \"husky\" (runs on bun install for other developers)",
+      "Test hook: Modify an export file (e.g., data/exports/baganator.ts description), stage it, commit and verify lastUpdated auto-updates AND is included in commit",
+      "Test hook skips when no export files modified: Modify non-export file, commit succeeds without timestamp updates",
+      "Test hook works with new export files (files not yet in git history)",
+      "Verify hook doesn't cause infinite loops (script already handles this by ignoring timestamp-only changes)",
+      "Verify git add command correctly stages only modified timestamps (doesn't unstage other changes)",
+      "Update AGENTS.md documentation to mention husky pre-commit hook behavior"
+    ],
+    "passes": false
   }
 ]
