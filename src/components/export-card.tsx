@@ -16,22 +16,22 @@ interface ExportCardProps {
 export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [videoPlaying, setVideoPlaying] = useState(false);
+  const [currentMediaDuration, setCurrentMediaDuration] = useState(5000); // Default 5s for images
   const cardRef = useRef<HTMLDivElement>(null);
   const mediaItems = exportData.media ?? [];
   const hasImages = mediaItems.length > 0;
   const hasMultipleImages = mediaItems.length > 1;
 
-  // Auto-cycle through images every 5 seconds when not hovered and no video playing
+  // Auto-cycle through media items based on current item duration
   useEffect(() => {
-    if (!hasMultipleImages || isHovered || videoPlaying) return;
+    if (!hasMultipleImages || isHovered) return;
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
-    }, 5000);
+    }, currentMediaDuration);
 
     return () => clearInterval(interval);
-  }, [hasMultipleImages, isHovered, videoPlaying, mediaItems.length]);
+  }, [hasMultipleImages, isHovered, currentMediaDuration, mediaItems.length]);
 
   // Prefers-reduced-motion check
   useEffect(() => {
@@ -59,12 +59,16 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
               alt={`${exportData.name} preview ${index + 1}`}
               isActive={index === currentImageIndex}
               objectCover={true}
-              onVideoPlaying={() => setVideoPlaying(true)}
-              onVideoEnded={() => {
-                setVideoPlaying(false);
-                // Advance to next carousel item after video completes first loop
-                if (hasMultipleImages) {
-                  setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
+              onVideoDurationChange={(duration) => {
+                // Only update duration when this video becomes active
+                if (index === currentImageIndex) {
+                  setCurrentMediaDuration(duration * 1000); // Convert to milliseconds
+                }
+              }}
+              onImageActive={() => {
+                // Reset to default 5s duration when image becomes active
+                if (index === currentImageIndex && mediaItem.type === 'image') {
+                  setCurrentMediaDuration(5000);
                 }
               }}
               className={`

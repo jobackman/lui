@@ -14,10 +14,10 @@ interface MediaCarouselItemProps {
   onLoad?: () => void;
   /** Callback when video is ready to play (for video items) */
   onVideoReady?: () => void;
-  /** Callback when video starts playing */
-  onVideoPlaying?: () => void;
-  /** Callback when video completes a loop */
-  onVideoEnded?: () => void;
+  /** Callback when video duration is available (in seconds) */
+  onVideoDurationChange?: (duration: number) => void;
+  /** Callback when image becomes active */
+  onImageActive?: () => void;
   /** Whether to use object-cover (true) or object-contain (false) */
   objectCover?: boolean;
 }
@@ -34,12 +34,11 @@ export function MediaCarouselItem({
   className = '',
   onLoad,
   onVideoReady,
-  onVideoPlaying,
-  onVideoEnded,
+  onVideoDurationChange,
+  onImageActive,
   objectCover = false,
 }: MediaCarouselItemProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const loopCountRef = useRef(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   // Check for prefers-reduced-motion preference
@@ -61,8 +60,6 @@ export function MediaCarouselItem({
     if (!video || mediaItem.type !== 'video') return;
 
     if (isActive && !prefersReducedMotion) {
-      // Reset loop count when video becomes active
-      loopCountRef.current = 0;
       // Play video when active and user doesn't prefer reduced motion
       video.play().catch((err) => {
         console.warn('Failed to autoplay video:', err);
@@ -89,39 +86,37 @@ export function MediaCarouselItem({
     return () => video.removeEventListener('loadeddata', handleVideoReady);
   }, [mediaItem.type, onVideoReady]);
 
-  // Handle video playing and ended events
+  // Handle video duration change
   useEffect(() => {
     const video = videoRef.current;
     if (!video || mediaItem.type !== 'video') return;
 
-    const handlePlaying = () => {
-      if (onVideoPlaying) onVideoPlaying();
-    };
-
-    const handleEnded = () => {
-      loopCountRef.current += 1;
-      // Only call onVideoEnded after first loop completes
-      if (loopCountRef.current === 1 && onVideoEnded) {
-        onVideoEnded();
+    const handleDurationChange = () => {
+      if (onVideoDurationChange && !Number.isNaN(video.duration) && video.duration > 0) {
+        onVideoDurationChange(video.duration);
       }
     };
 
-    if (onVideoPlaying) {
-      video.addEventListener('playing', handlePlaying);
-    }
-    if (onVideoEnded) {
-      video.addEventListener('ended', handleEnded);
+    // Try to get duration immediately if already loaded
+    if (!Number.isNaN(video.duration) && video.duration > 0 && onVideoDurationChange) {
+      onVideoDurationChange(video.duration);
     }
 
+    video.addEventListener('loadedmetadata', handleDurationChange);
+    video.addEventListener('durationchange', handleDurationChange);
+    
     return () => {
-      if (onVideoPlaying) {
-        video.removeEventListener('playing', handlePlaying);
-      }
-      if (onVideoEnded) {
-        video.removeEventListener('ended', handleEnded);
-      }
+      video.removeEventListener('loadedmetadata', handleDurationChange);
+      video.removeEventListener('durationchange', handleDurationChange);
     };
-  }, [mediaItem.type, onVideoPlaying, onVideoEnded]);
+  }, [mediaItem.type, onVideoDurationChange]);
+
+  // Notify when image becomes active
+  useEffect(() => {
+    if (mediaItem.type === 'image' && isActive && onImageActive) {
+      onImageActive();
+    }
+  }, [mediaItem.type, isActive, onImageActive]);
 
   if (mediaItem.type === 'video') {
     return (
