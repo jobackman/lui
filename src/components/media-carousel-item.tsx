@@ -14,6 +14,10 @@ interface MediaCarouselItemProps {
   onLoad?: () => void;
   /** Callback when video is ready to play (for video items) */
   onVideoReady?: () => void;
+  /** Callback when video starts playing */
+  onVideoPlaying?: () => void;
+  /** Callback when video completes a loop */
+  onVideoEnded?: () => void;
   /** Whether to use object-cover (true) or object-contain (false) */
   objectCover?: boolean;
 }
@@ -30,6 +34,8 @@ export function MediaCarouselItem({
   className = '',
   onLoad,
   onVideoReady,
+  onVideoPlaying,
+  onVideoEnded,
   objectCover = false,
 }: MediaCarouselItemProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -79,6 +85,36 @@ export function MediaCarouselItem({
     video.addEventListener('loadeddata', handleVideoReady);
     return () => video.removeEventListener('loadeddata', handleVideoReady);
   }, [mediaItem.type, onVideoReady]);
+
+  // Handle video playing and ended events
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || mediaItem.type !== 'video') return;
+
+    const handlePlaying = () => {
+      if (onVideoPlaying) onVideoPlaying();
+    };
+
+    const handleEnded = () => {
+      if (onVideoEnded) onVideoEnded();
+    };
+
+    if (onVideoPlaying) {
+      video.addEventListener('playing', handlePlaying);
+    }
+    if (onVideoEnded) {
+      video.addEventListener('ended', handleEnded);
+    }
+
+    return () => {
+      if (onVideoPlaying) {
+        video.removeEventListener('playing', handlePlaying);
+      }
+      if (onVideoEnded) {
+        video.removeEventListener('ended', handleEnded);
+      }
+    };
+  }, [mediaItem.type, onVideoPlaying, onVideoEnded]);
 
   if (mediaItem.type === 'video') {
     return (

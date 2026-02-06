@@ -181,7 +181,7 @@
       "Test with mixed image/video carousel content",
       "Verify video in active slide pauses carousel, inactive slides don't affect timing"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",

@@ -16,21 +16,22 @@ interface ExportCardProps {
 export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const mediaItems = exportData.media ?? [];
   const hasImages = mediaItems.length > 0;
   const hasMultipleImages = mediaItems.length > 1;
 
-  // Auto-cycle through images every 5 seconds when not hovered
+  // Auto-cycle through images every 5 seconds when not hovered and no video playing
   useEffect(() => {
-    if (!hasMultipleImages || isHovered) return;
+    if (!hasMultipleImages || isHovered || videoPlaying) return;
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [hasMultipleImages, isHovered, mediaItems.length]);
+  }, [hasMultipleImages, isHovered, videoPlaying, mediaItems.length]);
 
   // Prefers-reduced-motion check
   useEffect(() => {
@@ -58,6 +59,8 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
               alt={`${exportData.name} preview ${index + 1}`}
               isActive={index === currentImageIndex}
               objectCover={true}
+              onVideoPlaying={() => setVideoPlaying(true)}
+              onVideoEnded={() => setVideoPlaying(false)}
               className={`
                 absolute inset-0 w-full h-full object-cover
                 transition-opacity duration-700 ease-in-out

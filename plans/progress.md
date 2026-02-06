@@ -61,6 +61,7 @@ Work continues on the remaining features in prd.json.
 - Verified video integration complete. ExportCard+AddonDetailPage already use MediaCarouselItem w/ isActive prop for proper video pause behavior. Videos auto-play when active, pause when inactive/offscreen. Modal supports videos. Smooth transitions. Auto-pause on hover works. Build+tests pass (32). PRD complete.
 - Fixed video loading indicator in modal gallery. Added onVideoReady callback prop to MediaCarouselItem. Component now fires callback on 'loadeddata' event for videos (mirrors onLoad for images). Updated addon-detail-page modal to pass onVideoReady={() => setIsImageLoading(false)}. Loading indicator now clears properly for both images+videos. Build+tests pass (32).
 - Sorted front page grid by category. Added sortedAndFilteredAddons useMemo in home-page.tsx sorting filteredAddons by tags[0] (category). Core addons (tags[0]===category.core) display before misc addons. Handles edge cases (missing/empty tags). Search filtering+animations preserved. Build+tests pass (32).
+- Paused carousel auto-switching during video playback. Added onVideoPlaying/onVideoEnded callback props to MediaCarouselItem. Component fires callbacks on 'playing'/'ended' events. Added videoPlaying state to export-card.tsx. Auto-cycle useEffect now checks videoPlaying: if (!hasMultipleImages || isHovered || videoPlaying) return. Carousel pauses when video plays, resumes after loop completes. Respects prefers-reduced-motion. Build+tests pass (32).
 
 ---
 
