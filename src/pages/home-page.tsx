@@ -5,6 +5,7 @@ import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
 import { loadAllExports } from '@/lib/loadExports';
+import { category } from '@/types/exports';
 
 export function HomePage() {
   const allAddons = loadAllExports();
@@ -33,7 +34,27 @@ export function HomePage() {
     });
   }, [allAddons, searchQuery]);
 
-  const totalExports = filteredAddons.length;
+  // Sort filtered addons to show core addons before misc addons
+  const sortedAndFilteredAddons = useMemo(() => {
+    return [...filteredAddons].sort((a, b) => {
+      // Category is the first tag in the tags array
+      const aCategory = a.export.tags?.[0];
+      const bCategory = b.export.tags?.[0];
+
+      // Core addons come first
+      if (aCategory === category.core && bCategory !== category.core) {
+        return -1;
+      }
+      if (aCategory !== category.core && bCategory === category.core) {
+        return 1;
+      }
+
+      // If both are the same category (or both missing), maintain original order
+      return 0;
+    });
+  }, [filteredAddons]);
+
+  const totalExports = sortedAndFilteredAddons.length;
 
   return (
     <motion.div
@@ -58,7 +79,7 @@ export function HomePage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
               <AnimatePresence mode="popLayout">
-                {filteredAddons.map((addon, index) => {
+                {sortedAndFilteredAddons.map((addon, index) => {
                   // Create bento-style asymmetric layout with varying column spans
                   // Pattern: 2-col, 1-col, 1-col repeats (creates visual variety)
                   // Only apply at lg breakpoint (3 columns) to prevent layout issues

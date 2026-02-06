@@ -162,7 +162,7 @@
       "Animation delays/transitions work correctly with new sort order",
       "Handle edge cases: addons without tags array, empty tags array"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",
