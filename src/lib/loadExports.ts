@@ -1,4 +1,4 @@
-import type { AddonCategory } from "../types/exports";
+import type { Addon } from "../types/exports";
 
 import * as addons from '../../data/exports'
 
@@ -6,7 +6,7 @@ import * as addons from '../../data/exports'
  * Load all addon export data.
  * This provides type-safe access to all addon configurations.
  */
-export function loadAllExports(): AddonCategory[] {
+export function loadAllExports(): Addon[] {
   return Object.values(addons);
 }
 
@@ -26,7 +26,7 @@ export function getAddonManifest(): Array<{ id: string; name: string }> {
  * Get exports for a specific addon by ID.
  * Returns undefined if the addon is not found.
  */
-export function getAddonById(id: string): AddonCategory | undefined {
+export function getAddonById(id: string): Addon | undefined {
   const allExports = loadAllExports();
   return allExports.find(addon => addon.id === id);
 }

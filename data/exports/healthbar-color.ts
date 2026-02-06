@@ -1,23 +1,22 @@
-import type { AddonCategory } from "../../src/types/exports";
+import type { Addon } from "../../src/types/exports";
 import { tag, category } from "../../src/types/exports";
 
-export const healthbarColor: AddonCategory = {
+export const healthbarColor: Addon = {
   id: "healthbar-color",
   name: "Healthbar Color",
   export: {
     name: "Healthbar Color",
     description: "Minor tweaks to the player, target and focus target frames",
-    lastUpdated: "2026-02-05T22:32:58.463Z",
+    lastUpdated: "2026-02-06T00:09:40.069Z",
     exportString: `4Xz7DM1CIJdea(x0McdyoEKKqsOMetwmzNAFXzmGdXvCWPmIAMzFy(TVsY24dK1Hpimm9lPc4UTA1sFDRw(alnR5wMxAV8T1b(72SAUZpq7cC2s(2L(E(bp4VYXW(DhlJ24Vz3wK)7xr(E63HfY2YqZYmG(310)UG8xuK6zePfvKwurArezd(KCJ)g00Dip3noK2kF7iOnse0ezhG43CV6y7HEvqdERN)3LOJru9o65JEcW)JtWgBKZJ(F3jGvtK04wM3e4(F)6B)9o7vb2i7F9T5427JyfnD)pSgAy7gfoyyzA675UkJvsBg(MzSZLDZL6Cf1n4EY(OOU1ENXOmEaQY7pw2pLsGeJiN6s1ZI8umD)c71J3SIFRC45mzKzFFHoBHOLZg7fEoRSwKEKoXa)GRDH)2WbHlTdOg3ZF4GQlemJzwNeNeKIs4z1zOIbCwJjFI4eRqimcaKcGAZJbRlmIpIwjIrwcnMJUKFOfH8e5yafbuuR8PH(JGI4JhCjRKezhMv6fFshXoynWvnoxLkqianhfOrTizvp7uHGu3pFqsuaKtA0rTbYALUyqsIlDIEgkXS0twItQIcJJ)0ntXtQeb)Weul83Uv)mi1uXZ3RolXkbWXmbujrKoIMXwnAOe4hBeHBCpjreErxpOvulANCPMiCK2zahb5PenWaRcSHkDIm585p8S)zOxaajaKaqQmGuUL4fw1eSjehfWQPwdiqns4iLOluxBcbSveneaP2WzTYyLSolTsnx9KL7oEBfbfN(apd8NDH8sNVyfK6QPxWh5uuh3as36SXjW2JieXF9SFOVNkd5lSmhf4A79RVzyheG5HgN6KaKuIrpf2LWprsS8j44dlvdeFCFj)0jDlF13DzAx(c7GuFj64JPYXHIx(4JobB93y7nZzR)UGLox7ULSDhSbx6zdxd3883sBF2axXmKsOilCP6qiJz48QsBrtbyfst)zDt)PsYh1Il(A8ECKNpesHKJr3U(21qgZMLgLGIucDRoFbl6SAe4z2IodREdUUxaibGu1ajscjyxqaoc4OsZrmUZMohYmDkSNfn1v1QKBibCNnvqROw8nHLkDN7kN5(iN3Vjict(nNLGStIgyGStnu2j7vR83qn7c2PEAdLiWdJmgznp9xNV7ME(AcplXK7CcZvos3(Pz)Ral5I(dgeQ4fT1hgsqxmCyBHwLCkkToeRD6vpzY3C1I0wps326IStrAiwyS43)KXOzp)40VoEMi3zN4tr74UNiluSoYiowHzJUDSuUVK4Ks45yjmx5iwYtgtUsk)vuxzqBLyHcKxKOyHNyyoYyYCHur30DQlgi0U4RGqzrKOgJV3C(SPpiNhtxnhgtXfijw2XgJNDRaNLwQy3soPIPWCLJAnQTgaoxTJ4i47xldRKOvE9nHgqsEH7MmhZetmMt(aULlm7EQoX72)GHyTY7fF3DLG1kS3jYyTbbo2lrUPZXz4SdfD5KZCq(JLzevIX(mYlAAfw(783IC9CKXQAPOvvK8IIGIORTWzZkVFY3SoyitGzXxE2rfkAKUbR(KXANovxFCIfUYzXUxEjz2(1UBDS3sNxL6qzDWx0lk(y3KHKucFyge(YZkfYHAG15rF3T(B4AArQ1todJR0fNaPxAJ6b71Ul57UANrpnrwLa5z5UoudSoxTlqYbsjTlEsZzqmLnHYx8LS1VuB1IXDhmuOOSLE2B3McBgpA(DFXyYT3rZOLC0CUK(9JgP0IxWA7ozpDmlVqOwmQLHToyT(6OzZMmDgF7mU2KErbsVORm2PqTyvZftDWAnB6TpnMJvQfP4WEXkQjYefQsrfzLvbc2hvGrHEqC9sHQs6GuvdRhKVhuSwmcxWwhsaZztgBYBcjNP18xZIuUnT0rJU7jJ5J5pPRx8u2bDI926Imkz0IrKm26G1A8)m9lcmZ4GT6XUBjmsr6uCsGmAesV3p9QVW1c13xwCC3BOe0RyTo0klqhejI4dtnKzqVBCCQ4nbP)qX2QyTymOZwhcNm6(rxpXGRDomEjj6X7isFj8PI16q7SaDi(0zpn5AH4mEYCChSvxrMOqvkkIywfireNAWDwzQqcKLgiY1XtCUl5NkmwCZ7g9WiUJPX9KOfzEXG(YzvCuPOLyMvbQ9X(joq8vFq0w5QWvsaFkU0D9ANG9x0X64(VgU8i8U8in1fHeU2hs4iLOlWRCE(OhI97nlGOaIciQYsuKJvihbpLQvJCuBCSwHlgGuXOtgcRetspzboU3Zm5d)u9Ns1ZLxtwavjAGbsz1q3am5wHhcEFKCmqkyjEhBErTGyvAjE52ccaMaycGPYctKJf(8S1baPggKuByfyTJcRvxl0lbKGNWAaKaqQ0GezYjuNeaswaivnqI)VrF0wH1BAhLMWw80n65FbU8mtZ32559Ih5Zgo(Byp0xzQuPniUKeCjg(vLFzm)RPb3WZVGHkUt2YrPYorV(Gw1c948JLE7I8WKnqybFUTI5BEnEJk2tAxFl93qtrKok8rr9kYnlYEBfYiQkrbzeRiCD(Krm3MXFU86WQ4z4vNEynP8yUjHkLwpHmG3vcf0kQfFtycQhjB4X(5Z)MZrqMjrdmqMPgkZe5uqZhb7cpWrahvnoc(1ucajaKQgiXOuPZHutqPsoqPsSJNEqROw8nHLkXGOohE1NcefquFsef9kfdpZuLJTG16vnk8mATEpwR1lrezH1n6d61rxRv7HT62RB)EdTE5V0Ppq930xxFWWbD0B3xRFRwDhqoshYj8g9E6A6971gR1a9U97qoYG0U)6afLGUe4ypfs59jcKLmROM8tS)Das5Mv8GCjL)bXk3YgH92OKGLA57AQvucjZKWrkrxGh9jCDJy925v09f1jeejbxu8SA1GrgtlRoYXyI9PAQScZBXl6E2pDkxPNKSA67yqQRH9nfw4GiZJHBGlTx(2A6n4u6thA)Tz4HAOYVMGMoiK7M1NOWBQilmCdxkXAlvd)RoJQwAXprufYCkSKbb3JMkKqa3sxBh8g9haJtuutLUdqvchyaQQH2CLhC34(U9hxUdHcFxedOudIsqDBhBorTGxvQUnYXc3V)cF8WG3WtvJFuB0SwrmyBfLEBfJdcvL3WtilR)prEBP8`,
     media: [
       { type: 'image', url: 'https://i.imgur.com/qJohkZg.png' },
       { type: 'image', url: 'https://i.imgur.com/HwzokhN.png' },
     ],
-    tags: [tag.frames, tag.ui],
+    tags: [category.misc, tag.frames, tag.ui],
     setupInstructions: `1. Run /hbc
 2. Go to Profiles -> Import/Export Profiles
 3. Paste
 4. Success!`
   },
-  category: category.misc,
 };

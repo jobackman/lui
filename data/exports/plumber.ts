@@ -1,13 +1,13 @@
-import type { AddonCategory } from "../../src/types/exports";
+import type { Addon } from "../../src/types/exports";
 import { tag, category } from "../../src/types/exports";
 
-export const plumber: AddonCategory = {
+export const plumber: Addon = {
   id: "plumber",
   name: "Plumber",
   export: {
     name: "Plumber",
     description: "Miscellaneous UI improvements. Good quality stuff!",
-    lastUpdated: "2026-02-05T22:32:58.467Z",
+    lastUpdated: "2026-02-06T00:09:40.073Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/plumber",
     media: [
       { type: 'image', url: 'https://media.forgecdn.net/attachments/986/816/lootuidemo.gif' },
@@ -16,7 +16,6 @@ export const plumber: AddonCategory = {
       { type: 'image', url: 'https://media.forgecdn.net/attachments/1300/474/plumberlandingpage_9.jpg' },
     ],
     setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
-    tags: [tag.misc, tag.ui]
+    tags: [category.misc, tag.ui]
   },
-  category: category.misc,
 };
