@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
+import { Button } from '@/components/ui/button';
 import { loadAllExports } from '@/lib/loadExports';
 import { category } from '@/types/exports';
 
@@ -69,6 +70,26 @@ export function HomePage() {
 
         <div className="py-8 px-4">
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
+          
+          {/* Category filter chips */}
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSearchQuery(category.core)}
+              className="transition-all"
+            >
+              Core
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSearchQuery(category.misc)}
+              className="transition-all"
+            >
+              Misc
+            </Button>
+          </div>
         </div>
 
         <div className="container mx-auto w-full md:min-w-3xl px-4 sm:px-6 md:px-8 pb-12">

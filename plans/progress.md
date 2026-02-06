@@ -63,6 +63,7 @@ Work continues on the remaining features in prd.json.
 - Sorted front page grid by category. Added sortedAndFilteredAddons useMemo in home-page.tsx sorting filteredAddons by tags[0] (category). Core addons (tags[0]===category.core) display before misc addons. Handles edge cases (missing/empty tags). Search filtering+animations preserved. Build+tests pass (32).
 - Refactored carousel timing to use video duration. Removed videoPlaying state+loop tracking. Added onVideoDurationChange callback to MediaCarouselItem firing on loadedmetadata/durationchange events. Added currentMediaDuration state (default 5s) to export-card. Carousel interval now dynamic based on current media item (video duration in ms, or 5s for images). Cleaner approach, videos play full duration then auto-advance. Build+tests pass (32).
 - Added clear button to SearchBar. X icon button (lucide-react) positioned right-4 (mobile) / right-24 (desktop, before kbd shortcuts). Only renders when value.length>0. onClick calls onChange(''). Ghost variant, accessible (aria-label), hover:bg-foreground/10 transition. Input padding adjusted (pr-20 sm:pr-32) to prevent overlap. Clear button appears/disappears on input, responsive layout maintained. Build+tests pass (32).
+- Added category filter chips. Core+Misc buttons below SearchBar using Button w/ outline variant, sm size. Center-aligned w/ gap-3. onClick sets searchQuery to category.core/misc. Existing tag search filters grid. Clean UX for quick category filtering. Build+tests pass (32).
 
 ---
 

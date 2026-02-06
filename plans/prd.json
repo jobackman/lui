@@ -196,7 +196,7 @@
       "Test clicking chips populates search field and filters grid correctly",
       "Verify existing tag search logic works with category tags (should already work)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "UI",
