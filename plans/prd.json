@@ -148,6 +148,20 @@
       "Verify TypeScript compilation passes",
       "Update AGENTS.md to document that core/misc are now regular tags in the tags array"
     ],
+    "passes": "cancelled"
+  },
+  {
+    "category": "Feature",
+    "description": "Sort front page bento grid to display category.core addons before category.misc addons",
+    "details": "Update home-page.tsx to sort the filtered addons so that addons with category.core as their first tag appear before addons with category.misc. Since categories are now part of the tags array (first element is CategoryTag), sorting logic should: 1) Check if addon.export.tags[0] === category.core, 2) Group core addons first, misc addons second, 3) Preserve existing search filtering behavior, 4) Maintain smooth animations and layout transitions during filtering. Implementation: Add useMemo to create sortedAndFilteredAddons that sorts filteredAddons by category tag, with core before misc. Use this sorted list for rendering the grid.",
+    "steps": [
+      "Create sortedAndFilteredAddons useMemo in home-page.tsx that sorts filteredAddons by category",
+      "Addons with tags[0] === category.core appear before tags[0] === category.misc",
+      "Search filtering continues to work correctly with sorted results",
+      "Bento grid layout renders smoothly without layout shifts",
+      "Animation delays/transitions work correctly with new sort order",
+      "Handle edge cases: addons without tags array, empty tags array"
+    ],
     "passes": false
   },
   {
