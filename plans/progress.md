@@ -64,6 +64,7 @@ Work continues on the remaining features in prd.json.
 - Refactored carousel timing to use video duration. Removed videoPlaying state+loop tracking. Added onVideoDurationChange callback to MediaCarouselItem firing on loadedmetadata/durationchange events. Added currentMediaDuration state (default 5s) to export-card. Carousel interval now dynamic based on current media item (video duration in ms, or 5s for images). Cleaner approach, videos play full duration then auto-advance. Build+tests pass (32).
 - Added clear button to SearchBar. X icon button (lucide-react) positioned right-4 (mobile) / right-24 (desktop, before kbd shortcuts). Only renders when value.length>0. onClick calls onChange(''). Ghost variant, accessible (aria-label), hover:bg-foreground/10 transition. Input padding adjusted (pr-20 sm:pr-32) to prevent overlap. Clear button appears/disappears on input, responsive layout maintained. Build+tests pass (32).
 - Added category filter chips. Core+Misc buttons below SearchBar using Button w/ outline variant, sm size. Center-aligned w/ gap-3. onClick sets searchQuery to category.core/misc. Existing tag search filters grid. Clean UX for quick category filtering. Build+tests pass (32).
+- Synced search w/ URL params. useSearchParams from react-router-dom reads ?q param on mount to init searchQuery state. useEffect updates URL when searchQuery changes (/?q=value or clears if empty). Browser back/forward nav works. Shareable filtered views (e.g. /?q=core). Build+tests pass (32).
 
 ---
 

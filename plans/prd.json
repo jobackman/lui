@@ -230,7 +230,7 @@
       "Test that category filter chips (Core/Misc) update URL param correctly",
       "Test that sharing URL with ?q param loads filtered view for recipient"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "Feature",

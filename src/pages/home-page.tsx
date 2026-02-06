@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
@@ -10,12 +10,27 @@ import { category } from '@/types/exports';
 
 export function HomePage() {
   const allAddons = loadAllExports();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  // Initialize search query from URL param
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
 
   // Reset scroll position on mount
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Sync search query with URL search params
+  useEffect(() => {
+    const currentParam = searchParams.get('q') || '';
+    if (searchQuery !== currentParam) {
+      if (searchQuery) {
+        setSearchParams({ q: searchQuery });
+      } else {
+        setSearchParams({});
+      }
+    }
+  }, [searchQuery, searchParams, setSearchParams]);
 
   // Filter addons based on search query (searches export name and tags)
   const filteredAddons = useMemo(() => {
