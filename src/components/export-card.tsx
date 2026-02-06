@@ -60,7 +60,13 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
               isActive={index === currentImageIndex}
               objectCover={true}
               onVideoPlaying={() => setVideoPlaying(true)}
-              onVideoEnded={() => setVideoPlaying(false)}
+              onVideoEnded={() => {
+                setVideoPlaying(false);
+                // Advance to next carousel item after video completes first loop
+                if (hasMultipleImages) {
+                  setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
+                }
+              }}
               className={`
                 absolute inset-0 w-full h-full object-cover
                 transition-opacity duration-700 ease-in-out

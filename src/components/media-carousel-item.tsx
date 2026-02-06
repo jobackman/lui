@@ -39,6 +39,7 @@ export function MediaCarouselItem({
   objectCover = false,
 }: MediaCarouselItemProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const loopCountRef = useRef(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   // Check for prefers-reduced-motion preference
@@ -60,6 +61,8 @@ export function MediaCarouselItem({
     if (!video || mediaItem.type !== 'video') return;
 
     if (isActive && !prefersReducedMotion) {
+      // Reset loop count when video becomes active
+      loopCountRef.current = 0;
       // Play video when active and user doesn't prefer reduced motion
       video.play().catch((err) => {
         console.warn('Failed to autoplay video:', err);
@@ -96,7 +99,11 @@ export function MediaCarouselItem({
     };
 
     const handleEnded = () => {
-      if (onVideoEnded) onVideoEnded();
+      loopCountRef.current += 1;
+      // Only call onVideoEnded after first loop completes
+      if (loopCountRef.current === 1 && onVideoEnded) {
+        onVideoEnded();
+      }
     };
 
     if (onVideoPlaying) {
