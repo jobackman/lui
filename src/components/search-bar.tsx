@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Search, X } from "lucide-react";
 
 interface SearchBarProps {
   value: string;
@@ -21,9 +22,20 @@ export function SearchBar({ value, onChange, placeholder = "Search exports..." }
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full pl-12 pr-20 rounded-full h-12 text-base"
+          className="w-full pl-12 pr-20 sm:pr-32 rounded-full h-12 text-base"
           aria-label="Search exports by name or description"
         />
+        {value && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onChange('')}
+            className="absolute right-4 sm:right-24 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-foreground/10 transition-colors"
+            aria-label="Clear search"
+          >
+            <X className="h-4 w-4 text-foreground/80" />
+          </Button>
+        )}
         <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-1 pointer-events-none">
           <kbd className="px-2 py-1 text-xs font-semibold text-muted-foreground bg-background/50 border border-border rounded shadow-sm">
             {shortcutKey}

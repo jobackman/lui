@@ -214,6 +214,6 @@
       "Test clicking clear empties search field and shows all addons",
       "Verify mobile responsive behavior (no overlap issues)"
     ],
-    "passes": false
+    "passes": true
   }
 ]
