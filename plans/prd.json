@@ -182,5 +182,38 @@
       "Verify video in active slide pauses carousel, inactive slides don't affect timing"
     ],
     "passes": false
+  },
+  {
+    "category": "Feature",
+    "description": "Add filter chips beneath search bar to quickly filter by category (Core/Misc)",
+    "details": "Position two clickable filter chips (Core, Misc) between SearchBar and bento grid on home-page.tsx. Clicking chip calls setSearchQuery(category.core) or setSearchQuery(category.misc). Existing tag-based search filtering handles rest. Use shadcn Badge or Button component with variant=\"outline\" for chip styling. Chips should be centered below search bar with gap between them. Visual feedback on click (existing search highlights work automatically). No \"active\" state needed since search field shows current filter.",
+    "steps": [
+      "Create filter chip container div between SearchBar (line 50) and grid container (line 53)",
+      "Render two clickable badges/buttons labeled \"Core\" and \"Misc\"",
+      "onClick handlers call setSearchQuery(category.core) or setSearchQuery(category.misc)",
+      "Center chips horizontally with flex layout, gap-2 or gap-3 between chips",
+      "Use outline variant for subtle, non-intrusive appearance",
+      "Test clicking chips populates search field and filters grid correctly",
+      "Verify existing tag search logic works with category tags (should already work)"
+    ],
+    "passes": false
+  },
+  {
+    "category": "UI",
+    "description": "Add clear button inside search field to reset search query",
+    "details": "Update SearchBar component to show X icon button (using lucide-react X icon) positioned absolute right side (before keyboard shortcut badges). Only render when value.length > 0. Clicking X calls onChange('') to clear search. Button should be properly accessible (aria-label). Style consistent with search icon on left. Use ghost/minimal button variant to keep clean appearance. Ensure doesn't overlap keyboard shortcuts on larger screens.",
+    "steps": [
+      "Add conditional X icon button in search-bar.tsx (after Input, before keyboard shortcut div)",
+      "Position absolute right-[XX]px considering keyboard shortcut width (hidden on mobile where shortcuts hide)",
+      "Only render when value.length > 0 (conditional: {value && ...})",
+      "onClick calls onChange('') to clear",
+      "Add aria-label=\"Clear search\" for accessibility",
+      "Use ghost Button variant or plain button with hover:bg-muted transition",
+      "Adjust pr-20 padding on Input if needed to prevent text overlap",
+      "Test clear button appears/disappears correctly",
+      "Test clicking clear empties search field and shows all addons",
+      "Verify mobile responsive behavior (no overlap issues)"
+    ],
+    "passes": false
   }
 ]
