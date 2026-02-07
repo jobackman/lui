@@ -1,0 +1,5 @@
+# Update timestamps for modified export files
+bun run update-timestamps
+
+# Stage any updated timestamps
+git add data/exports/*.ts

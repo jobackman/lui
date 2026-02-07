@@ -25,6 +25,24 @@ Agent instructions for working on this Bun + React + TypeScript project.
 - **Update timestamps**: `bun run update-timestamps` (for modified exports only)
 - **Update all timestamps**: `bun run update-timestamps:all`
 
+### Git Hooks
+
+**Husky pre-commit hook** automatically updates `lastUpdated` timestamps for modified addon export files:
+
+- Runs `bun run update-timestamps` before each commit
+- Auto-stages timestamp changes (includes them in current commit)
+- Only processes staged `data/exports/*.ts` files
+- Skips silently when no export files are modified
+- Prevents manual timestamp errors
+
+**How it works:**
+1. You modify an addon export file (e.g., change description, add images, update tags)
+2. Stage the file with `git add data/exports/addon-name.ts`
+3. Create a commit with `git commit -m "message"`
+4. Hook automatically updates `lastUpdated` field and includes it in your commit
+
+**Note:** The timestamp script only updates files with actual content changes (ignoring timestamp-only modifications) to prevent infinite loops.
+
 ## TypeScript Configuration
 
 **Strict mode enabled** with these key settings:

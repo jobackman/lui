@@ -281,6 +281,22 @@
       "Verify git add command correctly stages only modified timestamps (doesn't unstage other changes)",
       "Update AGENTS.md documentation to mention husky pre-commit hook behavior"
     ],
+    "passes": true
+  },
+  {
+    "category": "Feature",
+    "description": "Sort bento grid by lastUpdated timestamp to show newest updates first within each category",
+    "details": "Enhance existing sort logic in home-page.tsx (lines 62-79) to add secondary sort by lastUpdated timestamp after primary category sort. Addons should display: 1) Core category first, then misc category (existing behavior), 2) Within each category, newest lastUpdated timestamps first (new behavior). Implementation: Extend sort comparator to compare new Date(b.export.lastUpdated) - new Date(a.export.lastUpdated) when both addons have same category. Ensures recently updated addons appear at top of their respective category sections. Handle edge cases: missing lastUpdated field should sort to bottom, invalid dates should not crash.",
+    "steps": [
+      "Update sortedAndFilteredAddons useMemo comparator to add secondary sort by lastUpdated timestamp",
+      "When categories are equal, sort by new Date(b.export.lastUpdated) - new Date(a.export.lastUpdated) (newest first)",
+      "Handle missing lastUpdated field gracefully (treat as oldest/bottom)",
+      "Test that core addons still appear before misc addons (primary sort maintained)",
+      "Test that within core section, newest updates appear first",
+      "Test that within misc section, newest updates appear first",
+      "Verify search filtering preserves sort order",
+      "Verify bento grid layout and animations work smoothly with new sort order"
+    ],
     "passes": false
   }
 ]

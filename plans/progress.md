@@ -67,6 +67,7 @@ Work continues on the remaining features in prd.json.
 - Synced search w/ URL params. useSearchParams from react-router-dom reads ?q param on mount to init searchQuery state. useEffect updates URL when searchQuery changes (/?q=value or clears if empty). Browser back/forward nav works. Shareable filtered views (e.g. /?q=core). Build+tests pass (32).
 - Made tag chips clickable links to filtered home. Wrapped Tag components in Link to={`/?q=${tag}`} in addon-detail-page. Added cursor-pointer + hover:bg-glass hover:text-white to Tag component for interactive feedback. Clicking tag navigates to home w/ URL param set. Build+tests pass (32).
 - Restyled Core/Misc filter chips to Tag components. Replaced Button w/ Tag wrapped in Link on home-page. Matches tag chip appearance from detail page. Fixed URL sync: split into 2 useEffects (URL→state, state→URL) preventing circular updates. Clicking Core/Misc now properly filters+persists. Build+tests pass (32).
+- Installed husky (v9.1.7) as dev dependency. Created pre-commit hook (.husky/pre-commit) running `bun run update-timestamps` + auto-staging timestamp changes w/ `git add data/exports/*.ts`. prepare script already in package.json. Tested: hook auto-updates timestamps when export files staged (baganator test), skips when no exports modified (non-export file test). Hook prevents manual timestamp errors, improves DX. Updated AGENTS.md w/ hook documentation (workflow, behavior, note about infinite loop prevention). Fixed loadExports test (15→16 addons). Build+tests+frontend verified. Build+tests pass (32).
 
 ---
 
