@@ -297,6 +297,6 @@
       "Verify search filtering preserves sort order",
       "Verify bento grid layout and animations work smoothly with new sort order"
     ],
-    "passes": false
+    "passes": true
   }
 ]

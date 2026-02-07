@@ -93,3 +93,5 @@ Work continues on the remaining features in prd.json.
 11. Refactoring: Migrate glass effects to atomic Tailwind utilities
 
 PRD now empty - all tasks completed and archived.
+- Added secondary sort by lastUpdated timestamp in home-page.tsx. Core addons display first (primary sort), then within each category newest timestamps appear first. Missing lastUpdated treated as 0 (oldest). Build+tests pass (32). Frontend verified w/ agent-browser.
+

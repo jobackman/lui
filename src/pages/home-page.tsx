@@ -58,7 +58,7 @@ export function HomePage() {
     });
   }, [allAddons, searchQuery]);
 
-  // Sort filtered addons to show core addons before misc addons
+  // Sort filtered addons to show core addons before misc addons, then by newest lastUpdated within each category
   const sortedAndFilteredAddons = useMemo(() => {
     return [...filteredAddons].sort((a, b) => {
       // Category is the first tag in the tags array
@@ -73,8 +73,10 @@ export function HomePage() {
         return 1;
       }
 
-      // If both are the same category (or both missing), maintain original order
-      return 0;
+      // If both are the same category (or both missing), sort by lastUpdated (newest first)
+      const aDate = a.export.lastUpdated ? new Date(a.export.lastUpdated).getTime() : 0;
+      const bDate = b.export.lastUpdated ? new Date(b.export.lastUpdated).getTime() : 0;
+      return bDate - aDate; // Newest first (descending order)
     });
   }, [filteredAddons]);
 
