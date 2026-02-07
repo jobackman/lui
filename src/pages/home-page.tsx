@@ -4,9 +4,54 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
-import { Tag } from '@/components/ui/tag';
 import { loadAllExports } from '@/lib/loadExports';
 import { category } from '@/types/exports';
+import type { Addon } from '@/types/exports';
+
+function AddonGrid({ addons, label, delay = 0 }: { addons: Addon[]; label: string; delay?: number }) {
+  if (addons.length === 0) return null;
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {/* Section header */}
+      <div className="flex items-center gap-3 mb-4">
+        <h2 className="text-sm font-medium uppercase tracking-[0.15em] text-foreground/50 shrink-0">
+          {label}
+        </h2>
+        <div className="h-px flex-1 bg-foreground/8" />
+        <span className="text-xs tabular-nums text-foreground/30">{addons.length}</span>
+      </div>
+
+      {/* Uniform grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <AnimatePresence mode="popLayout">
+          {addons.map((addon, index) => (
+            <motion.div
+              key={addon.id}
+              layout
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{
+                duration: 0.35,
+                delay: delay + index * 0.04,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <Link to={`/a/${addon.id}`} className="block h-full">
+                <ExportCard export={addon.export} addonId={addon.id} />
+              </Link>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+    </motion.section>
+  );
+}
 
 export function HomePage() {
   const allAddons = loadAllExports();
@@ -42,45 +87,36 @@ export function HomePage() {
 
   // Filter addons based on search query (searches export name and tags)
   const filteredAddons = useMemo(() => {
-    if (!searchQuery.trim()) {
-      // No search query - show all addons
-      return allAddons;
-    }
+    if (!searchQuery.trim()) return allAddons;
 
     const query = searchQuery.toLowerCase();
-
-    // Filter addons where the export name OR any tag matches the search query
     return allAddons.filter((addon) => {
       const nameMatches = addon.export.name.toLowerCase().includes(query);
-      const tagMatches = addon.export.tags?.some((tag) => tag.toLowerCase().includes(query)) ?? false;
-
+      const tagMatches = addon.export.tags?.some((t) => t.toLowerCase().includes(query)) ?? false;
       return nameMatches || tagMatches;
     });
   }, [allAddons, searchQuery]);
 
-  // Sort filtered addons to show core addons before misc addons, then by newest lastUpdated within each category
-  const sortedAndFilteredAddons = useMemo(() => {
-    return [...filteredAddons].sort((a, b) => {
-      // Category is the first tag in the tags array
-      const aCategory = a.export.tags?.[0];
-      const bCategory = b.export.tags?.[0];
-
-      // Core addons come first
-      if (aCategory === category.core && bCategory !== category.core) {
-        return -1;
-      }
-      if (aCategory !== category.core && bCategory === category.core) {
-        return 1;
-      }
-
-      // If both are the same category (or both missing), sort by lastUpdated (newest first)
+  // Sort within categories by newest lastUpdated
+  const sortByDate = (list: Addon[]) =>
+    [...list].sort((a, b) => {
       const aDate = a.export.lastUpdated ? new Date(a.export.lastUpdated).getTime() : 0;
       const bDate = b.export.lastUpdated ? new Date(b.export.lastUpdated).getTime() : 0;
-      return bDate - aDate; // Newest first (descending order)
+      return bDate - aDate;
     });
-  }, [filteredAddons]);
 
-  const totalExports = sortedAndFilteredAddons.length;
+  // Split into core and misc groups
+  const coreAddons = useMemo(
+    () => sortByDate(filteredAddons.filter((a) => a.export.tags?.[0] === category.core)),
+    [filteredAddons],
+  );
+  const miscAddons = useMemo(
+    () => sortByDate(filteredAddons.filter((a) => a.export.tags?.[0] !== category.core)),
+    [filteredAddons],
+  );
+
+  const isSearching = searchQuery.trim().length > 0;
+  const totalExports = filteredAddons.length;
 
   return (
     <motion.div
@@ -91,58 +127,32 @@ export function HomePage() {
       transition={{ duration: 0.3 }}
     >
       <div className="relative z-20">
-        <Hero />
-
-        <div className="py-8 px-4">
-          <SearchBar value={searchQuery} onChange={setSearchQuery} />
-          
-          {/* Category filter chips */}
-          <div className="flex items-center justify-center gap-3 mt-4">
-            <Link to={`/?q=${category.core}`}>
-              <Tag>Core</Tag>
-            </Link>
-            <Link to={`/?q=${category.misc}`}>
-              <Tag>Misc</Tag>
-            </Link>
+        {/* Compact header: hero + search integrated */}
+        <div className="pt-8 pb-6 px-4">
+          <Hero />
+          <div className="mt-6">
+            <SearchBar value={searchQuery} onChange={setSearchQuery} />
           </div>
         </div>
 
-        <div className="container mx-auto w-full md:min-w-3xl px-4 sm:px-6 md:px-8 pb-12">
+        {/* Content area */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           {totalExports === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              {searchQuery ? <p>No exports found matching "{searchQuery}"</p> : <p>No exports available</p>}
+            <div className="text-center py-16 text-muted-foreground">
+              {searchQuery ? (
+                <p>No addons matching &ldquo;{searchQuery}&rdquo;</p>
+              ) : (
+                <p>No addons available</p>
+              )}
             </div>
+          ) : isSearching ? (
+            /* When searching, show flat results without grouping */
+            <AddonGrid addons={sortByDate(filteredAddons)} label="Results" />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
-              <AnimatePresence mode="popLayout">
-                {sortedAndFilteredAddons.map((addon, index) => {
-                  // Create bento-style asymmetric layout with varying column spans
-                  // Pattern: 2-col, 1-col, 1-col repeats (creates visual variety)
-                  // Only apply at lg breakpoint (3 columns) to prevent layout issues
-                  const spanPattern = index % 3;
-                  const colSpan = spanPattern === 0 ? 'lg:col-span-2' : 'lg:col-span-1';
-
-                  return (
-                    <motion.div
-                      key={addon.id}
-                      className={colSpan}
-                      layout
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{
-                        duration: 0.4,
-                        delay: index * 0.1,
-                        ease: [0.22, 1, 0.36, 1], // Custom easing for smooth motion
-                      }}
-                    >
-                      <Link to={`/a/${addon.id}`} className="block h-full">
-                        <ExportCard export={addon.export} addonId={addon.id} />
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
+            /* Default: grouped sections */
+            <div className="space-y-10">
+              <AddonGrid addons={coreAddons} label="Core" delay={0.1} />
+              <AddonGrid addons={miscAddons} label="Misc" delay={0.2} />
             </div>
           )}
         </div>
