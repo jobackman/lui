@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
+import { FeaturedAddon } from '@/components/featured-addon';
 import { loadAllExports } from '@/lib/loadExports';
 import { category } from '@/types/exports';
 import type { Addon } from '@/types/exports';
@@ -118,6 +119,22 @@ export function HomePage() {
   const isSearching = searchQuery.trim().length > 0;
   const totalExports = filteredAddons.length;
 
+  // Find the newest addon overall (by lastUpdated) for the featured spotlight
+  const newestAddon = useMemo(() => {
+    const sorted = sortByDate(allAddons);
+    return sorted[0] ?? null;
+  }, [allAddons]);
+
+  // Remove the featured addon from the grid sections (only when not searching)
+  const coreAddonsFiltered = useMemo(
+    () => (newestAddon ? coreAddons.filter((a) => a.id !== newestAddon.id) : coreAddons),
+    [coreAddons, newestAddon],
+  );
+  const miscAddonsFiltered = useMemo(
+    () => (newestAddon ? miscAddons.filter((a) => a.id !== newestAddon.id) : miscAddons),
+    [miscAddons, newestAddon],
+  );
+
   return (
     <motion.div
       className="min-h-screen relative"
@@ -149,10 +166,11 @@ export function HomePage() {
             /* When searching, show flat results without grouping */
             <AddonGrid addons={sortByDate(filteredAddons)} label="Results" />
           ) : (
-            /* Default: grouped sections */
+            /* Default: featured spotlight + grouped sections */
             <div className="space-y-10">
-              <AddonGrid addons={coreAddons} label="Core" delay={0.1} />
-              <AddonGrid addons={miscAddons} label="Misc" delay={0.2} />
+              {newestAddon && <FeaturedAddon addon={newestAddon} />}
+              <AddonGrid addons={coreAddonsFiltered} label="Core" delay={0.15} />
+              <AddonGrid addons={miscAddonsFiltered} label="Misc" delay={0.25} />
             </div>
           )}
         </div>
