@@ -25,7 +25,6 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={handleToggle}
-      className="bg-glass backdrop-blur-glass border-glass hover:bg-glass-strong hover:backdrop-blur-glass-strong transition-all"
       aria-label={`Current theme: ${currentTheme.label}. Click to cycle themes.`}
       title={`Theme: ${currentTheme.label}`}
     >

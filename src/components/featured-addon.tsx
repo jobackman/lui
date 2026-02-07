@@ -163,7 +163,6 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
                     size="icon"
                     asChild
                     title="Download addon"
-                    className="h-9 w-9 bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-sm text-white"
                   >
                     <a
                       href={exportData.downloadUrl}
@@ -184,7 +183,6 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
                     size="icon"
                     asChild
                     title="View on external site"
-                    className="h-9 w-9 bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-sm text-white"
                   >
                     <a
                       href={exportData.externalUrl}

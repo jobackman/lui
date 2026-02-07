@@ -1,6 +1,6 @@
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search, X } from "lucide-react";
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Search, X } from 'lucide-react';
 
 interface SearchBarProps {
   value: string;
@@ -8,7 +8,7 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export function SearchBar({ value, onChange, placeholder = "Search exports..." }: SearchBarProps) {
+export function SearchBar({ value, onChange, placeholder = 'Search exports...' }: SearchBarProps) {
   // Detect platform for keyboard shortcut display
   const isMac = typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
   const shortcutKey = isMac ? '⌘' : 'Ctrl';
@@ -30,7 +30,7 @@ export function SearchBar({ value, onChange, placeholder = "Search exports..." }
             variant="ghost"
             size="sm"
             onClick={() => onChange('')}
-            className="absolute right-4 sm:right-24 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-foreground/10 transition-colors"
+            className="absolute right-4 sm:right-24 top-1/2 -translate-y-1/2 size-8 p-0"
             aria-label="Clear search"
           >
             <X className="h-4 w-4 text-foreground/80" />

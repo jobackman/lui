@@ -85,6 +85,17 @@
   --glass-blur-subtle: 12px;
   --glass-opacity-subtle: 0.3;
   --glass-bg-subtle: oklch(1 0 0 / 30%);
+
+  /* Glass button tokens */
+  --glass-btn-shine: inset 0 1px 0 0 oklch(1 0 0 / 12%);
+  --glass-btn-shadow: 0 1px 3px oklch(0 0 0 / 8%), 0 1px 2px oklch(0 0 0 / 6%);
+  --glass-btn-shadow-hover: 0 4px 12px oklch(0 0 0 / 12%), 0 1px 3px oklch(0 0 0 / 8%);
+  --glass-btn-shadow-active: inset 0 1px 4px oklch(0 0 0 / 12%);
+  --glass-btn-primary-bg: oklch(1 0 0 / 18%);
+  --glass-btn-primary-hover: oklch(1 0 0 / 26%);
+  --glass-btn-secondary-bg: oklch(1 0 0 / 8%);
+  --glass-btn-secondary-hover: oklch(1 0 0 / 14%);
+  --glass-btn-ghost-hover: oklch(1 0 0 / 10%);
 }
 
 .dark {
@@ -130,6 +141,17 @@
   --glass-blur-subtle: 12px;
   --glass-opacity-subtle: 0.3;
   --glass-bg-subtle: oklch(0.205 0 0 / 30%);
+
+  /* Glass button tokens */
+  --glass-btn-shine: inset 0 1px 0 0 oklch(1 0 0 / 8%);
+  --glass-btn-shadow: 0 1px 3px oklch(0 0 0 / 20%), 0 1px 2px oklch(0 0 0 / 15%);
+  --glass-btn-shadow-hover: 0 4px 16px oklch(0 0 0 / 25%), 0 1px 4px oklch(0 0 0 / 15%);
+  --glass-btn-shadow-active: inset 0 1px 4px oklch(0 0 0 / 25%);
+  --glass-btn-primary-bg: oklch(1 0 0 / 14%);
+  --glass-btn-primary-hover: oklch(1 0 0 / 22%);
+  --glass-btn-secondary-bg: oklch(1 0 0 / 6%);
+  --glass-btn-secondary-hover: oklch(1 0 0 / 12%);
+  --glass-btn-ghost-hover: oklch(1 0 0 / 8%);
 }
 
 @layer base {
@@ -243,6 +265,21 @@
   /* Glass transition utility */
   .transition-glass {
     transition: background 0.2s ease-in-out, border 0.2s ease-in-out, backdrop-filter 0.2s ease-in-out;
+  }
+
+  /* Glass button base - inner shine + shadow for depth */
+  .glass-btn {
+    box-shadow: var(--glass-btn-shine), var(--glass-btn-shadow);
+    transition: background 0.15s ease, box-shadow 0.2s ease, border-color 0.15s ease, transform 0.1s ease, backdrop-filter 0.2s ease;
+  }
+
+  .glass-btn:hover {
+    box-shadow: var(--glass-btn-shine), var(--glass-btn-shadow-hover);
+  }
+
+  .glass-btn:active {
+    box-shadow: var(--glass-btn-shadow-active);
+    transform: scale(0.97);
   }
 }
 
