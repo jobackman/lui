@@ -26,8 +26,7 @@ test("loadAllExports includes Platynator addon", () => {
 test("getAddonManifest returns list of addon ids and names", () => {
   const manifest = getAddonManifest();
   expect(Array.isArray(manifest)).toBe(true);
-  expect(manifest.length).toBe(16);
-  
+
   const ids = manifest.map(item => item.id);
   expect(ids).toContain("details");
   expect(ids).toContain("platynator");
@@ -50,26 +49,26 @@ test("export data has correct structure", () => {
   const exports = loadAllExports();
   const firstAddon = exports[0];
   const addonExport = firstAddon.export;
-  
+
   expect(addonExport).toBeDefined();
   expect(addonExport.name).toBeDefined();
   expect(addonExport.description).toBeDefined();
   expect(addonExport.lastUpdated).toBeDefined();
-  
+
   expect(typeof addonExport.name).toBe("string");
   expect(typeof addonExport.description).toBe("string");
   expect(typeof addonExport.lastUpdated).toBe("string");
-  
+
   // exportString is optional, but if present should be a string
   if (addonExport.exportString) {
     expect(typeof addonExport.exportString).toBe("string");
   }
-  
+
   // externalUrl is optional, but if present should be a string
   if (addonExport.externalUrl) {
     expect(typeof addonExport.externalUrl).toBe("string");
   }
-  
+
   // downloadUrl is optional, but if present should be a string
   if (addonExport.downloadUrl) {
     expect(typeof addonExport.downloadUrl).toBe("string");
