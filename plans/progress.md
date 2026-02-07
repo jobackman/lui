@@ -95,3 +95,36 @@ Work continues on the remaining features in prd.json.
 PRD now empty - all tasks completed and archived.
 - Added secondary sort by lastUpdated timestamp in home-page.tsx. Core addons display first (primary sort), then within each category newest timestamps appear first. Missing lastUpdated treated as 0 (oldest). Build+tests pass (32). Frontend verified w/ agent-browser.
 
+---
+
+## 2026-02-07 - Archive Completed and Cancelled Tasks
+
+**Archived:** 19 tasks to `/plans/archive/archived-2026-02-07.json`
+
+**Status:**
+- Completed: 17 tasks
+- Cancelled: 2 tasks
+
+**Archived Items:**
+1. UI (cancelled): Smooth zoom animations on image hover
+2. UI: Emphasize Copy button as primary action
+3. Infrastructure: Media items support (images + videos)
+4. UI: Video player component with autoplay/loop/mute
+5. Feature: Video integration in carousels
+6. Infrastructure: Fix timestamp script for ANY field changes
+7. Infrastructure: TypeScript constants for tags/categories
+8. Infrastructure: Simplify tag system (91→17 tags)
+9. UI: Fix video loading indicator in modal
+10. Infrastructure (cancelled): Merge category into tags array
+11. Feature: Sort grid by category (core first)
+12. Feature: Pause carousel during video playback
+13. Feature: Category filter chips (Core/Misc)
+14. UI: Clear button in search field
+15. Feature: URL sync for search params
+16. Feature: Clickable tag chips navigate to filtered home
+17. UI: Restyle category chips to Tag components
+18. Infrastructure: Husky pre-commit hook for timestamps
+19. Feature: Sort by lastUpdated within categories
+
+PRD now empty - all tasks completed and archived.
+

@@ -1,0 +1,340 @@
+[
+  {
+    "category": "UI",
+    "description": "Add smooth zoom animations to images on hover in the gallery (export cards and detail page)",
+    "details": "Add transform: scale() CSS transitions to images in export-card.tsx and addon-detail-page.tsx. Use Tailwind's hover:scale-105 or hover:scale-110 for subtle zoom effect. Duration: ~300-500ms with ease-out timing to match existing transitions. Respect prefers-reduced-motion for accessibility. Ensure zoom doesn't interfere with existing carousel auto-pause functionality. Apply overflow-hidden to parent containers to prevent zoomed images from breaking layout.",
+    "steps": [
+      "Hovering over images in export cards shows smooth zoom animation",
+      "Hovering over images in detail page carousel shows smooth zoom animation",
+      "Zoom animation stops when prefers-reduced-motion is enabled",
+      "Carousel auto-pause functionality still works correctly",
+      "No layout shift or overflow issues when images zoom",
+      "Zoom animation completes smoothly when quickly moving mouse on/off images"
+    ],
+    "passes": "cancelled",
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 0
+  },
+  {
+    "category": "UI",
+    "description": "Emphasize Copy button as primary action on addon detail page",
+    "details": "Reorder action buttons to place Copy button first (left-most). Update button styling hierarchy: Copy button uses prominent default variant (potentially size='lg'), Download stays ghost variant, 'Get from source' changes to outline/secondary variant. This establishes clear visual hierarchy with Copy as primary action. May need to check/update CopyButton component to accept variant and size props.",
+    "steps": [
+      "Copy button appears first (left-most) in button group",
+      "Copy button is visually most prominent (default variant styling)",
+      "Download button remains subtle (ghost variant)",
+      "Get from source button is less prominent than Copy (outline/secondary variant)",
+      "Layout works responsively on mobile (flex-wrap maintains order)",
+      "Button hierarchy is clear at a glance"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 1
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Extend AddonExport type to support media items (images and videos) with metadata",
+    "details": "Replace images?: string[] with media?: MediaItem[] where MediaItem = { type: 'image' | 'video', url: string }. Keep images as deprecated for backward compatibility. Type system ensures videos are properly identified and rendered differently from images.",
+    "steps": [
+      "Update src/types/exports.ts with new MediaItem type and media field",
+      "Mark images as deprecated with JSDoc comment",
+      "Ensure backward compatibility by handling both images and media arrays"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 2
+  },
+  {
+    "category": "UI",
+    "description": "Create video player component with autoplay, loop, mute, and no controls",
+    "details": "Build <MediaCarouselItem> or similar component that renders <video> tags with autoplay, loop, muted, playsInline attributes and no controls. Falls back to <img> for image items. Handles prefers-reduced-motion by pausing autoplay/loop. Lazy loads videos similar to images.",
+    "steps": [
+      "Create video rendering component with required attributes (autoplay, loop, muted, playsInline)",
+      "Remove video player UI controls (controlsList=\"nodownload nofullscreen noremoteplayback\")",
+      "Respect prefers-reduced-motion accessibility preference",
+      "Implement lazy loading for video elements",
+      "Test video playback in carousel"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 3
+  },
+  {
+    "category": "Feature",
+    "description": "Integrate videos in export card and detail page carousels",
+    "details": "Modify export-card.tsx and addon-detail-page.tsx to iterate over media array (with images fallback). Render videos with autoplay carousel behavior. Modal view supports video playback. Videos pause when not visible/active in carousel. Ensure smooth transitions between image and video slides.",
+    "steps": [
+      "Update export-card.tsx to handle media items (images + videos)",
+      "Update addon-detail-page.tsx carousel to support video playback",
+      "Ensure videos pause when carousel advances to different slide",
+      "Test modal functionality with video media items",
+      "Verify smooth transitions between mixed image/video content",
+      "Confirm carousel auto-pause still works correctly"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 4
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Fix timestamp update scripts to properly update lastUpdated when ANY export data changes, not just exportString",
+    "details": "Current script only updates timestamps when exportString field changes, but many exports don't have exportString (only name, description, downloadUrl, images, tags, etc.). Script needs to: 1) Detect ANY content change - Compare entire export object (excluding lastUpdated itself) between current file and git HEAD. 2) Support manual force update - --all flag should force update all timestamps to NOW regardless of changes. 3) Support selective update - --force file1.ts file2.ts to manually update specific files. 4) Better change detection - Parse TS/JS exports properly instead of regex, or compare git diff for any change outside lastUpdated field. 5) Handle new files - Files not in git HEAD should get current timestamp. 6) Preserve behavior - Still integrate with git pre-commit hook workflow.",
+    "steps": [
+      "Script detects changes to ANY field (description, images, tags, downloadUrl, setupInstructions, exportString, etc.)",
+      "bun run update-timestamps updates only modified staged files with actual content changes",
+      "bun run update-timestamps --all force updates ALL files to current timestamp regardless of changes",
+      "bun run update-timestamps --force file1.ts file2.ts updates specific files",
+      "New export files (not in git) get current timestamp",
+      "Changes to only lastUpdated field don't trigger infinite update loops",
+      "Script works correctly in git pre-commit hook context",
+      "Test with files that have no exportString field (e.g., baganator.ts)"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 5
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Convert export tags and addon categories to TypeScript constants for better type safety and consistency",
+    "details": "Replace string-based tags with typed constants exported from src/types/exports.ts. Create two 'as const' objects: (1) 'tag' object containing all tag constants (e.g., tag.ui, tag.nameplates, tag.pve, tag.mplus) and (2) 'category' object for addon categories (category.core, category.misc). Update AddonCategory interface to include optional category field. Benefits: autocomplete, typo prevention, refactoring safety, centralized tag vocabulary, clean import syntax (import { tag, category }), enables category-based filtering/grouping in UI.",
+    "steps": [
+      "Create 'tag' const object in src/types/exports.ts with all existing tags as properties (ui, nameplates, threat, pve, dmg, mplus, mythic, etc.) using 'as const' assertion",
+      "Create 'category' const object with core and misc properties using 'as const' assertion",
+      "Export AddonCategoryType = typeof category[keyof typeof category]",
+      "Export TagType = typeof tag[keyof typeof tag]",
+      "Add optional category?: AddonCategoryType field to AddonCategory interface",
+      "Update AddonExport.tags type from string[] to TagType[]",
+      "Migrate all data/exports/*.ts files to import { tag, category } and use tag.* constants instead of string literals",
+      "Assign category field to each addon (determine core vs misc based on essentialness)",
+      "Update any UI components that filter/display tags to use the new constants",
+      "Verify TypeScript compilation passes with strict type checking",
+      "Update AGENTS.md documentation to reflect new constant usage pattern"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 6
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Simplify tag system from 91 tags to ~18 core tags and make category field required for all addons",
+    "details": "Current tag system has 91 tags with many redundancies (dmg/damage, cd/cds/cdm, mythic/mythic+/m+, 8 resource types, weakaura - deprecated, etc). Simplify to ~18 functional tags: Combat (combat, damage, healing, meter), UI/Visual (ui, hud, frames, nameplates, healthbar), Resources (resource, cooldowns), Content (pve, raid, dungeon, mythic+), Utility (map, quest, misc). Keep raid and dungeon/mythic+ as separate tags for better filtering. Make category field required (not optional) in AddonCategory interface - all addons must be core or misc. Update all export files to use simplified tags.",
+    "steps": [
+      "Define simplified tag constants in src/types/exports.ts (~18 tags vs current 91)",
+      "Create tag migration mapping (old tags → new tags) for reference",
+      "Change category field from optional to required in AddonCategory interface",
+      "Update all data/exports/*.ts files to use new simplified tags",
+      "Ensure every addon has category field set (core or misc)",
+      "Remove old unused tag constants from exports.ts",
+      "Update AGENTS.md documentation with new simplified tag list",
+      "Verify TypeScript compilation passes",
+      "Test UI components that display/filter tags work correctly"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 7
+  },
+  {
+    "category": "UI",
+    "description": "Fix gallery loading indicator incorrectly showing 'Loading...' for video media items",
+    "details": "The addon detail page modal shows a persistent 'Loading...' indicator when displaying videos because isImageLoading state is only cleared by the onLoad callback, which only fires for <img> elements. Videos need their own loading detection via loadeddata or canplay events. Solution: 1) Add onVideoReady callback prop to MediaCarouselItem component to fire when video is ready to play, 2) Update MediaCarouselItem to call onVideoReady when video fires 'loadeddata' event, 3) Update addon-detail-page.tsx to use onVideoReady callback alongside onLoad, clearing loading state for both image and video types, 4) Ensure loading state resets correctly when navigating between mixed image/video content in carousel.",
+    "steps": [
+      "Add optional onVideoReady?: () => void prop to MediaCarouselItem component",
+      "Attach event listener to video element for 'loadeddata' or 'canplay' event that calls onVideoReady",
+      "Update addon-detail-page.tsx modal MediaCarouselItem to pass onVideoReady={() => setIsImageLoading(false)}",
+      "Test that 'Loading...' indicator disappears for video items in modal",
+      "Test that 'Loading...' indicator still works correctly for image items",
+      "Test navigation between mixed image/video content shows/hides loading correctly",
+      "Verify no console errors or duplicate callback issues"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 8
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Merge category field into tags array - categories become regular tags instead of separate field",
+    "details": "Current design has separate category field (core/misc) on AddonCategory interface alongside tags array. Simplify by: 1) Move category.core and category.misc into tag object as tag.core and tag.misc, 2) Remove category field from AddonCategory interface, 3) Update all data/exports/*.ts files to include category tag in tags array (e.g., tags: [tag.core, tag.ui, tag.nameplates]), 4) Remove separate category const object and AddonCategoryType type, 5) Update any UI filtering/grouping logic that uses category field to filter on tags instead. Benefits: Single consistent filtering mechanism, simpler data model, no special-casing of categories vs other classification dimensions.",
+    "steps": [
+      "Move category.core and category.misc constants into tag object (tag.core, tag.misc)",
+      "Remove separate category const object from exports.ts",
+      "Remove AddonCategoryType type definition",
+      "Remove category field from AddonCategory interface",
+      "Update TagType to include core/misc values",
+      "Update all data/exports/*.ts files to include category tag in tags array",
+      "Update UI components that filter/group by category to use tags.includes(tag.core) instead of category field",
+      "Ensure core/misc filtering still works correctly in UI",
+      "Verify TypeScript compilation passes",
+      "Update AGENTS.md to document that core/misc are now regular tags in the tags array"
+    ],
+    "passes": "cancelled",
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 9
+  },
+  {
+    "category": "Feature",
+    "description": "Sort front page bento grid to display category.core addons before category.misc addons",
+    "details": "Update home-page.tsx to sort the filtered addons so that addons with category.core as their first tag appear before addons with category.misc. Since categories are now part of the tags array (first element is CategoryTag), sorting logic should: 1) Check if addon.export.tags[0] === category.core, 2) Group core addons first, misc addons second, 3) Preserve existing search filtering behavior, 4) Maintain smooth animations and layout transitions during filtering. Implementation: Add useMemo to create sortedAndFilteredAddons that sorts filteredAddons by category tag, with core before misc. Use this sorted list for rendering the grid.",
+    "steps": [
+      "Create sortedAndFilteredAddons useMemo in home-page.tsx that sorts filteredAddons by category",
+      "Addons with tags[0] === category.core appear before tags[0] === category.misc",
+      "Search filtering continues to work correctly with sorted results",
+      "Bento grid layout renders smoothly without layout shifts",
+      "Animation delays/transitions work correctly with new sort order",
+      "Handle edge cases: addons without tags array, empty tags array"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 10
+  },
+  {
+    "category": "Feature",
+    "description": "Pause carousel auto-switching while video is playing in export cards",
+    "details": "Currently export-card.tsx auto-cycles through media items every 5 seconds when not hovered. When a carousel item is a video, the auto-switching should pause until the video completes at least one full playback loop. Implementation approach: 1) Add onVideoPlaying and onVideoEnded callbacks to MediaCarouselItem component that fire when video starts playing and completes a loop, 2) Track video playing state in export-card.tsx using useState, 3) Add videoPlaying state check to auto-cycle useEffect condition (line 26: if (!hasMultipleImages || isHovered || videoPlaying) return;), 4) Set videoPlaying=true when video starts, videoPlaying=false when video loop completes (ended event), 5) Ensure auto-cycle resumes after video completes one loop, 6) Handle edge cases: video paused by user preference (prefers-reduced-motion), multiple videos in sequence, rapid carousel navigation.",
+    "steps": [
+      "Add onVideoPlaying?: () => void and onVideoEnded?: () => void callback props to MediaCarouselItem component",
+      "Add event listeners in MediaCarouselItem for 'playing' and 'ended' events that trigger callbacks",
+      "Add videoPlaying state to export-card.tsx (const [videoPlaying, setVideoPlaying] = useState(false))",
+      "Pass onVideoPlaying={() => setVideoPlaying(true)} and onVideoEnded={() => setVideoPlaying(false)} to MediaCarouselItem",
+      "Update auto-cycle useEffect condition to include videoPlaying: if (!hasMultipleImages || isHovered || videoPlaying) return;",
+      "Test that auto-cycling pauses when video starts playing",
+      "Test that auto-cycling resumes after video completes one loop",
+      "Test edge case: prefers-reduced-motion still prevents autoplay",
+      "Test edge case: manual navigation (next/prev) during video playback works correctly",
+      "Test with mixed image/video carousel content",
+      "Verify video in active slide pauses carousel, inactive slides don't affect timing"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 11
+  },
+  {
+    "category": "Feature",
+    "description": "Add filter chips beneath search bar to quickly filter by category (Core/Misc)",
+    "details": "Position two clickable filter chips (Core, Misc) between SearchBar and bento grid on home-page.tsx. Clicking chip calls setSearchQuery(category.core) or setSearchQuery(category.misc). Existing tag-based search filtering handles rest. Use shadcn Badge or Button component with variant=\"outline\" for chip styling. Chips should be centered below search bar with gap between them. Visual feedback on click (existing search highlights work automatically). No \"active\" state needed since search field shows current filter.",
+    "steps": [
+      "Create filter chip container div between SearchBar (line 50) and grid container (line 53)",
+      "Render two clickable badges/buttons labeled \"Core\" and \"Misc\"",
+      "onClick handlers call setSearchQuery(category.core) or setSearchQuery(category.misc)",
+      "Center chips horizontally with flex layout, gap-2 or gap-3 between chips",
+      "Use outline variant for subtle, non-intrusive appearance",
+      "Test clicking chips populates search field and filters grid correctly",
+      "Verify existing tag search logic works with category tags (should already work)"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 12
+  },
+  {
+    "category": "UI",
+    "description": "Add clear button inside search field to reset search query",
+    "details": "Update SearchBar component to show X icon button (using lucide-react X icon) positioned absolute right side (before keyboard shortcut badges). Only render when value.length > 0. Clicking X calls onChange('') to clear search. Button should be properly accessible (aria-label). Style consistent with search icon on left. Use ghost/minimal button variant to keep clean appearance. Ensure doesn't overlap keyboard shortcuts on larger screens.",
+    "steps": [
+      "Add conditional X icon button in search-bar.tsx (after Input, before keyboard shortcut div)",
+      "Position absolute right-[XX]px considering keyboard shortcut width (hidden on mobile where shortcuts hide)",
+      "Only render when value.length > 0 (conditional: {value && ...})",
+      "onClick calls onChange('') to clear",
+      "Add aria-label=\"Clear search\" for accessibility",
+      "Use ghost Button variant or plain button with hover:bg-muted transition",
+      "Adjust pr-20 padding on Input if needed to prevent text overlap",
+      "Test clear button appears/disappears correctly",
+      "Test clicking clear empties search field and shows all addons",
+      "Verify mobile responsive behavior (no overlap issues)"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 13
+  },
+  {
+    "category": "Feature",
+    "description": "Sync search field with URL search parameter for shareable filtered views",
+    "details": "Update home-page.tsx to read/write search query from/to URL search params. When user types in search field, update URL to ?q=<query>. On page load, populate search field from URL param. Allows bookmarking/sharing filtered views (e.g., /?q=core). Implementation: Use useSearchParams from react-router-dom, read ?q param on mount to initialize searchQuery state, update URL when setSearchQuery called. Preserve browser back/forward navigation through search history.",
+    "steps": [
+      "Import useSearchParams hook from react-router-dom in home-page.tsx",
+      "Read ?q search param on component mount and initialize searchQuery state from it",
+      "Update setSearchQuery to also update URL search param using setSearchParams",
+      "Test that typing in search field updates URL (e.g., typing 'plater' → /?q=plater)",
+      "Test that loading page with ?q param populates search field and filters results",
+      "Test browser back/forward buttons navigate through search history correctly",
+      "Test that category filter chips (Core/Misc) update URL param correctly",
+      "Test that sharing URL with ?q param loads filtered view for recipient"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 14
+  },
+  {
+    "category": "Feature",
+    "description": "Make tag chips on detail page clickable links that navigate to filtered home page",
+    "details": "Update Tag component in addon-detail-page.tsx (lines 147-152) from plain badges to Link components that navigate to /?q=<tag>. Clicking tag navigates home with that tag as search filter. Maintains existing visual styling but adds interactive hover state. Since requirement #1 syncs search with URL params, clicking tag will auto-filter home page grid. Update Tag component cursor to pointer and add hover:bg-accent transition.",
+    "steps": [
+      "Import Link from react-router-dom in addon-detail-page.tsx",
+      "Wrap Tag components (line 150) with Link to={`/?q=${tag}`}",
+      "Update Tag component to accept asChild prop for Link integration (if using shadcn pattern)",
+      "Add cursor-pointer and hover state styling to Tag component",
+      "Test clicking tag on detail page navigates to home with search param set",
+      "Test that home page correctly filters by tag when arriving from tag click",
+      "Test visual feedback on tag hover (clear it's clickable)",
+      "Verify tag styling remains consistent with existing design"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 15
+  },
+  {
+    "category": "UI",
+    "description": "Restyle Core/Misc category filter chips to match tag chip appearance and behavior",
+    "details": "Update category filter chips on home-page.tsx (lines 75-92) from Button components to Tag components (same as used on detail page). Replace onClick with Link wrapper to /?q=core and /?q=misc for consistency with tag chip behavior from requirement #2. Maintains visual consistency across tag and category filtering. Tags are smaller, more subtle than current buttons. Update layout/spacing if needed to accommodate smaller chip size.",
+    "steps": [
+      "Import Tag component from @/components/ui/tag in home-page.tsx",
+      "Replace Button components (lines 76-91) with Tag components wrapped in Link",
+      "Set Link to={`/?q=${category.core}`} and to={`/?q=${category.misc}`}",
+      "Remove onClick handlers (navigation handled by Link)",
+      "Adjust container spacing/padding if needed for smaller tag size",
+      "Test clicking Core/Misc tags navigates with URL param (same behavior as before)",
+      "Verify visual consistency with tags shown on detail page",
+      "Test responsive layout on mobile with new tag-style chips"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 16
+  },
+  {
+    "category": "Infrastructure",
+    "description": "Add Husky pre-commit hook to automatically update timestamps on modified export files and auto-stage changes",
+    "details": "Install and configure Husky to run 'bun run update-timestamps' before each commit, automatically staging any timestamp updates to include them in the current commit. This ensures export files that are staged with content changes automatically get their lastUpdated field updated without manual intervention. Hook should: 1) Run only on staged data/exports/*.ts files, 2) Auto-stage updated timestamp changes using 'git add' so they're included in current commit, 3) Not block commits if no exports changed, 4) Work with existing update-timestamps script (which already detects actual content changes vs timestamp-only changes to prevent infinite loops), 5) Follow Bun ecosystem best practices (use bunx husky instead of npx). Setup process: Install husky as dev dependency, initialize with bunx husky init, create pre-commit hook that runs update-timestamps script then auto-stages modified export files, test with dummy export modification.",
+    "steps": [
+      "Install husky as devDependency: bun add -D husky",
+      "Initialize husky: bunx husky init (creates .husky/ directory and installs git hooks)",
+      "Create .husky/pre-commit file with:\n#!/usr/bin/env sh\n. \"$(dirname -- \"$0\")/_/husky.sh\"\nbun run update-timestamps\ngit add data/exports/*.ts",
+      "Make pre-commit hook executable: chmod +x .husky/pre-commit",
+      "Add prepare script to package.json: \"prepare\": \"husky\" (runs on bun install for other developers)",
+      "Test hook: Modify an export file (e.g., data/exports/baganator.ts description), stage it, commit and verify lastUpdated auto-updates AND is included in commit",
+      "Test hook skips when no export files modified: Modify non-export file, commit succeeds without timestamp updates",
+      "Test hook works with new export files (files not yet in git history)",
+      "Verify hook doesn't cause infinite loops (script already handles this by ignoring timestamp-only changes)",
+      "Verify git add command correctly stages only modified timestamps (doesn't unstage other changes)",
+      "Update AGENTS.md documentation to mention husky pre-commit hook behavior"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 17
+  },
+  {
+    "category": "Feature",
+    "description": "Sort bento grid by lastUpdated timestamp to show newest updates first within each category",
+    "details": "Enhance existing sort logic in home-page.tsx (lines 62-79) to add secondary sort by lastUpdated timestamp after primary category sort. Addons should display: 1) Core category first, then misc category (existing behavior), 2) Within each category, newest lastUpdated timestamps first (new behavior). Implementation: Extend sort comparator to compare new Date(b.export.lastUpdated) - new Date(a.export.lastUpdated) when both addons have same category. Ensures recently updated addons appear at top of their respective category sections. Handle edge cases: missing lastUpdated field should sort to bottom, invalid dates should not crash.",
+    "steps": [
+      "Update sortedAndFilteredAddons useMemo comparator to add secondary sort by lastUpdated timestamp",
+      "When categories are equal, sort by new Date(b.export.lastUpdated) - new Date(a.export.lastUpdated) (newest first)",
+      "Handle missing lastUpdated field gracefully (treat as oldest/bottom)",
+      "Test that core addons still appear before misc addons (primary sort maintained)",
+      "Test that within core section, newest updates appear first",
+      "Test that within misc section, newest updates appear first",
+      "Verify search filtering preserves sort order",
+      "Verify bento grid layout and animations work smoothly with new sort order"
+    ],
+    "passes": true,
+    "archivedAt": "2026-02-07T00:00:00.000Z",
+    "originalIndex": 18
+  }
+]
