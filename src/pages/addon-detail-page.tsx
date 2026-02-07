@@ -75,9 +75,9 @@ export function AddonDetailPage() {
 
   // Update document title
   useEffect(() => {
-    document.title = `${addon.export.name} - LUI`;
+    document.title = `${addon.export.name} - LucyUI`;
     return () => {
-      document.title = 'LUI';
+      document.title = 'LucyUI';
     };
   }, [addon.export.name]);
 
