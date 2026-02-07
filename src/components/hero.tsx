@@ -1,9 +1,22 @@
 export function Hero() {
   return (
-    <div className="text-center py-12 px-4 border-b-0 relative">
-      <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-purple-500 via-pink-500 via-orange-500 via-yellow-500 to-green-500 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient_4s_ease-in-out_infinite]">
-        LucyUI
+    <div className="relative text-center py-12 px-4 border-b-0">
+      <h1 className="relative inline-flex items-center justify-center overflow-visible text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.35] pb-3">
+        <span className="relative z-10 px-1 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(210,238,255,0.5),rgba(255,255,255,0.9))] bg-clip-text text-transparent drop-shadow-[0_8px_24px_rgba(15,18,30,0.4)]">
+          LucyUI
+        </span>
+        <span
+          className="absolute z-0 translate-y-[5px] select-none text-transparent stroke-[1.15px] stroke-white/65 [text-shadow:0_0_10px_rgba(200,235,255,0.55)]"
+          aria-hidden="true"
+        >
+          LucyUI
+        </span>
       </h1>
+      <div className="mt-4 flex items-center justify-center gap-2 text-xs uppercase tracking-[0.45em] text-foreground/60">
+        <span className="h-[1px] w-10 bg-foreground/20" aria-hidden="true" />
+        Ready for Midnight
+        <span className="h-[1px] w-10 bg-foreground/20" aria-hidden="true" />
+      </div>
     </div>
   );
 }
