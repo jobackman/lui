@@ -96,7 +96,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       <div className="absolute top-3 right-3 z-10 flex gap-1.5 items-center opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
         {exportData.exportString && <CopyButton text={exportData.exportString} />}
         {exportData.downloadUrl && (
-          <Button variant="ghost" size="icon" asChild title="Download addon">
+          <Button variant="default" size="icon" asChild title="Download addon">
             <a
               href={exportData.downloadUrl}
               target="_blank"
@@ -109,7 +109,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
           </Button>
         )}
         {exportData.externalUrl && (
-          <Button variant="ghost" size="icon" asChild title="View on external site">
+          <Button variant="default" size="icon" asChild title="View on external site">
             <a
               href={exportData.externalUrl}
               target="_blank"
