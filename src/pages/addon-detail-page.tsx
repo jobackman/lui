@@ -137,7 +137,7 @@ export function AddonDetailPage() {
           >
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div className="min-w-0 flex-1">
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1.5">
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1.5">
                   {addon.export.name}
                 </h1>
                 <p className="text-foreground/60 text-sm sm:text-base leading-relaxed">
