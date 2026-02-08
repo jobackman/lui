@@ -89,15 +89,14 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       {/* Content at bottom */}
       <div className="absolute bottom-0 left-0 right-0 z-10 p-4">
         <CardTitle className="text-white drop-shadow-lg text-base leading-snug">{exportData.name}</CardTitle>
-        <p className="text-white/50 text-xs mt-1 line-clamp-1">
-          {exportData.description}
-        </p>
+        <p className="text-white/50 text-xs mt-1 line-clamp-1">{exportData.description}</p>
       </div>
 
       {/* Action buttons - top right */}
-      <div className="absolute top-3 right-3 z-10 flex gap-1.5 opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
+      <div className="absolute top-3 right-3 z-10 flex gap-1.5 items-center opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
+        {exportData.exportString && <CopyButton text={exportData.exportString} />}
         {exportData.downloadUrl && (
-          <Button variant="default" size="icon" asChild title="Download addon">
+          <Button variant="ghost" size="icon" asChild title="Download addon">
             <a
               href={exportData.downloadUrl}
               target="_blank"
@@ -109,10 +108,8 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
             </a>
           </Button>
         )}
-        {exportData.exportString ? (
-          <CopyButton text={exportData.exportString} />
-        ) : exportData.externalUrl ? (
-          <Button variant="default" size="icon" asChild title="View on external site">
+        {exportData.externalUrl && (
+          <Button variant="ghost" size="icon" asChild title="View on external site">
             <a
               href={exportData.externalUrl}
               target="_blank"
@@ -123,7 +120,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
               <ExternalLink className="h-4 w-4" />
             </a>
           </Button>
-        ) : null}
+        )}
       </div>
 
       {/* Image indicator dots - positioned above bottom text */}

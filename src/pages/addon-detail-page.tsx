@@ -137,20 +137,14 @@ export function AddonDetailPage() {
           >
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div className="min-w-0 flex-1">
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1.5">
-                  {addon.export.name}
-                </h1>
-                <p className="text-foreground/60 text-sm sm:text-base leading-relaxed">
-                  {addon.export.description}
-                </p>
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1.5">{addon.export.name}</h1>
+                <p className="text-foreground/60 text-sm sm:text-base leading-relaxed">{addon.export.description}</p>
               </div>
             </div>
 
             {/* Meta row: timestamp + tags */}
             <div className="flex items-center gap-3 mt-3 flex-wrap">
-              <span className="text-xs text-foreground/30">
-                Updated {formatRelativeTime(addon.export.lastUpdated)}
-              </span>
+              <span className="text-xs text-foreground/30">Updated {formatRelativeTime(addon.export.lastUpdated)}</span>
               {addon.export.tags && addon.export.tags.length > 0 && (
                 <>
                   <span className="w-px h-3 bg-foreground/10" aria-hidden="true" />
@@ -189,7 +183,7 @@ export function AddonDetailPage() {
             )}
 
             {addon.export.externalUrl && (
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="ghost" size="lg" asChild>
                 <a href={addon.export.externalUrl} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Get from source
@@ -229,7 +223,7 @@ export function AddonDetailPage() {
               {hasMultipleImages && (
                 <>
                   <Button
-                    variant="default"
+                    variant="ghost"
                     size="icon"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -242,7 +236,7 @@ export function AddonDetailPage() {
                   </Button>
 
                   <Button
-                    variant="default"
+                    variant="ghost"
                     size="icon"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -330,7 +324,7 @@ export function AddonDetailPage() {
             {hasMultipleImages && (
               <>
                 <Button
-                  variant="default"
+                  variant="ghost"
                   size="icon"
                   onClick={handleModalPrevImage}
                   className="absolute left-2 top-1/2 -translate-y-1/2 z-10"
@@ -340,7 +334,7 @@ export function AddonDetailPage() {
                 </Button>
 
                 <Button
-                  variant="default"
+                  variant="ghost"
                   size="icon"
                   onClick={handleModalNextImage}
                   className="absolute right-2 top-1/2 -translate-y-1/2 z-10"

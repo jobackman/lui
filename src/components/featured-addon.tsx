@@ -156,14 +156,10 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
               className="mt-4 sm:mt-5 flex items-center gap-3 flex-wrap"
             >
               {/* Quick action buttons */}
-              <div className="flex gap-1.5" onClick={(e) => e.preventDefault()}>
+              <div className="flex items-center gap-1.5" onClick={(e) => e.preventDefault()}>
+                {exportData.exportString && <CopyButton text={exportData.exportString} />}
                 {exportData.downloadUrl && (
-                  <Button
-                    variant="default"
-                    size="icon"
-                    asChild
-                    title="Download addon"
-                  >
+                  <Button variant="ghost" size="icon" asChild title="Download addon">
                     <a
                       href={exportData.downloadUrl}
                       target="_blank"
@@ -175,15 +171,8 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
                     </a>
                   </Button>
                 )}
-                {exportData.exportString ? (
-                  <CopyButton text={exportData.exportString} />
-                ) : exportData.externalUrl ? (
-                  <Button
-                    variant="default"
-                    size="icon"
-                    asChild
-                    title="View on external site"
-                  >
+                {exportData.externalUrl && (
+                  <Button variant="ghost" size="icon" asChild title="View on external site">
                     <a
                       href={exportData.externalUrl}
                       target="_blank"
@@ -194,7 +183,7 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
                       <ExternalLink className="h-4 w-4" />
                     </a>
                   </Button>
-                ) : null}
+                )}
               </div>
             </motion.div>
           </div>
