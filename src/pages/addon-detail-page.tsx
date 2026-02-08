@@ -299,27 +299,25 @@ export function AddonDetailPage() {
 
       {/* Media Gallery Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-[95vw] w-full max-h-[95vh] p-0 border-0">
-          <div className="relative w-full h-full flex items-center justify-center">
-            <div className="relative w-full h-full flex items-center justify-center p-4 sm:p-8">
-              {isImageLoading && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-glass-strong backdrop-blur-glass-strong border-glass px-4 py-2 rounded-lg text-sm">
-                    Loading...
-                  </div>
+        <DialogContent className="max-w-fit w-auto max-h-[95vh] p-0 border-0 bg-transparent backdrop-blur-none shadow-none [&>button.absolute]:hidden">
+          <div className="relative flex items-center justify-center">
+            {isImageLoading && (
+              <div className="absolute inset-0 flex items-center justify-center z-20">
+                <div className="bg-glass-strong backdrop-blur-glass-strong border-glass px-4 py-2 rounded-lg text-sm">
+                  Loading...
                 </div>
-              )}
-              {mediaItems[modalImageIndex] && (
-                <MediaCarouselItem
-                  mediaItem={mediaItems[modalImageIndex]}
-                  alt={`${addon.export.name} screenshot ${modalImageIndex + 1}`}
-                  isActive={true}
-                  onLoad={() => setIsImageLoading(false)}
-                  onVideoReady={() => setIsImageLoading(false)}
-                  className="max-w-full max-h-full object-contain rounded-lg"
-                />
-              )}
-            </div>
+              </div>
+            )}
+            {mediaItems[modalImageIndex] && (
+              <MediaCarouselItem
+                mediaItem={mediaItems[modalImageIndex]}
+                alt={`${addon.export.name} screenshot ${modalImageIndex + 1}`}
+                isActive={true}
+                onLoad={() => setIsImageLoading(false)}
+                onVideoReady={() => setIsImageLoading(false)}
+                className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
+              />
+            )}
 
             {hasMultipleImages && (
               <>
@@ -327,7 +325,7 @@ export function AddonDetailPage() {
                   variant="ghost"
                   size="icon"
                   onClick={handleModalPrevImage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 z-10"
+                  className="absolute -left-12 top-1/2 -translate-y-1/2 z-10"
                   aria-label="Previous image"
                 >
                   <ChevronLeft className="h-6 w-6" />
@@ -337,13 +335,13 @@ export function AddonDetailPage() {
                   variant="ghost"
                   size="icon"
                   onClick={handleModalNextImage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 z-10"
+                  className="absolute -right-12 top-1/2 -translate-y-1/2 z-10"
                   aria-label="Next image"
                 >
                   <ChevronRight className="h-6 w-6" />
                 </Button>
 
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10">
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 z-10">
                   <CarouselIndicators
                     totalImages={mediaItems.length}
                     currentIndex={modalImageIndex}
