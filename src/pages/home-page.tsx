@@ -9,8 +9,30 @@ import { loadAllExports } from '@/lib/loadExports';
 import { category } from '@/types/exports';
 import type { Addon } from '@/types/exports';
 
+/**
+ * Compute the column span for each item in a 6-column grid (lg).
+ * Regular rows: 3 items x 2-col each. Last row distributes remaining
+ * items evenly across the full 6 columns so there's never dead space.
+ */
+function getColSpans(count: number): number[] {
+  if (count === 0) return [];
+  const remainder = count % 3;
+  const fullRows = Math.floor(count / 3);
+  const spans: number[] = new Array(fullRows * 3).fill(2); // 2-col each in full rows
+
+  if (remainder === 1) {
+    spans.push(6); // single trailing item spans full width
+  } else if (remainder === 2) {
+    spans.push(3, 3); // two trailing items split evenly
+  }
+
+  return spans;
+}
+
 function AddonGrid({ addons, label, delay = 0 }: { addons: Addon[]; label: string; delay?: number }) {
   if (addons.length === 0) return null;
+
+  const colSpans = getColSpans(addons.length);
 
   return (
     <motion.section
@@ -27,27 +49,37 @@ function AddonGrid({ addons, label, delay = 0 }: { addons: Addon[]; label: strin
         <span className="text-xs tabular-nums text-foreground/30">{addons.length}</span>
       </div>
 
-      {/* Uniform grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {/* Adaptive grid: 6-col on lg so last-row items stretch to fill */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
         <AnimatePresence mode="popLayout">
-          {addons.map((addon, index) => (
-            <motion.div
-              key={addon.id}
-              layout
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{
-                duration: 0.35,
-                delay: delay + index * 0.04,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              <Link to={`/a/${addon.id}`} className="block h-full">
-                <ExportCard export={addon.export} addonId={addon.id} />
-              </Link>
-            </motion.div>
-          ))}
+          {addons.map((addon, index) => {
+            const span = colSpans[index] ?? 2;
+            return (
+              <motion.div
+                key={addon.id}
+                layout
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.97 }}
+                transition={{
+                  duration: 0.35,
+                  delay: delay + index * 0.04,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className={
+                  span === 6
+                    ? 'lg:col-span-6'
+                    : span === 3
+                      ? 'lg:col-span-3'
+                      : 'lg:col-span-2'
+                }
+              >
+                <Link to={`/a/${addon.id}`} className="block h-full">
+                  <ExportCard export={addon.export} addonId={addon.id} />
+                </Link>
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </div>
     </motion.section>
