@@ -18,6 +18,7 @@ export const tag = {
   // Content
   raid: 'raid',
   mythic: 'mythic+',
+  mplus: 'm+',
 
   // Utility
   map: 'map',
