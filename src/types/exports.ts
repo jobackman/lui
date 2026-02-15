@@ -28,6 +28,7 @@ export const tag = {
 export const category = {
   core: 'core',
   misc: 'misc',
+  retired: 'retired',
 } as const;
 
 /**

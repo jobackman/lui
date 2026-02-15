@@ -138,13 +138,17 @@ export function HomePage() {
       return bDate - aDate;
     });
 
-  // Split into core and misc groups
+  // Split into core, misc, and retired groups
   const coreAddons = useMemo(
     () => sortByDate(filteredAddons.filter((a) => a.export.tags?.[0] === category.core)),
     [filteredAddons],
   );
   const miscAddons = useMemo(
-    () => sortByDate(filteredAddons.filter((a) => a.export.tags?.[0] !== category.core)),
+    () => sortByDate(filteredAddons.filter((a) => a.export.tags?.[0] === category.misc)),
+    [filteredAddons],
+  );
+  const retiredAddons = useMemo(
+    () => sortByDate(filteredAddons.filter((a) => a.export.tags?.[0] === category.retired)),
     [filteredAddons],
   );
 
@@ -152,8 +156,10 @@ export function HomePage() {
   const totalExports = filteredAddons.length;
 
   // Find the newest addon overall (by lastUpdated) for the featured spotlight
+  // Exclude retired addons from being featured
   const newestAddon = useMemo(() => {
-    const sorted = sortByDate(allAddons);
+    const nonRetired = allAddons.filter((a) => a.export.tags?.[0] !== category.retired);
+    const sorted = sortByDate(nonRetired);
     return sorted[0] ?? null;
   }, [allAddons]);
 
@@ -165,6 +171,10 @@ export function HomePage() {
   const miscAddonsFiltered = useMemo(
     () => (newestAddon ? miscAddons.filter((a) => a.id !== newestAddon.id) : miscAddons),
     [miscAddons, newestAddon],
+  );
+  const retiredAddonsFiltered = useMemo(
+    () => (newestAddon ? retiredAddons.filter((a) => a.id !== newestAddon.id) : retiredAddons),
+    [retiredAddons, newestAddon],
   );
 
   return (
@@ -203,6 +213,11 @@ export function HomePage() {
               {newestAddon && <FeaturedAddon addon={newestAddon} />}
               <AddonGrid addons={coreAddonsFiltered} label="Core" delay={0.15} />
               <AddonGrid addons={miscAddonsFiltered} label="Misc" delay={0.25} />
+              {retiredAddonsFiltered.length > 0 && (
+                <div className="opacity-60">
+                  <AddonGrid addons={retiredAddonsFiltered} label="Retired" delay={0.35} />
+                </div>
+              )}
             </div>
           )}
         </div>
