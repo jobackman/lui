@@ -13,6 +13,6 @@ export * from './frogskis-cursor-trail';
 export * from './baganator';
 export * from './account-wide-interface-settings';
 export * from './blizz-hud-tweaks';
-export * from './enhanced-qol';
+export * from './eqol';
 export * from './lcc';
 export * from './eqol-unitframes';
