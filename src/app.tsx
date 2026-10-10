@@ -4,7 +4,7 @@ import { EditionProvider } from '@/contexts/edition-context';
 import { HomePage } from '@/pages/home-page';
 import { AddonDetailPage } from '@/pages/addon-detail-page';
 import { CommandBar } from '@/components/command-bar';
-import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
+import { AmbientBackground } from '@/components/ambient-background';
 import './index.css';
 
 export function App() {
@@ -12,7 +12,7 @@ export function App() {
 
   return (
     <EditionProvider>
-      <BackgroundRippleEffect cellSize={48} />
+      <AmbientBackground />
       <CommandBar />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>

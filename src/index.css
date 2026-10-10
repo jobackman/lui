@@ -11,6 +11,94 @@
 
   #root {
     @apply w-full min-h-screen;
+    isolation: isolate;
+  }
+}
+
+.ambient-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-blob {
+  position: absolute;
+  width: min(85vw, 900px);
+  height: min(85vh, 800px);
+  border-radius: 42% 58% 62% 38% / 48% 40% 60% 52%;
+  background: radial-gradient(ellipse at center, currentColor, transparent 70%);
+  filter: blur(32px);
+  animation: ambient-drift var(--drift-duration, 36s) ease-in-out infinite alternate,
+    ambient-color var(--color-duration, 48s) ease-in-out infinite alternate;
+  animation-delay: var(--phase, 0s);
+}
+
+.ambient-blob--violet {
+  top: -35%;
+  left: 15%;
+  --color-start: oklch(0.45 0.2 280 / 0.5);
+  --color-end: oklch(0.43 0.18 315 / 0.45);
+  color: var(--color-start);
+  --phase: -12s;
+}
+
+.ambient-blob--cyan {
+  top: 15%;
+  right: -35%;
+  --color-start: oklch(0.4 0.2 200 / 0.4);
+  --color-end: oklch(0.43 0.18 245 / 0.4);
+  color: var(--color-start);
+  --drift-duration: 43s;
+  --color-duration: 57s;
+  --phase: -28s;
+}
+
+.ambient-blob--rose {
+  top: 20%;
+  left: -35%;
+  --color-start: oklch(0.4 0.2 340 / 0.4);
+  --color-end: oklch(0.42 0.19 285 / 0.4);
+  color: var(--color-start);
+  --drift-duration: 39s;
+  --color-duration: 53s;
+  --phase: -7s;
+}
+
+.ambient-blob--blue {
+  bottom: -40%;
+  left: 15%;
+  width: min(100vw, 1100px);
+  --color-start: oklch(0.35 0.15 240 / 0.3);
+  --color-end: oklch(0.4 0.16 195 / 0.35);
+  color: var(--color-start);
+  --drift-duration: 47s;
+  --color-duration: 61s;
+  --phase: -35s;
+}
+
+@keyframes ambient-drift {
+  0% {
+    transform: translate(-6%, -4%) rotate(-12deg) scale(0.95, 1.05);
+    border-radius: 42% 58% 62% 38% / 48% 40% 60% 52%;
+  }
+  50% {
+    transform: translate(8%, 6%) rotate(8deg) scale(1.12, 0.9);
+    border-radius: 60% 40% 38% 62% / 35% 58% 42% 65%;
+  }
+  100% {
+    transform: translate(-4%, 12%) rotate(22deg) scale(0.9, 1.15);
+    border-radius: 38% 62% 55% 45% / 62% 35% 65% 38%;
+  }
+}
+
+@keyframes ambient-color {
+  from {
+    color: var(--color-start);
+  }
+  to {
+    color: var(--color-end);
   }
 }
 
