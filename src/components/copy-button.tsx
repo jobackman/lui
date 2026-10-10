@@ -9,12 +9,13 @@ export type CopyButtonProps = ButtonProps & {
   showIcon?: boolean;
 };
 
-export function CopyButton({ text, onCopy, className, children, showIcon = false, size, variant, ...props }: CopyButtonProps) {
+export function CopyButton({ text, onCopy, className, children, showIcon = false, size, variant, onClick, ...props }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async (e: React.MouseEvent) => {
+  const handleCopy = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default link behavior
     e.stopPropagation(); // Prevent card click events
+    onClick?.(e);
     if (!text) return; // Don't copy if no text provided
     try {
       await navigator.clipboard.writeText(text);

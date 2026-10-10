@@ -85,7 +85,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
 
       {/* Action buttons - top right */}
       <div className="absolute top-3 left-3 right-3 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-wrap justify-end gap-1.5 items-center opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
-        <ExportCopyButtons exports={exportData.exports} />
+        <ExportCopyButtons exports={exportData.exports} compact />
         {exportData.downloadUrl && (
           <Button variant="default" size="icon" asChild title="Download addon">
             <a
