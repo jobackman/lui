@@ -3,7 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Tag } from '@/components/ui/tag';
-import { CopyButton } from '@/components/copy-button';
+import { ExportCopyButtons } from '@/components/export-copy-buttons';
+import { getCopyableExports } from '@/lib/copyable-exports';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
 import { getCatalogAddonById, resolveAddon } from '@/lib/loadExports';
@@ -59,6 +60,7 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
   const [modalImageIndex, setModalImageIndex] = useState(0);
   const [isImageLoading, setIsImageLoading] = useState(true);
 
+  const hasExports = getCopyableExports(addon.configuration.exports).length > 0;
   const mediaItems = addon.configuration.media ?? [];
   const hasImages = mediaItems.length > 0;
   const hasMultipleImages = mediaItems.length > 1;
@@ -190,11 +192,7 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.15 }}
           >
-            {addon.configuration.exportString && (
-              <CopyButton text={addon.configuration.exportString} showIcon size="lg">
-                Copy to clipboard
-              </CopyButton>
-            )}
+            <ExportCopyButtons exports={addon.configuration.exports} showIcon size="lg" singleLabel="Copy to clipboard" />
 
             {addon.configuration.downloadUrl && (
               <Button variant="ghost" size="lg" asChild>
@@ -304,12 +302,12 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
             </motion.div>
           )}
 
-          {!addon.configuration.exportString && !addon.configuration.externalUrl && addon.configuration.downloadUrl && !addon.configuration.setupInstructions && (
+          {!hasExports && !addon.configuration.externalUrl && addon.configuration.downloadUrl && !addon.configuration.setupInstructions && (
             <p className="rounded-xl bg-glass border-glass p-5 text-sm text-foreground/60">Download the addon using the link above and use its default settings. No configuration import is required.</p>
           )}
 
           {/* Message for external-link-only addons */}
-          {!addon.configuration.exportString && addon.configuration.externalUrl && !addon.configuration.setupInstructions && (
+          {!hasExports && addon.configuration.externalUrl && !addon.configuration.setupInstructions && (
             <motion.div
               className="bg-glass backdrop-blur-glass border-glass rounded-xl p-5 text-center"
               initial={{ opacity: 0, y: 10 }}

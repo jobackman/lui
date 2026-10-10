@@ -59,6 +59,25 @@ export const example: Addon = {
 
 Each edition accepts one configuration, not an array of profiles. Tags are optional; when provided, the first tag is a category (`core`, `misc`, or `retired`). Include category tags for homepage grouping. Export strings, download/source URLs, instructions, media (`{ type: 'image' | 'video', url }`), tags, and timestamps are independent per edition.
 
+## Copyable exports
+
+Use `exports` for either a single string or a list of named strings within an edition's configuration:
+
+```ts
+// Most addons: one copy action
+exports: 'your-export-string',
+
+// Addons with multiple export types (e.g. EQoL)
+exports: [
+  { name: 'Settings', value: 'your-settings-string' },
+  { name: 'Resource bars', value: 'your-resource-bar-string' },
+],
+```
+
+A plain string keeps the standard **Copy** action. Named entries display separate **Copy Settings**, **Copy Resource bars**, etc. buttons on cards, featured addons, and detail pages, in definition order. Each button copies only its own value. A named list with one entry is also valid.
+
+Omit `exports` for download-only recommendations. Empty lists and blank values produce no copy actions. Export contents are copied verbatim. For long strings, you can keep values in separate TypeScript modules and import them into the configuration.
+
 ## Timestamp automation
 
 The pre-commit hook updates timestamps for changed **staged** configurations recursively under `data/exports/`. It ignores timestamp-only edits and shared identity/catalog files, and preserves unrelated unstaged changes. Unchanged legacy configurations moved to the Retail directory retain their historical timestamps.

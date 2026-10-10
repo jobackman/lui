@@ -8,13 +8,28 @@ for (const id of ['platynator', 'eqol']) {
     expect(retail).toBeDefined();
     expect(forever).toBeDefined();
     expect(forever?.edition).toBe('forever');
-    expect(forever?.configuration.exportString).toBeDefined();
+    expect(forever?.configuration.exports).toBeDefined();
     expect(forever?.configuration).not.toBe(retail?.configuration);
     expect(forever?.configuration.media).not.toBe(retail?.configuration.media);
     expect(forever?.configuration.tags).not.toBe(retail?.configuration.tags);
     expect(getAddonManifest('forever').some((addon) => addon.id === id)).toBe(true);
   });
 }
+
+test('EQoL includes the Retail unit-frame export instead of a separate addon', () => {
+  const retail = getAddonById('eqol', 'retail');
+  const exports = retail?.configuration.exports;
+  if (!Array.isArray(exports)) throw new Error('Expected named EQoL exports');
+
+  expect(exports.map((entry) => entry.name)).toEqual(['Full profile', 'Unit frames only']);
+  expect(exports.every((entry) => entry.value.length > 0)).toBe(true);
+  expect(exports[0]?.value).not.toBe(exports[1]?.value);
+  expect(retail?.configuration.setupInstructions).toContain('Profiles -> EQoL Unit Frames');
+  expect(retail?.configuration.media).toContainEqual({ type: 'image', url: 'https://i.imgur.com/Bx1KM6C.png' });
+  expect(getAddonById('eqol-unitframes', 'retail')).toBeUndefined();
+  expect(getAddonManifest('retail').some((addon) => addon.id === 'eqol-unitframes')).toBe(false);
+  expect(typeof getAddonById('eqol', 'forever')?.configuration.exports).toBe('string');
+});
 
 test("loadAllExports returns array of addon categories", () => {
   const exports = loadAllExports();
@@ -75,9 +90,13 @@ test("export data has correct structure", () => {
   expect(typeof addonExport.description).toBe("string");
   expect(typeof addonExport.lastUpdated).toBe("string");
 
-  // exportString is optional, but if present should be a string
-  if (addonExport.exportString) {
-    expect(typeof addonExport.exportString).toBe("string");
+  if (typeof addonExport.exports === 'string') {
+    expect(addonExport.exports.length).toBeGreaterThan(0);
+  } else if (addonExport.exports) {
+    for (const entry of addonExport.exports) {
+      expect(typeof entry.name).toBe('string');
+      expect(typeof entry.value).toBe('string');
+    }
   }
 
   // externalUrl is optional, but if present should be a string
@@ -96,5 +115,5 @@ test("sensei-resource-bar addon includes both its source and published export", 
   expect(senseiResourceBar).toBeDefined();
   expect(senseiResourceBar?.configuration.externalUrl).toBeDefined();
   expect(typeof senseiResourceBar?.configuration.externalUrl).toBe("string");
-  expect(typeof senseiResourceBar?.configuration.exportString).toBe('string');
+  expect(typeof senseiResourceBar?.configuration.exports).toBe('string');
 });

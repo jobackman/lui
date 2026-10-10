@@ -5,7 +5,7 @@ import type { Addon, AddonConfiguration, GameEdition } from '@/types/exports';
 const retailConfiguration = {
   name: 'Example addon',
   description: 'Retail layout',
-  exportString: 'retail-profile',
+  exports: 'retail-profile',
   lastUpdated: '2026-02-01T00:00:00.000Z',
   tags: [category.core],
 } satisfies AddonConfiguration;
@@ -13,7 +13,7 @@ const retailConfiguration = {
 const foreverConfiguration = {
   name: 'Example addon',
   description: 'Forever layout',
-  exportString: 'forever-profile',
+  exports: 'forever-profile',
   lastUpdated: '2026-02-02T00:00:00.000Z',
   tags: [category.misc],
 } satisfies AddonConfiguration;
@@ -43,8 +43,8 @@ test('dual-edition configurations keep exports, categories, and timestamps indep
     [edition.forever]: foreverConfiguration,
   });
 
-  expect(addon.editions.retail?.exportString).toBe('retail-profile');
-  expect(addon.editions.forever?.exportString).toBe('forever-profile');
+  expect(addon.editions.retail?.exports).toBe('retail-profile');
+  expect(addon.editions.forever?.exports).toBe('forever-profile');
   expect(addon.editions.retail?.tags?.[0]).toBe(category.core);
   expect(addon.editions.forever?.tags?.[0]).toBe(category.misc);
   expect(addon.editions.retail?.lastUpdated).not.toBe(addon.editions.forever?.lastUpdated);
@@ -61,8 +61,20 @@ test('download-only recommendations publish support without an export or externa
 
   expect(addon.editions.forever).toBeDefined();
   expect(addon.editions.forever?.downloadUrl).toBe(configuration.downloadUrl);
-  expect(addon.editions.forever?.exportString).toBeUndefined();
+  expect(addon.editions.forever?.exports).toBeUndefined();
   expect(addon.editions.forever?.externalUrl).toBeUndefined();
+});
+
+test('one configuration can define multiple named export types', () => {
+  const configuration: AddonConfiguration = {
+    ...retailConfiguration,
+    exports: [
+      { name: 'Settings', value: 'settings-profile' },
+      { name: 'Resource bars', value: 'resource-profile' },
+    ],
+  };
+  const addon = makeAddon({ [edition.retail]: configuration });
+  expect(addon.editions.retail?.exports).toEqual(configuration.exports);
 });
 
 // These constraints are verified by TypeScript, not Bun's transpiler.
@@ -80,6 +92,12 @@ function verifyTypeConstraints(): void {
     name: 'Invalid configuration',
     description: 'Missing timestamp',
   };
+  const unnamedExport: AddonConfiguration = {
+    ...retailConfiguration,
+    // @ts-expect-error Entries in a named list require a display name.
+    exports: [{ value: 'profile' }],
+  };
+  void unnamedExport;
   void invalidEdition;
   void multipleProfiles;
   void missingTimestamp;

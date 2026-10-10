@@ -5,7 +5,7 @@ import { category } from '@/types/exports';
 import type { Addon, AddonConfiguration } from '@/types/exports';
 
 const retail: AddonConfiguration = {
-  name: 'Retail frames', description: 'Retail configuration', exportString: 'retail-string',
+  name: 'Retail frames', description: 'Retail configuration', exports: 'retail-string',
   downloadUrl: 'https://example.com/retail', lastUpdated: '2026-01-01T00:00:00Z',
   media: [{ type: 'image', url: '/retail.png' }], tags: [category.core],
 };
@@ -30,7 +30,7 @@ test('resolution preserves the selected configuration and never falls back', () 
     expect(resolveAddon(addon, 'forever')?.configuration).toBe(addon.editions.forever);
   }
   expect(resolveAddon(fixtures[0]!, 'forever')).toBeUndefined();
-  expect(resolveAddon(fixtures[2]!, 'forever')?.configuration.exportString).toBeUndefined();
+  expect(resolveAddon(fixtures[2]!, 'forever')?.configuration.exports).toBeUndefined();
 });
 
 test('featured content and searches operate on the selected edition only', () => {

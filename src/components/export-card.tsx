@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Card, CardTitle } from '@/components/ui/card';
-import { CopyButton } from '@/components/copy-button';
+import { ExportCopyButtons } from '@/components/export-copy-buttons';
 import { Button } from '@/components/ui/button';
 import { Download, ExternalLink } from 'lucide-react';
 import { CarouselIndicators } from '@/components/carousel-indicators';
@@ -93,8 +93,8 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       </div>
 
       {/* Action buttons - top right */}
-      <div className="absolute top-3 right-3 z-10 flex gap-1.5 items-center opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
-        {exportData.exportString && <CopyButton text={exportData.exportString} />}
+      <div className="absolute top-3 left-3 right-3 z-10 flex flex-wrap justify-end gap-1.5 items-center opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
+        <ExportCopyButtons exports={exportData.exports} />
         {exportData.downloadUrl && (
           <Button variant="default" size="icon" asChild title="Download addon">
             <a

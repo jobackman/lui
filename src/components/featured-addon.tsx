@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Download, ExternalLink } from 'lucide-react';
-import { CopyButton } from '@/components/copy-button';
+import { ExportCopyButtons } from '@/components/export-copy-buttons';
 import { Button } from '@/components/ui/button';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
 import { CarouselIndicators } from '@/components/carousel-indicators';
@@ -157,8 +157,8 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
               className="mt-4 sm:mt-5 flex items-center gap-3 flex-wrap"
             >
               {/* Quick action buttons */}
-              <div className="flex items-center gap-1.5" onClick={(e) => e.preventDefault()}>
-                {exportData.exportString && <CopyButton text={exportData.exportString} />}
+              <div className="flex flex-wrap items-center gap-1.5" onClick={(e) => e.preventDefault()}>
+                <ExportCopyButtons exports={exportData.exports} />
                 {exportData.downloadUrl && (
                   <Button variant="ghost" size="icon" asChild title="Download addon">
                     <a

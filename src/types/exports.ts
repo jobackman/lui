@@ -60,6 +60,12 @@ export interface MediaItem {
   url: string;
 }
 
+/** A named copyable string for addons with distinct export types. */
+export interface AddonExport {
+  name: string;
+  value: string;
+}
+
 /**
  * Edition-specific addon configuration, including download-only recommendations.
  */
@@ -68,8 +74,8 @@ export interface AddonConfiguration {
   name: string;
   /** Short description of what this export contains */
   description: string;
-  /** Optional copyable configuration; download-only recommendations need no export string. */
-  exportString?: string;
+  /** A single copyable string or a list of named strings; omit for download-only recommendations. */
+  exports?: string | AddonExport[];
   /** External URL where users can find the export string (e.g., WoWHead, Icy Veins, external guide) */
   externalUrl?: string;
   /** ISO 8601 date string of when this export was last updated */

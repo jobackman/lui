@@ -223,7 +223,7 @@ plans/
 - Use `edition.retail` / `edition.forever`, `category`, and `tag` constants from `src/types/exports.ts`.
 - Configuration presence publishes support for that edition. No separate compatibility list and no cross-edition fallback.
 - Required configuration fields: `name`, `description`, and ISO 8601 `lastUpdated`.
-- Optional fields: `exportString`, `externalUrl`, `downloadUrl`, `media`, `setupInstructions`, `tags`.
+- Optional fields: `exports` (a string or `{ name, value }[]`), `externalUrl`, `downloadUrl`, `media`, `setupInstructions`, `tags`.
 - Download-only/default-settings recommendations are valid with no export string.
 - When tags are provided, the first tag is `category.core`, `category.misc`, or `category.retired`; use category tags for homepage grouping.
 - Media items use `{ type: 'image' | 'video', url: string }`, not an `images` array.
