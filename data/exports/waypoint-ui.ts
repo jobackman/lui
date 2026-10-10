@@ -1,4 +1,4 @@
-import type { Addon } from "../../src/types/exports";
+import type { LegacyAddon as Addon } from "../../src/types/exports";
 import { tag, category } from "../../src/types/exports";
 
 export const waypointUi: Addon = {
@@ -7,7 +7,7 @@ export const waypointUi: Addon = {
   export: {
     name: "Waypoint UI",
     description: "Restyles the in-world waypoint markers in a nice looking way",
-    lastUpdated: "2026-02-06T01:42:28.425Z",
+    lastUpdated: "2026-10-10T14:35:26.960Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/waypointui",
     media: [
       { type: 'image', url: 'https://media.forgecdn.net/attachments/1365/397/slide1.png' },

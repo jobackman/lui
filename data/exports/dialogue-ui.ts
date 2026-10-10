@@ -1,4 +1,4 @@
-import type { Addon } from "../../src/types/exports";
+import type { LegacyAddon as Addon } from "../../src/types/exports";
 import { tag, category } from "../../src/types/exports";
 
 export const dialogueUI: Addon = {
@@ -7,7 +7,7 @@ export const dialogueUI: Addon = {
   export: {
     name: "Dialogue UI",
     description: "Much better UI around NPC dialogues and quest givers",
-    lastUpdated: "2026-02-06T01:42:28.420Z",
+    lastUpdated: "2026-10-10T14:35:26.902Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/dialogueui",
     media: [
       { type: 'image', url: 'https://media.forgecdn.net/attachments/829/473/wowscrnshot_032124_205644.jpg' },

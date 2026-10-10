@@ -1,4 +1,4 @@
-import type { Addon } from "../../src/types/exports";
+import type { LegacyAddon as Addon } from "../../src/types/exports";
 import { tag, category } from "../../src/types/exports";
 
 export const accountWideInterfaceSettings: Addon = {
@@ -7,7 +7,7 @@ export const accountWideInterfaceSettings: Addon = {
   export: {
     name: "Account Wide Interface Settings",
     description: "Makes your interface settings account wide instead of character specific. So you only have to set it up once!",
-    lastUpdated: "2026-02-06T00:09:40.053Z",
+    lastUpdated: "2026-10-10T14:35:26.887Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/account-wide-ui",
     media: [
       { type: 'image', url: 'https://media.forgecdn.net/attachments/1432/435/accwideui1a.jpg' },

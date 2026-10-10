@@ -7,7 +7,7 @@ import { ExportCard } from '@/components/export-card';
 import { FeaturedAddon } from '@/components/featured-addon';
 import { loadAllExports } from '@/lib/loadExports';
 import { category } from '@/types/exports';
-import type { Addon } from '@/types/exports';
+import type { LegacyAddon as Addon } from '@/types/exports';
 
 /**
  * Compute the column span for each item in a 6-column grid (lg).

@@ -1,4 +1,4 @@
-import type { Addon } from "../types/exports";
+import type { LegacyAddon as Addon } from "../types/exports";
 
 import * as addons from '../../data/exports'
 

@@ -1,4 +1,4 @@
-import type { Addon } from "../../src/types/exports";
+import type { LegacyAddon as Addon } from "../../src/types/exports";
 import { tag, category } from "../../src/types/exports";
 
 export const baganator: Addon = {
@@ -7,7 +7,7 @@ export const baganator: Addon = {
   export: {
     name: "Baganator",
     description: "The better Adibags-like bag addon",
-    lastUpdated: "2026-02-06T00:09:40.055Z",
+    lastUpdated: "2026-10-10T14:35:26.889Z",
     downloadUrl: "https://www.curseforge.com/wow/addons/baganator",
     media: [
       { type: 'image', url: 'https://media.forgecdn.net/attachments/974/124/categories-2024-09-23-default.webp' },

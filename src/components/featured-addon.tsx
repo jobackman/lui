@@ -8,7 +8,7 @@ import { MediaCarouselItem } from '@/components/media-carousel-item';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { cn } from '@/lib/utils';
-import type { Addon } from '@/types/exports';
+import type { LegacyAddon as Addon } from '@/types/exports';
 
 interface FeaturedAddonProps {
   addon: Addon;

@@ -1,4 +1,4 @@
-import type { Addon } from "../../src/types/exports";
+import type { LegacyAddon as Addon } from "../../src/types/exports";
 import { tag, category } from "../../src/types/exports";
 
 export const lcc: Addon = {
@@ -7,7 +7,7 @@ export const lcc: Addon = {
   export: {
     name: "LucyCursorCooldowns",
     description: "Shows failed-to-cast spells on the cursor",
-    lastUpdated: "2026-04-19T19:36:06.617Z",
+    lastUpdated: "2026-10-10T14:35:26.934Z",
     downloadUrl: 'https://www.curseforge.com/wow/addons/lucycursorcooldowns',
     media: [
       { type: 'video', url: 'https://i.imgur.com/75b4hZq.mp4' },

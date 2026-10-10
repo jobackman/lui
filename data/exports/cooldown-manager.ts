@@ -1,4 +1,4 @@
-import type { Addon } from "../../src/types/exports";
+import type { LegacyAddon as Addon } from "../../src/types/exports";
 import { tag, category } from "../../src/types/exports";
 
 export const cooldownManager: Addon = {
@@ -7,7 +7,7 @@ export const cooldownManager: Addon = {
   export: {
     name: "Cooldown Manager - Class profiles",
     description: "Just use Luxthos class profiles for Cooldown Manager",
-    lastUpdated: "2026-02-06T00:09:40.061Z",
+    lastUpdated: "2026-10-10T14:35:26.895Z",
     externalUrl: "https://www.luxthos.com/cooldown-manager-profiles-world-of-warcraft-midnight/",
     setupInstructions: `1. Copy the class / spec profile from Luxthos
   2. Run \`/cdm\` in-game to open Cooldown Manager settings
