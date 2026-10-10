@@ -1,13 +1,16 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Hero } from '@/components/hero';
 import { SearchBar } from '@/components/search-bar';
 import { ExportCard } from '@/components/export-card';
 import { FeaturedAddon } from '@/components/featured-addon';
-import { loadAllExports } from '@/lib/loadExports';
+import { loadAllExports, filterAddons, sortAddonsByDate, getFeaturedAddon } from '@/lib/loadExports';
+import { useEdition } from '@/contexts/edition-context';
+import { EditionSwitcher } from '@/components/edition-switcher';
+import { editionLabels, editionUrl, updateSearchParameter } from '@/lib/game-edition';
 import { category } from '@/types/exports';
-import type { Addon } from '@/types/exports';
+import type { ResolvedAddon as Addon } from '@/types/exports';
 
 /**
  * Compute the column span for each item in a 6-column grid (lg).
@@ -56,7 +59,7 @@ function AddonGrid({ addons, label, delay = 0 }: { addons: Addon[]; label: strin
             const span = colSpans[index] ?? 2;
             return (
               <motion.div
-                key={addon.id}
+                key={`${addon.edition}:${addon.id}`}
                 layout
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -74,8 +77,8 @@ function AddonGrid({ addons, label, delay = 0 }: { addons: Addon[]; label: strin
                       : 'lg:col-span-2'
                 }
               >
-                <Link to={`/a/${addon.id}`} className="block h-full">
-                  <ExportCard export={addon.export} addonId={addon.id} />
+                <Link to={editionUrl(`/a/${addon.id}`, addon.edition)} className="block h-full">
+                  <ExportCard export={addon.configuration} addonId={addon.id} />
                 </Link>
               </motion.div>
             );
@@ -87,68 +90,33 @@ function AddonGrid({ addons, label, delay = 0 }: { addons: Addon[]; label: strin
 }
 
 export function HomePage() {
-  const allAddons = loadAllExports();
+  const { gameEdition } = useEdition();
+  const allAddons = useMemo(() => loadAllExports(gameEdition), [gameEdition]);
   const [searchParams, setSearchParams] = useSearchParams();
-  
-  // Initialize search query from URL param
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
+  const searchQuery = searchParams.get('q') || '';
+  const setSearchQuery = (query: string): void => {
+    setSearchParams((current) => updateSearchParameter(current, 'q', query), { replace: true });
+  };
 
   // Reset scroll position on mount
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Sync URL search params to search query state (when URL changes via Link)
-  useEffect(() => {
-    const currentParam = searchParams.get('q') || '';
-    if (searchQuery !== currentParam) {
-      setSearchQuery(currentParam);
-    }
-  }, [searchParams]);
-
-  // Sync search query state to URL (when typing in search bar)
-  useEffect(() => {
-    const currentParam = searchParams.get('q') || '';
-    if (searchQuery !== currentParam) {
-      if (searchQuery) {
-        setSearchParams({ q: searchQuery });
-      } else {
-        setSearchParams({});
-      }
-    }
-  }, [searchQuery]);
-
-  // Filter addons based on search query (searches export name and tags)
-  const filteredAddons = useMemo(() => {
-    if (!searchQuery.trim()) return allAddons;
-
-    const query = searchQuery.toLowerCase();
-    return allAddons.filter((addon) => {
-      const nameMatches = addon.export.name.toLowerCase().includes(query);
-      const tagMatches = addon.export.tags?.some((t) => t.toLowerCase().includes(query)) ?? false;
-      return nameMatches || tagMatches;
-    });
-  }, [allAddons, searchQuery]);
-
-  // Sort within categories by newest lastUpdated
-  const sortByDate = (list: Addon[]) =>
-    [...list].sort((a, b) => {
-      const aDate = a.export.lastUpdated ? new Date(a.export.lastUpdated).getTime() : 0;
-      const bDate = b.export.lastUpdated ? new Date(b.export.lastUpdated).getTime() : 0;
-      return bDate - aDate;
-    });
+  const filteredAddons = useMemo(() => filterAddons(allAddons, searchQuery), [allAddons, searchQuery]);
+  const sortByDate = sortAddonsByDate;
 
   // Split into core, misc, and retired groups
   const coreAddons = useMemo(
-    () => sortByDate(filteredAddons.filter((a) => a.export.tags?.[0] === category.core)),
+    () => sortByDate(filteredAddons.filter((a) => a.configuration.tags?.[0] === category.core)),
     [filteredAddons],
   );
   const miscAddons = useMemo(
-    () => sortByDate(filteredAddons.filter((a) => a.export.tags?.[0] === category.misc)),
+    () => sortByDate(filteredAddons.filter((a) => !a.configuration.tags || a.configuration.tags[0] === category.misc)),
     [filteredAddons],
   );
   const retiredAddons = useMemo(
-    () => sortByDate(filteredAddons.filter((a) => a.export.tags?.[0] === category.retired)),
+    () => sortByDate(filteredAddons.filter((a) => a.configuration.tags?.[0] === category.retired)),
     [filteredAddons],
   );
 
@@ -157,11 +125,7 @@ export function HomePage() {
 
   // Find the newest addon overall (by lastUpdated) for the featured spotlight
   // Exclude retired addons from being featured
-  const newestAddon = useMemo(() => {
-    const nonRetired = allAddons.filter((a) => a.export.tags?.[0] !== category.retired);
-    const sorted = sortByDate(nonRetired);
-    return sorted[0] ?? null;
-  }, [allAddons]);
+  const newestAddon = useMemo(() => getFeaturedAddon(allAddons) ?? null, [allAddons]);
 
   // Remove the featured addon from the grid sections (only when not searching)
   const coreAddonsFiltered = useMemo(
@@ -189,19 +153,25 @@ export function HomePage() {
         {/* Compact header: hero + search integrated */}
         <div className="pt-8 pb-6 px-4">
           <Hero />
-          <div className="mt-6">
+          <div className="mt-5 flex justify-center">
+            <EditionSwitcher />
+          </div>
+          <div className="mt-5">
             <SearchBar value={searchQuery} onChange={setSearchQuery} />
           </div>
         </div>
 
         {/* Content area */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div key={gameEdition} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           {totalExports === 0 ? (
             <div className="text-center py-16 text-muted-foreground">
               {searchQuery ? (
-                <p>No addons matching &ldquo;{searchQuery}&rdquo;</p>
+                <p>No {editionLabels[gameEdition]} addons matching &ldquo;{searchQuery}&rdquo;</p>
               ) : (
-                <p>No addons available</p>
+                <>
+                  <p className="text-lg font-medium text-foreground/75">No addons published for {editionLabels[gameEdition]} yet.</p>
+                  <p className="mt-2 text-sm">Confirmed-compatible addons and configurations will appear here as they are added.</p>
+                </>
               )}
             </div>
           ) : isSearching ? (
@@ -210,7 +180,7 @@ export function HomePage() {
           ) : (
             /* Default: featured spotlight + grouped sections */
             <div className="space-y-10">
-              {newestAddon && <FeaturedAddon addon={newestAddon} />}
+              {newestAddon && <FeaturedAddon key={`${gameEdition}:${newestAddon.id}`} addon={newestAddon} />}
               <AddonGrid addons={coreAddonsFiltered} label="Core" delay={0.15} />
               <AddonGrid addons={miscAddonsFiltered} label="Misc" delay={0.25} />
               {retiredAddonsFiltered.length > 0 && (

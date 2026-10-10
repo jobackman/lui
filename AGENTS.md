@@ -31,13 +31,14 @@ Agent instructions for working on this Bun + React + TypeScript project.
 
 - Runs `bun run update-timestamps` before each commit
 - Auto-stages timestamp changes (includes them in current commit)
-- Only processes staged `data/exports/*.ts` files
+- Recursively processes staged configuration files under `data/exports/`; skips shared definitions without timestamps
+- Updates the Git index without staging unrelated unstaged edits
 - Skips silently when no export files are modified
 - Prevents manual timestamp errors
 
 **How it works:**
 1. You modify an addon export file (e.g., change description, add images, update tags)
-2. Stage the file with `git add data/exports/addon-name.ts`
+2. Stage the file with `git add data/exports/retail/addon-name.ts`
 3. Create a commit with `git commit -m "message"`
 4. Hook automatically updates `lastUpdated` field and includes it in your commit
 
@@ -65,21 +66,21 @@ Agent instructions for working on this Bun + React + TypeScript project.
 - **Components**: kebab-case files, PascalCase exports
   - File: `copy-button.tsx` → Export: `export function CopyButton()`
 - **Utilities/libs**: kebab-case (e.g., `load-exports.ts`, `format-relative-time.ts`)
-- **Types**: PascalCase interfaces (e.g., `AddonCategory`, `AddonExport`)
+- **Types**: PascalCase interfaces (e.g., `Addon`, `AddonConfiguration`, `ResolvedAddon`)
 - **Tests**: `*.test.ts` or `*.test.tsx`
 
 ### Imports
 
 - Use `@/` alias for src imports: `import { cn } from '@/lib/utils'`
 - Group imports: external libs first, then `@/` imports
-- Use `type` imports for types: `import type { AddonCategory } from '@/types/exports'`
+- Use `type` imports for types: `import type { ResolvedAddon } from '@/types/exports'`
 - Named exports preferred over default exports (except React components can use either)
 
 ```tsx
 import { useState } from 'react';
 import { Button, type ButtonProps } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import type { AddonCategory } from '@/types/exports';
+import type { ResolvedAddon } from '@/types/exports';
 ```
 
 ### TypeScript Patterns
@@ -87,21 +88,21 @@ import type { AddonCategory } from '@/types/exports';
 - Always type function parameters and return values
 - Use `interface` for object shapes, `type` for unions/intersections
 - Leverage type narrowing with guards (e.g., `if (addon)` for undefined checks)
-- Optional chaining for nullable access: `addon?.export?.tags`
+- Optional chaining for nullable access: `addon?.configuration.tags`
 - Array access returns `T | undefined` due to `noUncheckedIndexedAccess`
 
 ```ts
 // Good: explicit types
-export function getAddonById(id: string): AddonCategory | undefined {
+export function getAddonById(id: string): ResolvedAddon | undefined {
   const allExports = loadAllExports();
   return allExports.find((addon) => addon.id === id);
 }
 
 // Good: type imports
-import type { AddonExport } from '@/types/exports';
+import type { AddonConfiguration } from '@/types/exports';
 
 // Good: handling array access
-const firstAddon = addons[0]; // type is AddonCategory | undefined
+const firstAddon = addons[0]; // type is ResolvedAddon | undefined
 if (firstAddon) {
   console.log(firstAddon.name);
 }
@@ -204,7 +205,9 @@ src/
 └── contexts/            # React contexts
 
 data/
-└── exports/             # Addon data files (*.ts exports)
+└── exports/             # Shared Addon definitions and index.ts
+    ├── retail/          # Retail AddonConfiguration files
+    └── forever/         # Verified Forever configurations, when published
 
 plans/
 ├── prd.json            # Product requirements
@@ -213,46 +216,23 @@ plans/
 
 ## Data Management
 
-### Addon Exports (`data/exports/`)
+### Addon configurations (`data/exports/`)
 
-- Each file exports an `AddonCategory` object
-- Follow type schema from `src/types/exports.ts`
-- Include `id`, `name`, and `export` object
-- `lastUpdated` in ISO 8601 format
-- Optional fields: `exportString`, `externalUrl`, `downloadUrl`, `images`, `setupInstructions`, `tags`
-- `category` field is **required** (core or misc)
-- **Use tag and category constants** for type safety (not string literals)
+- Top-level files export shared `Addon` identities (`id`, `name`, `editions`); register new identities in `data/exports/index.ts`.
+- Edition subdirectories export one `AddonConfiguration` per addon/edition. See `README.md` for complete examples.
+- Use `edition.retail` / `edition.forever`, `category`, and `tag` constants from `src/types/exports.ts`.
+- Configuration presence publishes support for that edition. No separate compatibility list and no cross-edition fallback.
+- Required configuration fields: `name`, `description`, and ISO 8601 `lastUpdated`.
+- Optional fields: `exportString`, `externalUrl`, `downloadUrl`, `media`, `setupInstructions`, `tags`.
+- Download-only/default-settings recommendations are valid with no export string.
+- When tags are provided, the first tag is `category.core`, `category.misc`, or `category.retired`; use category tags for homepage grouping.
+- Media items use `{ type: 'image' | 'video', url: string }`, not an `images` array.
+- Use `ResolvedAddon` (`id`, `name`, `edition`, `configuration`) in UI consumers. Resolve through `src/lib/loadExports.ts`, not direct edition fallback logic.
+- Use `editionUrl()` for internal navigation and `useEdition()` for active selection. Preserve search parameters when updating the edition/query.
+- Only publish Forever configurations after verifying actual compatibility. Existing migrated data is Retail-only.
+- Pre-commit timestamps are independent per edition; unchanged legacy-to-Retail migrations preserve original dates. See `scripts/README.md` for staged-content safety.
 
-```ts
-import type { AddonCategory } from '../../src/types/exports';
-import { tag, category } from '../../src/types/exports';
-
-export const baganator: AddonCategory = {
-  id: 'baganator',
-  name: 'Baganator',
-  export: {
-    name: 'Baganator',
-    description: 'The better Adibags-like bag addon',
-    lastUpdated: '2026-02-04T11:25:17.854Z',
-    downloadUrl: 'https://www.curseforge.com/wow/addons/baganator',
-    tags: [tag.misc, tag.ui],
-  },
-  category: category.misc,
-};
-```
-
-**Available tag constants:**
-
-- **Combat & Performance**: `tag.combat`, `tag.damage`, `tag.healing`, `tag.meter`
-- **UI & Visual**: `tag.ui`, `tag.hud`, `tag.frames`, `tag.nameplates`
-- **Resources & Abilities**: `tag.resource`, `tag.cooldowns`
-- **Content**: `tag.raid`, `tag.mythic` (for mythic+)
-- **Utility**: `tag.map`, `tag.quest`, `tag.misc`
-
-**Category constants:**
-
-- `category.core` - Essential addons
-- `category.misc` - Optional addons
+**Tag constants:** combat, damage, healing, meter, ui, hud, frames, nameplates, resource, cooldowns, raid, mythic, mplus, map, quest, fade. No `tag.misc` constant exists; use `category.misc` as the category.
 
 ## Product Requirements Workflow
 

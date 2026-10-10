@@ -1,201 +1,124 @@
 #!/usr/bin/env bun
-/**
- * Script to update lastUpdated timestamps when export data changes
- * Can be run manually or as part of a git pre-commit hook
- * 
- * Usage:
- *   bun run update-timestamps           # Update staged files with changes
- *   bun run update-timestamps --all     # Force update all files to now
- *   bun run update-timestamps --force file1.ts file2.ts  # Force specific files
- */
+import { execFileSync } from 'node:child_process';
+import { readdir } from 'node:fs/promises';
+import { join } from 'node:path';
 
-import { execSync } from "child_process";
-import { readFileSync, writeFileSync, readdirSync } from "fs";
-import { join } from "path";
+const TIMESTAMP = /lastUpdated:\s*["']([^"']+)["']/;
 
-const EXPORTS_DIR = join(process.cwd(), "data/exports");
-const ISO_DATE_REGEX = /lastUpdated:\s*["']([^"']+)["']/;
-
-interface FileChange {
-  path: string;
-  oldContent: string;
-  newContent: string;
-  needsUpdate: boolean;
+function git(cwd: string, args: string[], input?: string): string {
+  return execFileSync('git', args, { cwd, encoding: 'utf8', input, stdio: ['pipe', 'pipe', 'pipe'] });
 }
 
-/**
- * Get the list of modified export files in git staging area
- */
-function getModifiedExportFiles(): string[] {
-  try {
-    const output = execSync("git diff --cached --name-only data/exports/*.ts", {
-      encoding: "utf-8",
-    }).trim();
-    
-    if (!output) return [];
-    
-    return output.split("\n").filter(Boolean);
-  } catch (error) {
-    // If not in a git repo or no staged files, return empty array
-    return [];
+function gitContent(cwd: string, revisionPath: string): string | undefined {
+  try { return git(cwd, ['show', revisionPath]); }
+  catch { return undefined; }
+}
+
+/** Remove timestamps from comparison without changing configuration strings. */
+export function normalizeContent(content: string): string {
+  return content.replace(TIMESTAMP, 'lastUpdated: "NORMALIZED"');
+}
+
+/** Recognize the original single-export body during the Retail directory migration. */
+export function configurationBody(content: string): string | undefined {
+  const legacy = content.match(/\bexport:\s*\{([\s\S]*)\n  \},\n\};\s*$/);
+  if (legacy) return normalizeContent(legacy[1] ?? '').trim();
+  const current = content.match(/:\s*AddonConfiguration\s*=\s*\{([\s\S]*)\n\};\s*$/);
+  return current ? normalizeContent(current[1] ?? '').trim() : undefined;
+}
+
+/** Recursively discover configuration files, not top-level addon identities. */
+export async function getAllExportFiles(cwd: string): Promise<string[]> {
+  async function walk(relative: string): Promise<string[]> {
+    const entries = await readdir(join(cwd, relative), { withFileTypes: true });
+    const groups = await Promise.all(entries.map(async (entry): Promise<string[]> => {
+      const path = `${relative}/${entry.name}`;
+      if (entry.isDirectory()) return walk(path);
+      if (!path.endsWith('.ts')) return [];
+      return TIMESTAMP.test(await Bun.file(join(cwd, path)).text()) ? [path] : [];
+    }));
+    return groups.flat();
   }
+  return walk('data/exports');
 }
 
-/**
- * Get all export files (used when running without git context)
- */
-function getAllExportFiles(): string[] {
-  const exportsDir = join(process.cwd(), "data/exports");
-  const files = readdirSync(exportsDir)
-    .filter(f => f.endsWith(".ts"))
-    .map(f => `data/exports/${f}`);
-  return files;
-}
-
-/**
- * Normalize content by removing lastUpdated field for comparison
- * This prevents the timestamp itself from being considered a change
- */
-function normalizeContent(content: string): string {
-  return content.replace(ISO_DATE_REGEX, "lastUpdated: \"NORMALIZED\"");
-}
-
-/**
- * Check if export content has changed compared to git HEAD
- * Detects changes to ANY field (description, images, tags, downloadUrl, etc.)
- * Excludes the lastUpdated field itself from comparison
- */
-function hasContentChanged(filePath: string, currentContent: string): boolean {
-  try {
-    // Get the version of the file from git HEAD
-    const headContent = execSync(`git show HEAD:${filePath}`, {
-      encoding: "utf-8",
-    });
-    
-    // Normalize both versions (remove timestamp for comparison)
-    const normalizedCurrent = normalizeContent(currentContent);
-    const normalizedHead = normalizeContent(headContent);
-    
-    // If content differs (excluding timestamp), it needs an update
-    return normalizedCurrent !== normalizedHead;
-  } catch (error) {
-    // File might be new (not in HEAD), assume it needs timestamp update
-    return true;
-  }
-}
-
-/**
- * Update the lastUpdated timestamp in file content
- */
-function updateTimestamp(content: string): string {
-  const now = new Date().toISOString();
-  return content.replace(ISO_DATE_REGEX, `lastUpdated: "${now}"`);
-}
-
-/**
- * Process files and update timestamps where needed
- */
-function processFiles(files: string[], forceUpdate: boolean): FileChange[] {
-  const changes: FileChange[] = [];
-  
-  for (const filePath of files) {
-    const fullPath = join(process.cwd(), filePath);
-    const currentContent = readFileSync(fullPath, "utf-8");
-    
-    // Check if this file has content changes (or force update)
-    const needsUpdate = forceUpdate || hasContentChanged(filePath, currentContent);
-    
-    if (needsUpdate) {
-      const newContent = updateTimestamp(currentContent);
-      changes.push({
-        path: filePath,
-        oldContent: currentContent,
-        newContent,
-        needsUpdate: true,
-      });
+function previousContent(cwd: string, path: string, staged: string): string | undefined {
+  const previous = gitContent(cwd, `HEAD:${path}`);
+  if (previous !== undefined) return previous;
+  // A structural move of an unchanged legacy Retail configuration is not a new update.
+  if (path.startsWith('data/exports/retail/')) {
+    const basename = path.slice('data/exports/retail/'.length);
+    const legacy = gitContent(cwd, `HEAD:data/exports/${basename}`);
+    if (legacy && configurationBody(legacy) === configurationBody(staged) && configurationBody(staged) !== undefined) {
+      return staged;
     }
   }
-  
-  return changes;
+  return undefined;
 }
 
-/**
- * Apply changes to files
- */
-function applyChanges(changes: FileChange[]): void {
-  for (const change of changes) {
-    if (change.needsUpdate) {
-      const fullPath = join(process.cwd(), change.path);
-      writeFileSync(fullPath, change.newContent, "utf-8");
-      console.log(`✓ Updated timestamp in ${change.path}`);
-      
-      // Re-stage the file if running in git context
-      try {
-        execSync(`git add ${change.path}`, { stdio: "ignore" });
-      } catch {
-        // Not in git context or git not available, skip staging
-      }
+export interface TimestampOptions {
+  cwd?: string;
+  forceAll?: boolean;
+  forcePaths?: string[];
+  now?: string;
+}
+
+/** Update staged configurations only; never stage unrelated working-tree changes. */
+export async function updateTimestamps({ cwd = process.cwd(), forceAll = false, forcePaths, now = new Date().toISOString() }: TimestampOptions = {}): Promise<string[]> {
+  const forced = forceAll || forcePaths !== undefined;
+  const paths = forceAll ? await getAllExportFiles(cwd) : forcePaths ?? git(cwd, [
+    'diff', '--cached', '--name-only', '--diff-filter=ACMR', '-z', '--', 'data/exports',
+  ]).split('\0').filter(Boolean);
+  const updated: string[] = [];
+
+  for (const path of paths) {
+    if (!path.startsWith('data/exports/') || !path.endsWith('.ts') || path.split('/').includes('..')) {
+      throw new Error(`Not an addon configuration path: ${path}`);
     }
+    const file = Bun.file(join(cwd, path));
+    const working = await file.text();
+    const staged = gitContent(cwd, `:${path}`);
+    const content = forced ? working : staged;
+    if (!content || !TIMESTAMP.test(content)) continue;
+    // Manual forced updates refuse partial staging instead of adding unstaged edits.
+    if (forced && staged !== undefined && staged !== working && staged !== gitContent(cwd, `HEAD:${path}`)) {
+      throw new Error(`Refusing forced update of partially staged file: ${path}. Stage or unstage its changes first.`);
+    }
+    const previous = previousContent(cwd, path, content);
+    if (!forced && previous !== undefined && normalizeContent(previous) === normalizeContent(content)) continue;
+
+    const next = content.replace(TIMESTAMP, `lastUpdated: "${now}"`);
+    const oid = git(cwd, ['hash-object', '-w', '--stdin'], next).trim();
+    const mode = git(cwd, ['ls-files', '--stage', '--', path]).split(' ')[0] || '100644';
+    git(cwd, ['update-index', '--add', '--cacheinfo', mode, oid, path]);
+
+    if (working === content) {
+      await Bun.write(file, next);
+    } else if (working.match(TIMESTAMP)?.[1] === content.match(TIMESTAMP)?.[1]) {
+      // Mirror only the timestamp into a partially staged working tree, leaving other edits untouched.
+      await Bun.write(file, working.replace(TIMESTAMP, `lastUpdated: "${now}"`));
+    }
+    updated.push(path);
   }
+  return updated;
 }
 
-/**
- * Main execution
- */
-function main() {
+async function main(): Promise<void> {
   const args = process.argv.slice(2);
-  const forceAll = args.includes("--all");
-  const forceIndex = args.indexOf("--force");
-  
-  let files: string[];
-  let forceUpdate = false;
-  
-  if (forceAll) {
-    // --all flag: force update all files to current timestamp
-    files = getAllExportFiles();
-    forceUpdate = true;
-    console.log("Force updating all export files...");
-  } else if (forceIndex !== -1) {
-    // --force flag with specific files
-    const specifiedFiles = args.slice(forceIndex + 1);
-    if (specifiedFiles.length === 0) {
-      console.error("Error: --force requires file paths as arguments");
-      console.error("Usage: bun run update-timestamps --force file1.ts file2.ts");
-      process.exit(1);
-    }
-    // Normalize file paths (add data/exports/ prefix if not present)
-    files = specifiedFiles.map(f => {
-      if (f.startsWith("data/exports/")) return f;
-      if (f.endsWith(".ts")) return `data/exports/${f}`;
-      return `data/exports/${f}.ts`;
-    });
-    forceUpdate = true;
-    console.log(`Force updating ${files.length} specified file(s)...`);
-  } else {
-    // Default: update only staged files with actual content changes
-    files = getModifiedExportFiles();
-    forceUpdate = false;
-    if (files.length > 0) {
-      console.log(`Processing ${files.length} staged export file(s)...`);
-    }
-  }
-  
-  if (files.length === 0) {
-    console.log("No export files to process.");
-    return;
-  }
-  
-  // Process and apply changes
-  const changes = processFiles(files, forceUpdate);
-  const updatedCount = changes.filter(c => c.needsUpdate).length;
-  
-  if (updatedCount === 0) {
-    console.log("No timestamp updates needed.");
-    return;
-  }
-  
-  applyChanges(changes);
-  console.log(`\n✓ Updated ${updatedCount} file(s) with new timestamps.`);
+  const forceIndex = args.indexOf('--force');
+  const forcePaths = forceIndex < 0 ? undefined : args.slice(forceIndex + 1).map((path) => {
+    const relative = path.startsWith('data/exports/') ? path : `data/exports/${path}`;
+    return relative.endsWith('.ts') ? relative : `${relative}.ts`;
+  });
+  if (forcePaths?.length === 0) throw new Error('--force requires configuration paths');
+  const updated = await updateTimestamps({ forceAll: args.includes('--all'), forcePaths });
+  for (const path of updated) console.log(`✓ Updated timestamp in ${path}`);
+  if (!updated.length) console.log('No timestamp updates needed.');
 }
 
-main();
+if (import.meta.main) {
+  main().catch((error: unknown) => {
+    console.error('Timestamp update failed:', error);
+    process.exitCode = 1;
+  });
+}

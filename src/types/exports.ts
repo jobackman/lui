@@ -26,6 +26,14 @@ export const tag = {
   fade: 'fade',
 } as const;
 
+/** Supported game editions; configuration presence determines published support. */
+export const edition = {
+  retail: 'retail',
+  forever: 'forever',
+} as const;
+
+export type GameEdition = typeof edition[keyof typeof edition];
+
 export const category = {
   core: 'core',
   misc: 'misc',
@@ -53,14 +61,14 @@ export interface MediaItem {
 }
 
 /**
- * Represents a single WoW addon export configuration
+ * Edition-specific addon configuration, including download-only recommendations.
  */
-export interface AddonExport {
+export interface AddonConfiguration {
   /** Display name for this export */
   name: string;
   /** Short description of what this export contains */
   description: string;
-  /** The actual export string to be copied to clipboard (optional if externalUrl is provided) */
+  /** Optional copyable configuration; download-only recommendations need no export string. */
   exportString?: string;
   /** External URL where users can find the export string (e.g., WoWHead, Icy Veins, external guide) */
   externalUrl?: string;
@@ -76,11 +84,19 @@ export interface AddonExport {
   tags?: [CategoryTag, ...TagType[]];
 }
 
+/** Shared addon identity with at most one configuration per game edition. */
 export interface Addon {
-  /** Unique identifier for the addon (matches filename without .json) */
+  /** Unique identifier shared across editions. */
   id: string;
-  /** Display name for the addon */
   name: string;
-  /** Single export configuration for this addon */
-  export: AddonExport;
+  /** An entry publishes support for that edition, even without a copyable export. */
+  editions: Partial<Record<GameEdition, AddonConfiguration>>;
+}
+
+/** A published configuration resolved for exactly one edition. */
+export interface ResolvedAddon {
+  id: string;
+  name: string;
+  edition: GameEdition;
+  configuration: AddonConfiguration;
 }

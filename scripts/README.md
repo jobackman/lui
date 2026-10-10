@@ -1,68 +1,47 @@
-# Timestamp Automation
+# Timestamp automation
 
-This directory contains scripts for automating timestamp updates in addon export files.
+`scripts/update-timestamps.ts` runs via the Husky pre-commit hook or manually. Git and Bun are required.
 
-## Update Timestamps Script
+## Default: staged configurations only
 
-The `update-timestamps.ts` script automatically updates the `lastUpdated` field in export files when the `exportString` field is modified.
-
-### Features
-
-- **Smart Detection**: Only updates timestamps when `exportString` changes (ignores other field changes)
-- **Git Integration**: Works with git staging area to detect modified files
-- **Pre-commit Hook**: Automatically runs before commits to keep timestamps in sync
-- **Manual Override**: Can be run manually on all files or specific files
-
-### Usage
-
-#### Automatic (Pre-commit Hook)
-
-The script runs automatically when you commit changes:
-
-```bash
-# Modify an export file's exportString
-git add data/exports/my-addon.ts
-git commit -m "Update addon export string"
-# Script automatically updates timestamp and re-stages the file
-```
-
-#### Manual Usage
-
-Run on staged files only:
 ```bash
 bun run update-timestamps
 ```
 
-Run on all export files (force update check):
+- Finds added/changed staged `.ts` files recursively under `data/exports/`.
+- Reads the Git index, not unstaged working-tree content.
+- Updates `lastUpdated` when configuration content changes compared with HEAD, ignoring timestamp-only differences.
+- Skips shared addon definitions/catalog files without timestamps and deleted files.
+- Updates the index without staging unrelated working-tree changes.
+- For partially staged files, mirrors only the timestamp into the working tree if its original timestamp matches the staged one. An independently edited working-tree timestamp is left alone.
+- Recognizes unchanged configurations moved from the original single-export files into `data/exports/retail/`, preserving historical timestamps during this migration.
+
+Example:
+
+```bash
+git add data/exports/forever/example.ts
+git commit -m "Publish confirmed Forever configuration"
+```
+
+Changing Forever does not bump the corresponding Retail configuration's timestamp.
+
+## Forced updates
+
 ```bash
 bun run update-timestamps:all
+bun run update-timestamps --force retail/details.ts forever/example.ts
 ```
 
-### How It Works
+`--all` recursively discovers configuration files. `--force` accepts paths relative to `data/exports/` or full `data/exports/...` paths, with optional `.ts` suffixes.
 
-1. Detects which export files are staged for commit (or all files with `--all` flag)
-2. Compares current `exportString` with the version in git HEAD
-3. If `exportString` changed, updates `lastUpdated` to current ISO 8601 timestamp
-4. Re-stages the file if running in git context
+Forced updates intentionally stage the resulting configurations. They refuse files with both staged changes and additional unstaged changes, rather than accidentally staging unrelated edits. Stage the intended full contents first, or unstage the changes, before forcing a partially staged file. If only unstaged changes exist, a forced command intentionally stages them along with the new timestamp.
 
-### Pre-commit Hook
+Shared definitions without timestamps are never updated. A forced command in a Git repository can stage a new previously untracked configuration.
 
-The pre-commit hook is located at `.git/hooks/pre-commit` and runs automatically before each commit. It only processes files that are staged for commit.
+## Tests
 
-If you need to skip the hook (not recommended):
 ```bash
-git commit --no-verify
+bun test scripts/update-timestamps.test.ts
 ```
 
-### Error Handling
-
-- If `exportString` cannot be extracted, no update occurs
-- If file is new (not in git HEAD), timestamp is updated
-- If not in a git repository, falls back to checking all files
-- Malformed export files are skipped with a warning
-
-### Requirements
-
-- Bun runtime
-- Git (for automatic detection of changed files)
-- Export files must follow the TypeScript format with template literals for `exportString`
+Tests use isolated temporary Git repositories and cover nested discovery, independent edition updates, timestamp-only changes, partial staging, migration preservation, and new/forced configurations.
