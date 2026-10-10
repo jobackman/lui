@@ -1,4 +1,8 @@
+import { useEdition } from '@/contexts/edition-context';
+import { editionLabels } from '@/lib/game-edition';
+
 export function Hero() {
+  const { gameEdition } = useEdition();
   return (
     <div className="relative text-center">
       <h1 className="relative inline-flex items-center justify-center overflow-visible text-4xl md:text-5xl font-black tracking-tight leading-none">
@@ -14,7 +18,7 @@ export function Hero() {
       </h1>
       <div className="mt-2 flex items-center justify-center gap-2 text-[10px] uppercase tracking-[0.45em] text-foreground/45">
         <span className="h-[1px] w-8 bg-foreground/15" aria-hidden="true" />
-        Ready for Midnight
+        {editionLabels[gameEdition]} · Addons & layouts
         <span className="h-[1px] w-8 bg-foreground/15" aria-hidden="true" />
       </div>
     </div>

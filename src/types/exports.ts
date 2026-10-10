@@ -84,9 +84,6 @@ export interface AddonConfiguration {
   tags?: [CategoryTag, ...TagType[]];
 }
 
-/** @deprecated Use AddonConfiguration. Retained while UI consumers are migrated. */
-export type AddonExport = AddonConfiguration;
-
 /** Shared addon identity with at most one configuration per game edition. */
 export interface Addon {
   /** Unique identifier shared across editions. */
@@ -96,9 +93,10 @@ export interface Addon {
   editions: Partial<Record<GameEdition, AddonConfiguration>>;
 }
 
-/** @deprecated Temporary single-export model for unmigrated catalog/UI consumers. */
-export interface LegacyAddon {
+/** A published configuration resolved for exactly one edition. */
+export interface ResolvedAddon {
   id: string;
   name: string;
-  export: AddonConfiguration;
+  edition: GameEdition;
+  configuration: AddonConfiguration;
 }

@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { EditionProvider } from '@/contexts/edition-context';
 import { HomePage } from '@/pages/home-page';
 import { AddonDetailPage } from '@/pages/addon-detail-page';
 import { CommandBar } from '@/components/command-bar';
@@ -10,7 +11,7 @@ export function App() {
   const location = useLocation();
 
   return (
-    <>
+    <EditionProvider>
       <BackgroundRippleEffect cellSize={48} />
       <CommandBar />
       <AnimatePresence mode="wait">
@@ -19,7 +20,7 @@ export function App() {
           <Route path="/a/:id" element={<AddonDetailPage />} />
         </Routes>
       </AnimatePresence>
-    </>
+    </EditionProvider>
   );
 }
 

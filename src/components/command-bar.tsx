@@ -10,18 +10,21 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { loadAllExports } from '@/lib/loadExports';
+import { useEdition } from '@/contexts/edition-context';
+import { editionLabels, editionUrl } from '@/lib/game-edition';
 
 export function CommandBar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const addons = loadAllExports();
+  const { gameEdition } = useEdition();
+  const addons = loadAllExports(gameEdition);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         // Don't trigger if typing in an input field
         if (
-          e.target instanceof HTMLInputElement ||
+          (e.target instanceof HTMLInputElement && !['radio', 'checkbox', 'button'].includes(e.target.type)) ||
           e.target instanceof HTMLTextAreaElement ||
           e.target instanceof HTMLSelectElement
         ) {
@@ -49,25 +52,25 @@ export function CommandBar() {
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Navigation">
           <CommandItem
-            onSelect={() => handleSelect(() => navigate('/'))}
+            onSelect={() => handleSelect(() => navigate(editionUrl('/', gameEdition)))}
             className="cursor-pointer"
           >
             <Home className="mr-2 h-4 w-4" />
             <span>Home</span>
           </CommandItem>
         </CommandGroup>
-        <CommandGroup heading="Addons">
+        <CommandGroup heading={`${editionLabels[gameEdition]} addons`}>
           {addons.map((addon) => (
             <CommandItem
               key={addon.id}
-              value={`${addon.name} ${addon.export.tags?.join(' ') || ''}`}
-              onSelect={() => handleSelect(() => navigate(`/a/${addon.id}`))}
+              value={`${addon.name} ${addon.configuration.tags?.join(' ') || ''}`}
+              onSelect={() => handleSelect(() => navigate(editionUrl(`/a/${addon.id}`, gameEdition)))}
               className="cursor-pointer"
             >
               <span className="font-medium">{addon.name}</span>
-              {addon.export.description && (
+              {addon.configuration.description && (
                 <span className="ml-2 text-xs text-muted-foreground truncate">
-                  {addon.export.description}
+                  {addon.configuration.description}
                 </span>
               )}
             </CommandItem>

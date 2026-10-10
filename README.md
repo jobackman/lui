@@ -1,21 +1,72 @@
-# bun-react-tailwind-shadcn-template
+# LucyUI — WoW addon configurations
 
-To install dependencies:
+A Bun + React + TypeScript site for edition-specific WoW addon recommendations and configurations.
 
 ```bash
 bun install
+bun run dev
+bun test
+bun run build
 ```
 
-To start a development server:
+Production: `bun run start`. Build output: `dist/`.
+
+## Game editions
+
+Choose **Retail** or **WoW Forever** using the homepage/detail-page switcher. The URL is authoritative (`/?edition=forever`, `/a/details?edition=retail`); visits without an edition use the remembered preference, otherwise Retail. Invalid URL editions normalize to Retail.
+
+An addon appears only when a configuration has been published for that edition. A configuration can recommend downloading the addon and using defaults without providing an export string. Missing configurations never fall back to another edition.
+
+Platynator and EQoL are published for Forever, with independent copies of their Retail configurations as starting points for later updates. Other migrated entries remain Retail-only. Add further Forever configurations only after confirming compatibility.
+
+## Adding an addon or edition
+
+1. Create an `AddonConfiguration` in `data/exports/<edition>/<addon-id>.ts`.
+2. Create/update the shared `Addon` in `data/exports/<addon-id>.ts` to import that configuration into its `editions` map.
+3. For a new addon, export its shared definition from `data/exports/index.ts`.
+4. Run `bun test` and `bun run build`; check the selected edition's listing, links, and detail page.
+
+Edition-specific configuration example:
+
+```ts
+// data/exports/forever/example.ts
+import type { AddonConfiguration } from '../../../src/types/exports';
+import { category, tag } from '../../../src/types/exports';
+
+export const exampleForever: AddonConfiguration = {
+  name: 'Example',
+  description: 'Download and use the defaults.',
+  lastUpdated: '2026-01-01T00:00:00.000Z',
+  downloadUrl: 'https://example.com/verified-forever-download',
+  tags: [category.misc, tag.ui],
+};
+```
+
+Shared identity:
+
+```ts
+// data/exports/example.ts
+import type { Addon } from '../../src/types/exports';
+import { edition } from '../../src/types/exports';
+import { exampleForever } from './forever/example';
+
+export const example: Addon = {
+  id: 'example',
+  name: 'Example',
+  editions: { [edition.forever]: exampleForever },
+};
+```
+
+Each edition accepts one configuration, not an array of profiles. Tags are optional; when provided, the first tag is a category (`core`, `misc`, or `retired`). Include category tags for homepage grouping. Export strings, download/source URLs, instructions, media (`{ type: 'image' | 'video', url }`), tags, and timestamps are independent per edition.
+
+## Timestamp automation
+
+The pre-commit hook updates timestamps for changed **staged** configurations recursively under `data/exports/`. It ignores timestamp-only edits and shared identity/catalog files, and preserves unrelated unstaged changes. Unchanged legacy configurations moved to the Retail directory retain their historical timestamps.
 
 ```bash
-bun dev
+bun run update-timestamps
+bun run update-timestamps:all
+bun run update-timestamps --force retail/details.ts
 ```
 
-To run for production:
-
-```bash
-bun start
-```
-
-This project was created using `bun init` in bun v1.3.7. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+See [scripts/README.md](scripts/README.md) for forced-update and partial-staging behaviour. The implementation checklist is in [plans/wow-editions-plan.md](plans/wow-editions-plan.md).

@@ -1,6 +1,21 @@
 import { test, expect } from "bun:test";
 import { loadAllExports, getAddonManifest, getAddonById } from "./loadExports";
 
+for (const id of ['platynator', 'eqol']) {
+  test(`${id} publishes independent Retail and Forever configurations`, () => {
+    const retail = getAddonById(id, 'retail');
+    const forever = getAddonById(id, 'forever');
+    expect(retail).toBeDefined();
+    expect(forever).toBeDefined();
+    expect(forever?.edition).toBe('forever');
+    expect(forever?.configuration.exportString).toBeDefined();
+    expect(forever?.configuration).not.toBe(retail?.configuration);
+    expect(forever?.configuration.media).not.toBe(retail?.configuration.media);
+    expect(forever?.configuration.tags).not.toBe(retail?.configuration.tags);
+    expect(getAddonManifest('forever').some((addon) => addon.id === id)).toBe(true);
+  });
+}
+
 test("loadAllExports returns array of addon categories", () => {
   const exports = loadAllExports();
   expect(Array.isArray(exports)).toBe(true);
@@ -12,7 +27,7 @@ test("loadAllExports includes Details addon", () => {
   const details = exports.find(addon => addon.id === "details");
   expect(details).toBeDefined();
   expect(details?.name).toBe("Details");
-  expect(details?.export).toBeDefined();
+  expect(details?.configuration).toBeDefined();
 });
 
 test("loadAllExports includes Platynator addon", () => {
@@ -20,7 +35,7 @@ test("loadAllExports includes Platynator addon", () => {
   const platynator = exports.find(addon => addon.id === "platynator");
   expect(platynator).toBeDefined();
   expect(platynator?.name).toBe("Platynator");
-  expect(platynator?.export).toBeDefined();
+  expect(platynator?.configuration).toBeDefined();
 });
 
 test("getAddonManifest returns list of addon ids and names", () => {
@@ -48,7 +63,8 @@ test("getAddonById returns undefined for invalid id", () => {
 test("export data has correct structure", () => {
   const exports = loadAllExports();
   const firstAddon = exports[0];
-  const addonExport = firstAddon.export;
+  if (!firstAddon) throw new Error('Expected a published Retail addon');
+  const addonExport = firstAddon.configuration;
 
   expect(addonExport).toBeDefined();
   expect(addonExport.name).toBeDefined();
@@ -75,10 +91,10 @@ test("export data has correct structure", () => {
   }
 });
 
-test("sensei-resource-bar addon has externalUrl instead of exportString", () => {
+test("sensei-resource-bar addon includes both its source and published export", () => {
   const senseiResourceBar = getAddonById("sensei-resource-bar");
   expect(senseiResourceBar).toBeDefined();
-  expect(senseiResourceBar?.export.externalUrl).toBeDefined();
-  expect(typeof senseiResourceBar?.export.externalUrl).toBe("string");
-  expect(senseiResourceBar?.export.exportString).toBeUndefined();
+  expect(senseiResourceBar?.configuration.externalUrl).toBeDefined();
+  expect(typeof senseiResourceBar?.configuration.externalUrl).toBe("string");
+  expect(typeof senseiResourceBar?.configuration.exportString).toBe('string');
 });

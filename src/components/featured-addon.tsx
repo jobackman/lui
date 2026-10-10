@@ -1,21 +1,22 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Clock, ArrowRight, Download, ExternalLink } from 'lucide-react';
+import { Download, ExternalLink } from 'lucide-react';
 import { CopyButton } from '@/components/copy-button';
 import { Button } from '@/components/ui/button';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
+import { editionUrl } from '@/lib/game-edition';
 import { cn } from '@/lib/utils';
-import type { LegacyAddon as Addon } from '@/types/exports';
+import type { ResolvedAddon as Addon } from '@/types/exports';
 
 interface FeaturedAddonProps {
   addon: Addon;
 }
 
 export function FeaturedAddon({ addon }: FeaturedAddonProps) {
-  const { export: exportData } = addon;
+  const { configuration: exportData } = addon;
   const mediaItems = exportData.media ?? [];
   const hasMedia = mediaItems.length > 0;
   const hasMultipleMedia = mediaItems.length > 1;
@@ -53,7 +54,7 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link
-        to={`/a/${addon.id}`}
+        to={editionUrl(`/a/${addon.id}`, addon.edition)}
         className="block group"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

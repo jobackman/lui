@@ -1,37 +1,65 @@
 import { useState, useEffect } from 'react';
-import { useParams, Navigate, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Tag } from '@/components/ui/tag';
 import { CopyButton } from '@/components/copy-button';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
-import { getAddonById } from '@/lib/loadExports';
+import { getCatalogAddonById, resolveAddon } from '@/lib/loadExports';
+import { useEdition } from '@/contexts/edition-context';
+import { EditionSwitcher } from '@/components/edition-switcher';
+import { editionLabels, editionUrl } from '@/lib/game-edition';
+import { edition } from '@/types/exports';
+import type { ResolvedAddon } from '@/types/exports';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { ArrowLeft, Download, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 export function AddonDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const { gameEdition } = useEdition();
+  const addon = id ? getCatalogAddonById(id) : undefined;
+  const resolved = addon ? resolveAddon(addon, gameEdition) : undefined;
+
+  useEffect(() => {
+    document.title = `${resolved?.configuration.name ?? addon?.name ?? 'Addon not found'} · ${editionLabels[gameEdition]} - LucyUI`;
+    return () => { document.title = 'LucyUI'; };
+  }, [addon?.name, resolved?.configuration.name, gameEdition]);
+
+  if (resolved) return <AddonDetailContent key={`${gameEdition}:${resolved.id}`} addon={resolved} />;
+
+  return (
+    <div className="relative z-20 mx-auto min-h-screen max-w-4xl px-4 py-10">
+      <Link to={editionUrl('/', gameEdition)} className="text-sm text-foreground/50 hover:text-foreground">← Back to {editionLabels[gameEdition]} addons</Link>
+      <div className="mt-6"><EditionSwitcher /></div>
+      <section className="mt-10 rounded-xl bg-glass backdrop-blur-glass border-glass p-6 sm:p-8">
+        <h1 className="text-2xl font-bold">{addon?.name ?? 'Addon not found'}</h1>
+        <p className="mt-3 text-foreground/60">
+          {addon ? `This addon is not currently available for ${editionLabels[gameEdition]}.` : 'We could not find an addon with this ID.'}
+        </p>
+        {addon && (
+          <div className="mt-6 flex flex-wrap gap-3">
+            {Object.values(edition).filter((value) => addon.editions[value]).map((value) => (
+              <Button key={value} variant="outline" asChild>
+                <Link to={editionUrl(`/a/${addon.id}`, value)}>View {editionLabels[value]} configuration</Link>
+              </Button>
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+
+function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
   const [isImageLoading, setIsImageLoading] = useState(true);
 
-  // Handle invalid addon IDs
-  if (!id) {
-    return <Navigate to="/" replace />;
-  }
-
-  const addon = getAddonById(id);
-
-  // 404 handling - redirect to home for invalid addon IDs
-  if (!addon) {
-    return <Navigate to="/" replace />;
-  }
-
-  const mediaItems = addon.export.media ?? [];
+  const mediaItems = addon.configuration.media ?? [];
   const hasImages = mediaItems.length > 0;
   const hasMultipleImages = mediaItems.length > 1;
 
@@ -43,6 +71,7 @@ export function AddonDetailPage() {
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLSelectElement) return;
       if (isModalOpen && hasMultipleImages) {
         if (e.key === 'ArrowLeft') {
           e.preventDefault();
@@ -70,14 +99,6 @@ export function AddonDetailPage() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [navigate, hasMultipleImages, mediaItems.length, isModalOpen]);
-
-  // Update document title
-  useEffect(() => {
-    document.title = `${addon.export.name} - LucyUI`;
-    return () => {
-      document.title = 'LucyUI';
-    };
-  }, [addon.export.name]);
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
@@ -120,13 +141,15 @@ export function AddonDetailPage() {
             className="mb-6"
           >
             <Link
-              to="/"
+              to={editionUrl('/', addon.edition)}
               className="inline-flex items-center gap-1.5 text-sm text-foreground/40 hover:text-foreground/80 transition-colors group"
             >
               <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
               Back
             </Link>
           </motion.div>
+
+          <div className="mb-6"><EditionSwitcher /></div>
 
           {/* Header zone */}
           <motion.header
@@ -137,20 +160,20 @@ export function AddonDetailPage() {
           >
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div className="min-w-0 flex-1">
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1.5">{addon.export.name}</h1>
-                <p className="text-foreground/60 text-sm sm:text-base leading-relaxed">{addon.export.description}</p>
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-1.5">{addon.configuration.name}</h1>
+                <p className="text-foreground/60 text-sm sm:text-base leading-relaxed">{addon.configuration.description}</p>
               </div>
             </div>
 
             {/* Meta row: timestamp + tags */}
             <div className="flex items-center gap-3 mt-3 flex-wrap">
-              <span className="text-xs text-foreground/30">Updated {formatRelativeTime(addon.export.lastUpdated)}</span>
-              {addon.export.tags && addon.export.tags.length > 0 && (
+              <span className="text-xs text-foreground/30">Updated {formatRelativeTime(addon.configuration.lastUpdated)}</span>
+              {addon.configuration.tags && addon.configuration.tags.length > 0 && (
                 <>
                   <span className="w-px h-3 bg-foreground/10" aria-hidden="true" />
                   <div className="flex flex-wrap gap-1.5">
-                    {addon.export.tags.map((tagValue) => (
-                      <Link key={tagValue} to={`/?q=${tagValue}`}>
+                    {addon.configuration.tags.map((tagValue) => (
+                      <Link key={tagValue} to={editionUrl(`/?q=${encodeURIComponent(tagValue)}`, addon.edition)}>
                         <Tag>{tagValue}</Tag>
                       </Link>
                     ))}
@@ -167,24 +190,24 @@ export function AddonDetailPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.15 }}
           >
-            {addon.export.exportString && (
-              <CopyButton text={addon.export.exportString} showIcon size="lg">
+            {addon.configuration.exportString && (
+              <CopyButton text={addon.configuration.exportString} showIcon size="lg">
                 Copy to clipboard
               </CopyButton>
             )}
 
-            {addon.export.downloadUrl && (
+            {addon.configuration.downloadUrl && (
               <Button variant="ghost" size="lg" asChild>
-                <a href={addon.export.downloadUrl} target="_blank" rel="noopener noreferrer">
+                <a href={addon.configuration.downloadUrl} target="_blank" rel="noopener noreferrer">
                   <Download className="h-4 w-4 mr-2" />
                   Download
                 </a>
               </Button>
             )}
 
-            {addon.export.externalUrl && (
+            {addon.configuration.externalUrl && (
               <Button variant="ghost" size="lg" asChild>
-                <a href={addon.export.externalUrl} target="_blank" rel="noopener noreferrer">
+                <a href={addon.configuration.externalUrl} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Get from source
                 </a>
@@ -209,7 +232,7 @@ export function AddonDetailPage() {
                   <MediaCarouselItem
                     key={mediaItem.url}
                     mediaItem={mediaItem}
-                    alt={`${addon.export.name} screenshot ${index + 1}`}
+                    alt={`${addon.configuration.name} screenshot ${index + 1}`}
                     isActive={index === currentImageIndex}
                     className={`
                       absolute inset-0 w-full h-full object-contain
@@ -265,7 +288,7 @@ export function AddonDetailPage() {
           )}
 
           {/* Setup Instructions */}
-          {addon.export.setupInstructions && (
+          {addon.configuration.setupInstructions && (
             <motion.div
               className="bg-glass backdrop-blur-glass border-glass rounded-xl p-5 sm:p-6 mb-6"
               initial={{ opacity: 0, y: 10 }}
@@ -276,13 +299,17 @@ export function AddonDetailPage() {
                 Setup Instructions
               </h2>
               <pre className="whitespace-pre-wrap font-sans text-sm text-foreground/70 leading-relaxed">
-                {addon.export.setupInstructions}
+                {addon.configuration.setupInstructions}
               </pre>
             </motion.div>
           )}
 
+          {!addon.configuration.exportString && !addon.configuration.externalUrl && addon.configuration.downloadUrl && !addon.configuration.setupInstructions && (
+            <p className="rounded-xl bg-glass border-glass p-5 text-sm text-foreground/60">Download the addon using the link above and use its default settings. No configuration import is required.</p>
+          )}
+
           {/* Message for external-link-only addons */}
-          {!addon.export.exportString && addon.export.externalUrl && !addon.export.setupInstructions && (
+          {!addon.configuration.exportString && addon.configuration.externalUrl && !addon.configuration.setupInstructions && (
             <motion.div
               className="bg-glass backdrop-blur-glass border-glass rounded-xl p-5 text-center"
               initial={{ opacity: 0, y: 10 }}
@@ -311,7 +338,7 @@ export function AddonDetailPage() {
             {mediaItems[modalImageIndex] && (
               <MediaCarouselItem
                 mediaItem={mediaItems[modalImageIndex]}
-                alt={`${addon.export.name} screenshot ${modalImageIndex + 1}`}
+                alt={`${addon.configuration.name} screenshot ${modalImageIndex + 1}`}
                 isActive={true}
                 onLoad={() => setIsImageLoading(false)}
                 onVideoReady={() => setIsImageLoading(false)}

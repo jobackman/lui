@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Download, ExternalLink } from 'lucide-react';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
-import type { AddonExport } from '@/types/exports';
+import type { AddonConfiguration } from '@/types/exports';
 
 interface ExportCardProps {
-  export: AddonExport;
+  export: AddonConfiguration;
   addonId: string;
 }
 
