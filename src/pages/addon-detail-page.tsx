@@ -7,6 +7,7 @@ import { ExportCopyButtons } from '@/components/export-copy-buttons';
 import { getCopyableExports } from '@/lib/copyable-exports';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
+import { SnapCarousel } from '@/components/snap-carousel';
 import { getCatalogAddonById, resolveAddon } from '@/lib/loadExports';
 import { useEdition } from '@/contexts/edition-context';
 import { EditionSwitcher } from '@/components/edition-switcher';
@@ -58,7 +59,6 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
-  const [isImageLoading, setIsImageLoading] = useState(true);
 
   const hasExports = getCopyableExports(addon.configuration.exports).length > 0;
   const mediaItems = addon.configuration.media ?? [];
@@ -117,12 +117,10 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
 
   const handleModalPrevImage = () => {
     setModalImageIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
-    setIsImageLoading(true);
   };
 
   const handleModalNextImage = () => {
     setModalImageIndex((prev) => (prev + 1) % mediaItems.length);
-    setIsImageLoading(true);
   };
 
   return (
@@ -221,9 +219,11 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div
-                className="relative w-full cursor-pointer group"
-                style={{ minHeight: '280px', maxHeight: '540px', aspectRatio: '16/9' }}
+              <SnapCarousel
+                className="w-full h-[clamp(280px,50vw,540px)] cursor-pointer group"
+                label={`${addon.configuration.name} screenshots`}
+                currentIndex={currentImageIndex}
+                onIndexChange={setCurrentImageIndex}
                 onClick={handleImageClick}
               >
                 {mediaItems.map((mediaItem, index) => (
@@ -232,14 +232,10 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
                     mediaItem={mediaItem}
                     alt={`${addon.configuration.name} screenshot ${index + 1}`}
                     isActive={index === currentImageIndex}
-                    className={`
-                      absolute inset-0 w-full h-full object-contain
-                      transition-opacity duration-500 ease-in-out
-                      ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
-                    `}
+                    className="w-full h-full object-contain"
                   />
                 ))}
-              </div>
+              </SnapCarousel>
 
               {hasMultipleImages && (
                 <>
@@ -326,31 +322,29 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="max-w-fit w-auto max-h-[95vh] p-0 border-0 bg-transparent backdrop-blur-none shadow-none [&>button.absolute]:hidden">
           <div className="relative flex items-center justify-center">
-            {isImageLoading && (
-              <div className="absolute inset-0 flex items-center justify-center z-20">
-                <div className="bg-glass-strong backdrop-blur-glass-strong border-glass px-4 py-2 rounded-lg text-sm">
-                  Loading...
-                </div>
-              </div>
-            )}
-            {mediaItems[modalImageIndex] && (
-              <MediaCarouselItem
-                mediaItem={mediaItems[modalImageIndex]}
-                alt={`${addon.configuration.name} screenshot ${modalImageIndex + 1}`}
-                isActive={true}
-                onLoad={() => setIsImageLoading(false)}
-                onVideoReady={() => setIsImageLoading(false)}
-                className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
-              />
-            )}
-
+            <SnapCarousel
+              className="w-[90vw] h-[85vh] rounded-lg"
+              label={`${addon.configuration.name} fullscreen screenshots`}
+              currentIndex={modalImageIndex}
+              onIndexChange={setModalImageIndex}
+            >
+              {mediaItems.map((mediaItem, index) => (
+                <MediaCarouselItem
+                  key={mediaItem.url}
+                  mediaItem={mediaItem}
+                  alt={`${addon.configuration.name} screenshot ${index + 1}`}
+                  isActive={index === modalImageIndex}
+                  className="w-full h-full object-contain"
+                />
+              ))}
+            </SnapCarousel>
             {hasMultipleImages && (
               <>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={handleModalPrevImage}
-                  className="absolute -left-12 top-1/2 -translate-y-1/2 z-10"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 z-10"
                   aria-label="Previous image"
                 >
                   <ChevronLeft className="h-6 w-6" />
@@ -360,7 +354,7 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
                   variant="ghost"
                   size="icon"
                   onClick={handleModalNextImage}
-                  className="absolute -right-12 top-1/2 -translate-y-1/2 z-10"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 z-10"
                   aria-label="Next image"
                 >
                   <ChevronRight className="h-6 w-6" />
@@ -370,10 +364,7 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
                   <CarouselIndicators
                     totalImages={mediaItems.length}
                     currentIndex={modalImageIndex}
-                    onIndexChange={(index) => {
-                      setModalImageIndex(index);
-                      setIsImageLoading(true);
-                    }}
+                    onIndexChange={setModalImageIndex}
                   />
                 </div>
               </>

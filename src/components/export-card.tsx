@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { SnapCarousel } from '@/components/snap-carousel';
 import { Card, CardTitle } from '@/components/ui/card';
 import { ExportCopyButtons } from '@/components/export-copy-buttons';
 import { Button } from '@/components/ui/button';
@@ -15,6 +17,8 @@ interface ExportCardProps {
 export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const reducedMotion = useReducedMotion();
   const [currentMediaDuration, setCurrentMediaDuration] = useState(5000); // Default 5s for images
   const cardRef = useRef<HTMLDivElement>(null);
   const mediaItems = exportData.media ?? [];
@@ -23,23 +27,14 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
 
   // Auto-cycle through media items based on current item duration
   useEffect(() => {
-    if (!hasMultipleImages || isHovered) return;
+    if (!hasMultipleImages || isHovered || hasInteracted || reducedMotion) return;
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
     }, currentMediaDuration);
 
     return () => clearInterval(interval);
-  }, [hasMultipleImages, isHovered, currentMediaDuration, mediaItems.length]);
-
-  // Prefers-reduced-motion check
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches && hasMultipleImages) {
-      // Stop cycling if user prefers reduced motion
-      setIsHovered(true);
-    }
-  }, [hasMultipleImages]);
+  }, [hasMultipleImages, isHovered, hasInteracted, reducedMotion, currentMediaDuration, mediaItems.length, currentImageIndex]);
 
   return (
     <Card
@@ -50,7 +45,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
     >
       {/* Background Media Layer */}
       {hasImages ? (
-        <div className="absolute inset-0">
+        <SnapCarousel className="absolute inset-0" label={`${exportData.name} previews`} currentIndex={currentImageIndex} onIndexChange={setCurrentImageIndex} onInteract={() => setHasInteracted(true)}>
           {mediaItems.map((mediaItem, index) => (
             <MediaCarouselItem
               key={mediaItem.url}
@@ -70,14 +65,10 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
                   setCurrentMediaDuration(5000);
                 }
               }}
-              className={`
-                absolute inset-0 w-full h-full object-cover
-                transition-opacity duration-700 ease-in-out
-                ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}
-              `}
+              className="w-full h-full object-cover"
             />
           ))}
-        </div>
+        </SnapCarousel>
       ) : (
         // Fallback gradient background when no media
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 via-blue-500/30 to-pink-500/30" />
@@ -87,13 +78,13 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
 
       {/* Content at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 p-4">
+      <div className="absolute bottom-0 left-0 right-0 z-10 p-4 pointer-events-none">
         <CardTitle className="text-white drop-shadow-lg text-base leading-snug">{exportData.name}</CardTitle>
         <p className="text-white/50 text-xs mt-1 line-clamp-1">{exportData.description}</p>
       </div>
 
       {/* Action buttons - top right */}
-      <div className="absolute top-3 left-3 right-3 z-10 flex flex-wrap justify-end gap-1.5 items-center opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
+      <div className="absolute top-3 left-3 right-3 z-10 pointer-events-none [&>*]:pointer-events-auto flex flex-wrap justify-end gap-1.5 items-center opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200 motion-reduce:transition-none">
         <ExportCopyButtons exports={exportData.exports} />
         {exportData.downloadUrl && (
           <Button variant="default" size="icon" asChild title="Download addon">
@@ -129,7 +120,7 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
           <CarouselIndicators
             totalImages={mediaItems.length}
             currentIndex={currentImageIndex}
-            onIndexChange={setCurrentImageIndex}
+            onIndexChange={(index) => { setHasInteracted(true); setCurrentImageIndex(index); }}
             stopPropagation
           />
         </div>

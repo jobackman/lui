@@ -146,6 +146,7 @@ export function MediaCarouselItem({
       src={mediaItem.url}
       alt={alt}
       className={className}
+      draggable={false}
       loading="lazy"
       onLoad={onLoad}
     />

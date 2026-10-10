@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { SnapCarousel } from '@/components/snap-carousel';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Download, ExternalLink } from 'lucide-react';
@@ -8,7 +10,6 @@ import { MediaCarouselItem } from '@/components/media-carousel-item';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { formatRelativeTime } from '@/lib/formatRelativeTime';
 import { editionUrl } from '@/lib/game-edition';
-import { cn } from '@/lib/utils';
 import type { ResolvedAddon as Addon } from '@/types/exports';
 
 interface FeaturedAddonProps {
@@ -23,27 +24,21 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const reducedMotion = useReducedMotion();
   const [mediaDuration, setMediaDuration] = useState(5000);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Auto-cycle media
   useEffect(() => {
-    if (!hasMultipleMedia || isHovered) return;
+    if (!hasMultipleMedia || isHovered || hasInteracted || reducedMotion) return;
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % mediaItems.length);
     }, mediaDuration);
 
     return () => clearInterval(interval);
-  }, [hasMultipleMedia, isHovered, mediaDuration, mediaItems.length]);
-
-  // Reduced motion
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches && hasMultipleMedia) {
-      setIsHovered(true);
-    }
-  }, [hasMultipleMedia]);
+  }, [hasMultipleMedia, isHovered, hasInteracted, reducedMotion, mediaDuration, mediaItems.length, currentIndex]);
 
   const relativeTime = exportData.lastUpdated ? formatRelativeTime(exportData.lastUpdated) : null;
 
@@ -65,7 +60,7 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
         >
           {/* Media background */}
           {hasMedia ? (
-            <div className="absolute inset-0">
+            <SnapCarousel className="absolute inset-0" label={`${exportData.name} previews`} currentIndex={currentIndex} onIndexChange={setCurrentIndex} onInteract={() => setHasInteracted(true)}>
               {mediaItems.map((mediaItem, index) => (
                 <MediaCarouselItem
                   key={mediaItem.url}
@@ -83,16 +78,11 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
                       setMediaDuration(5000);
                     }
                   }}
-                  className={cn(
-                    'absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out',
-                    index === currentIndex ? 'opacity-100' : 'opacity-0',
-                  )}
+              className="w-full h-full object-cover"
                 />
               ))}
 
-              {/* Cinematic zoom on hover */}
-              <div className="absolute inset-0 transition-transform duration-[1.5s] ease-out group-hover:scale-[1.03]" />
-            </div>
+            </SnapCarousel>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-purple-600/40 via-blue-600/40 to-pink-600/40" />
           )}
@@ -112,7 +102,7 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
           />
 
           {/* Content overlay -- left-aligned editorial layout */}
-          <div className="relative z-10 flex flex-col justify-end h-full min-h-[280px] sm:min-h-[340px] p-5 sm:p-8">
+          <div className="relative z-10 pointer-events-none flex flex-col justify-end h-full min-h-[280px] sm:min-h-[340px] p-5 sm:p-8">
             {/* Recently updated badge */}
             <motion.div
               initial={{ opacity: 0, x: -12 }}
@@ -157,7 +147,7 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
               className="mt-4 sm:mt-5 flex items-center gap-3 flex-wrap"
             >
               {/* Quick action buttons */}
-              <div className="flex flex-wrap items-center gap-1.5" onClick={(e) => e.preventDefault()}>
+              <div className="flex flex-wrap items-center gap-1.5 pointer-events-auto" onClick={(e) => e.preventDefault()}>
                 <ExportCopyButtons exports={exportData.exports} />
                 {exportData.downloadUrl && (
                   <Button variant="ghost" size="icon" asChild title="Download addon">
@@ -195,7 +185,7 @@ export function FeaturedAddon({ addon }: FeaturedAddonProps) {
               <CarouselIndicators
                 totalImages={mediaItems.length}
                 currentIndex={currentIndex}
-                onIndexChange={setCurrentIndex}
+                onIndexChange={(index) => { setHasInteracted(true); setCurrentIndex(index); }}
                 stopPropagation
               />
             </div>
