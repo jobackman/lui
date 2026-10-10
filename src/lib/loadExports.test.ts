@@ -16,6 +16,21 @@ for (const id of ['platynator', 'eqol']) {
   });
 }
 
+for (const id of ['waypoint-ui', 'dialogue-ui', 'lcc']) {
+  test(`${id} publishes unchanged defaults independently for Forever`, () => {
+    const retail = getAddonById(id, 'retail');
+    const forever = getAddonById(id, 'forever');
+    expect(retail).toBeDefined();
+    expect(forever).toBeDefined();
+    expect(forever?.edition).toBe('forever');
+    expect(forever?.configuration).toEqual(retail?.configuration);
+    expect(forever?.configuration).not.toBe(retail?.configuration);
+    expect(forever?.configuration.media).not.toBe(retail?.configuration.media);
+    expect(forever?.configuration.tags).not.toBe(retail?.configuration.tags);
+    expect(getAddonManifest('forever').some((addon) => addon.id === id)).toBe(true);
+  });
+}
+
 test('EQoL includes the Retail unit-frame export instead of a separate addon', () => {
   const retail = getAddonById('eqol', 'retail');
   const exports = retail?.configuration.exports;
