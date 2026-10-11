@@ -5,7 +5,6 @@ import { Card, CardTitle } from '@/components/ui/card';
 import { ExportCopyButtons } from '@/components/export-copy-buttons';
 import { Button } from '@/components/ui/button';
 import { Download, ExternalLink } from 'lucide-react';
-import { CarouselIndicators } from '@/components/carousel-indicators';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
 import type { AddonConfiguration } from '@/types/exports';
 
@@ -114,17 +113,6 @@ export function ExportCard({ export: exportData, addonId }: ExportCardProps) {
         )}
       </div>
 
-      {/* Image indicator dots - positioned above bottom text */}
-      {hasMultipleImages && (
-        <div className="absolute bottom-[52px] left-1/2 -translate-x-1/2 z-10">
-          <CarouselIndicators
-            totalImages={mediaItems.length}
-            currentIndex={currentImageIndex}
-            onIndexChange={(index) => { setHasInteracted(true); setCurrentImageIndex(index); }}
-            stopPropagation
-          />
-        </div>
-      )}
     </Card>
   );
 }
