@@ -8,6 +8,7 @@ import { getCopyableExports } from '@/lib/copyable-exports';
 import { CarouselIndicators } from '@/components/carousel-indicators';
 import { MediaCarouselItem } from '@/components/media-carousel-item';
 import { SnapCarousel } from '@/components/snap-carousel';
+import { SetupInstructions } from '@/components/setup-instructions';
 import { getCatalogAddonById, resolveAddon } from '@/lib/loadExports';
 import { useEdition } from '@/contexts/edition-context';
 import { EditionSwitcher } from '@/components/edition-switcher';
@@ -292,9 +293,7 @@ function AddonDetailContent({ addon }: { addon: ResolvedAddon }) {
               <h2 className="text-sm font-medium uppercase tracking-[0.1em] text-foreground/50 mb-3">
                 Setup Instructions
               </h2>
-              <pre className="whitespace-pre-wrap font-sans text-sm text-foreground/70 leading-relaxed">
-                {addon.configuration.setupInstructions}
-              </pre>
+              <SetupInstructions>{addon.configuration.setupInstructions}</SetupInstructions>
             </motion.div>
           )}
 

@@ -59,6 +59,10 @@ export const example: Addon = {
 
 Each edition accepts one configuration, not an array of profiles. Tags are optional; when provided, the first tag is a category (`core`, `misc`, or `retired`). Include category tags for homepage grouping. Export strings, download/source URLs, instructions, media (`{ type: 'image' | 'video', url }`), tags, and timestamps are independent per edition.
 
+## Setup instructions
+
+`setupInstructions` supports Markdown: links (`[label](https://example.com)`), numbered/bulleted lists, **bold**, *emphasis*, inline code, and fenced code blocks. Existing plain-text line breaks are preserved. Links open in a new tab; raw HTML and embedded images are disabled (use `media` for images).
+
 ## Copyable exports
 
 Use `exports` for either a single string or a list of named strings within an edition's configuration:

@@ -46,6 +46,24 @@ test('EQoL includes the Retail unit-frame export instead of a separate addon', (
   expect(typeof getAddonById('eqol', 'forever')?.configuration.exports).toBe('string');
 });
 
+test('Chronicle is a Forever-only download recommendation with CurseForge screenshots', () => {
+  const id = 'chronicle-voices-of-azeroth';
+  const forever = getAddonById(id, 'forever');
+
+  expect(forever?.name).toBe('Chronicle: Voices of Azeroth');
+  expect(forever?.configuration.downloadUrl).toBe('https://www.curseforge.com/wow/addons/chronicle-voices-of-azeroth');
+  expect(forever?.configuration.exports).toBeUndefined();
+  expect(forever?.configuration.externalUrl).toBeUndefined();
+  expect(forever?.configuration.tags).toEqual(['misc', 'quest', 'ui']);
+  expect(forever?.configuration.media?.length).toBe(8);
+  expect(forever?.configuration.media?.every((item) =>
+    item.type === 'image' && item.url.startsWith('https://media.forgecdn.net/attachments/')
+  )).toBe(true);
+  expect(getAddonManifest('forever').some((addon) => addon.id === id)).toBe(true);
+  expect(getAddonById(id, 'retail')).toBeUndefined();
+  expect(getAddonManifest('retail').some((addon) => addon.id === id)).toBe(false);
+});
+
 test("loadAllExports returns array of addon categories", () => {
   const exports = loadAllExports();
   expect(Array.isArray(exports)).toBe(true);

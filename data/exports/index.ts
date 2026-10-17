@@ -15,3 +15,4 @@ export * from './account-wide-interface-settings';
 export * from './blizz-hud-tweaks';
 export * from './eqol';
 export * from './lcc';
+export * from './chronicle-voices-of-azeroth';
