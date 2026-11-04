@@ -9,5 +9,9 @@ export const editModeForever: AddonConfiguration = {
     media: [
       { type: 'image', url: 'https://i.imgur.com/9CiuZNo.jpeg' },
     ],
+    setupInstructions: `1. Click **Copy** on this page; no addon download is needed.
+2. In game, open the game menu and select **Edit Mode**.
+3. Open the layout dropdown, choose **Import**, and paste the copied layout.
+4. Give the layout a name, import it, and save any adjustments for your screen.`,
     tags: [category.misc, tag.ui]
 };

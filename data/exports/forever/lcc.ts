@@ -12,8 +12,6 @@ export const lccForever: AddonConfiguration = {
       { type: 'image', url: 'https://i.imgur.com/eIGCoZ6.png' },
     ],
     tags: [category.core, tag.frames, tag.ui],
-    setupInstructions: `Nothing required to setup really, just install and use!
-
-Settings: /lcc
-`
+    setupInstructions: `1. Install LucyCursorCooldowns and log in.
+2. Use the default settings; no import is needed. Run \`/lcc\` if you want to adjust them.`
 };

@@ -11,6 +11,7 @@ export const baganatorForever: AddonConfiguration = {
       { type: 'image', url: 'https://media.forgecdn.net/attachments/1053/566/header-2024-12-30-single.webp' },
       { type: 'image', url: 'https://media.forgecdn.net/attachments/1082/780/transfer.webp' },
     ],
-    setupInstructions: `Download and use the default settings. Requires [Syndicator](https://www.curseforge.com/wow/addons/syndicator), which is installed automatically by the CurseForge client. If installing manually, install Syndicator too.`,
+    setupInstructions: `1. Install Baganator and its required dependency, [Syndicator](https://www.curseforge.com/wow/addons/syndicator). The CurseForge app installs Syndicator automatically; install it separately if installing manually.
+2. Log in and open your bags. Use the default settings; no import is needed.`,
     tags: [category.misc, tag.ui]
 };

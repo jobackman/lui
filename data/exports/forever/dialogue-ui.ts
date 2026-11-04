@@ -14,10 +14,8 @@ export const dialogueUIForever: AddonConfiguration = {
       { type: 'image', url: 'https://i.imgur.com/F5SmpXx.png' },
       { type: 'image', url: 'https://i.imgur.com/dvxOFeL.png' },
     ],
-    setupInstructions: `There is no easy way to import settings, but it has quite good defaults.
-You may want to disable the camera movements in settings.
-
-Take a look at the last 3 images on how to configure.
-`,
+    setupInstructions: `1. Install Dialogue UI and log in.
+2. Use the default settings; no import is needed.
+3. Optional: disable camera movement in the addon settings. See the last three screenshots on this page for the settings location and suggested adjustments.`,
     tags: [category.misc, tag.quest, tag.ui]
 };

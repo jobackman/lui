@@ -16,10 +16,10 @@ export const chronicleVoicesOfAzerothForever: AddonConfiguration = {
     { type: 'image', url: 'https://media.forgecdn.net/attachments/2032/283/5_zone_overview-jpg.jpg' },
     { type: 'image', url: 'https://media.forgecdn.net/attachments/2032/284/6_options-jpg.jpg' },
   ],
-  setupInstructions: `Install and play; no settings import is needed. The CurseForge app installs the required voice packs automatically.
+  setupInstructions: `1. Install Chronicle: Voices of Azeroth. The CurseForge app installs the required voice packs automatically.
+2. If installing manually, also download [Voices of Kalimdor](https://www.curseforge.com/wow/addons/chronicle-voices-of-kalimdor), [Voices of the Eastern Kingdoms](https://www.curseforge.com/wow/addons/chronicle-voices-of-the-eastern-kingdoms), and [Books & Adventures](https://www.curseforge.com/wow/addons/chronicle-books-adventures). Extract all four addons into your AddOns folder.
+3. Log in and use the default settings; no import is needed. Run \`/lore\` to open the journal.
 
-If installing manually, also download [Voices of Kalimdor](https://www.curseforge.com/wow/addons/chronicle-voices-of-kalimdor), [Voices of the Eastern Kingdoms](https://www.curseforge.com/wow/addons/chronicle-voices-of-the-eastern-kingdoms), and [Books & Adventures](https://www.curseforge.com/wow/addons/chronicle-books-adventures). Extract all four addons into your AddOns folder.
-
-Use /lore to open the journal. Do not install Chronicle: Story Journal alongside this addon.`,
+**Do not install Chronicle: Story Journal alongside this addon.**`,
   tags: [category.misc, tag.quest, tag.ui],
 };

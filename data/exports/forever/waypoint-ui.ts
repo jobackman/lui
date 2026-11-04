@@ -12,6 +12,7 @@ export const waypointUiForever: AddonConfiguration = {
       { type: 'image', url: 'https://media.forgecdn.net/attachments/1586/908/way.png' },
       { type: 'image', url: 'https://media.forgecdn.net/attachments/1586/911/customization.png' },
     ],
-    setupInstructions: `Just download and use it. There are some settings you could tweak but its defaults are good already`,
+    setupInstructions: `1. Install Waypoint UI and log in.
+2. Use the default settings; no import is needed. Adjust the addon settings if you want to customize the markers.`,
     tags: [category.misc, tag.map, tag.ui]
 };

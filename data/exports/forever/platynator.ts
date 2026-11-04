@@ -18,8 +18,8 @@ export const platynatorForever: AddonConfiguration = {
       { type: 'image', url: 'https://i.imgur.com/foqzO8J.png' },
       { type: 'image', url: 'https://i.imgur.com/sGCF4gm.png' },
     ],
-    setupInstructions: `1. Run \`/platy\` to open settings
-2. Import the string
-3. Done!`,
+    setupInstructions: `1. Install Platynator and log in.
+2. Click **Copy** on this page, then run \`/platy\` to open the addon settings.
+3. Use the import option to paste and import the copied configuration.`,
     tags: [category.core, tag.nameplates, tag.frames, tag.mythic, tag.mplus, tag.combat, tag.ui],
 };

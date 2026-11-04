@@ -28,19 +28,8 @@ export const eqolForever: AddonConfiguration = {
       tag.frames,
       tag.raid,
     ],
-    setupInstructions: `This addon does a a ton of different things:
-
-- UI Fading
-- Party & Raid Frames
-- Cooldown Manager
-- Resource Bars
-- Swing timers for MH/OH/Ranged
-- Has an "Opie" like feature
-- Spell/Item IDs
-- Auto accept/turnin quests
-- Auto repair/sell junk
-- Auto combat logging in raids/mythic+
-- Auto "delete" confirmation
-- Smart healthpot/healthstone/food/water macros
-`,
+    setupInstructions: `1. Install EQoL and log in.
+2. Click **Copy** on this page, then run \`/eqol\` to open the addon settings.
+3. Open the profile settings and use the import option to paste and import the copied configuration.
+4. Review the enabled features and adjust them to your preferences.`,
 };
