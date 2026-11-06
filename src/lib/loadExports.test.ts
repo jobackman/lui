@@ -46,22 +46,29 @@ test('EQoL includes the Retail unit-frame export instead of a separate addon', (
   expect(typeof getAddonById('eqol', 'forever')?.configuration.exports).toBe('string');
 });
 
-test('Chronicle is a Forever-only download recommendation with CurseForge screenshots', () => {
-  const id = 'chronicle-voices-of-azeroth';
+test('Spoken is a Forever-only recommendation including English voice packs', () => {
+  const id = 'spoken';
   const forever = getAddonById(id, 'forever');
 
-  expect(forever?.name).toBe('Chronicle: Voices of Azeroth');
-  expect(forever?.configuration.downloadUrl).toBe('https://www.curseforge.com/wow/addons/chronicle-voices-of-azeroth');
+  expect(forever?.name).toBe('Spoken');
+  expect(forever?.configuration.downloadUrl).toBe('https://www.curseforge.com/wow/addons/spoken-english');
   expect(forever?.configuration.exports).toBeUndefined();
-  expect(forever?.configuration.externalUrl).toBeUndefined();
+  expect(forever?.configuration.externalUrl).toBe('https://spoken.quest');
   expect(forever?.configuration.tags).toEqual(['misc', 'quest', 'ui']);
-  expect(forever?.configuration.media?.length).toBe(8);
-  expect(forever?.configuration.media?.every((item) =>
-    item.type === 'image' && item.url.startsWith('https://media.forgecdn.net/attachments/')
-  )).toBe(true);
+  expect(forever?.configuration.setupInstructions).toContain('/sp settings');
+  for (const pack of ['spoken-quests-audio-all', 'spoken-audio-places', 'spoken-audio-readables']) {
+    expect(forever?.configuration.setupInstructions).toContain(`https://www.curseforge.com/wow/addons/${pack}`);
+  }
   expect(getAddonManifest('forever').some((addon) => addon.id === id)).toBe(true);
   expect(getAddonById(id, 'retail')).toBeUndefined();
   expect(getAddonManifest('retail').some((addon) => addon.id === id)).toBe(false);
+});
+
+test('Chronicle is no longer published in either edition', () => {
+  for (const edition of ['retail', 'forever'] as const) {
+    expect(getAddonById('chronicle-voices-of-azeroth', edition)).toBeUndefined();
+    expect(getAddonManifest(edition).some((addon) => addon.id === 'chronicle-voices-of-azeroth')).toBe(false);
+  }
 });
 
 test("loadAllExports returns array of addon categories", () => {
